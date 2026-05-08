@@ -2,12 +2,20 @@
 const installCmd = 'npm install -g @cngxjs/compodocx';
 ---
 
-<section class="relative overflow-hidden">
+<section class="hero-section relative isolate overflow-hidden">
   <div
-    class="from-cdx-bg-alt/60 to-cdx-bg pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b"
+    class="from-cdx-bg-alt/60 to-cdx-bg pointer-events-none absolute inset-0 -z-30 bg-gradient-to-b"
     aria-hidden="true"
   >
   </div>
+
+  <div class="hero-orbs pointer-events-none absolute inset-0 -z-20" aria-hidden="true">
+    <span class="orb orb-1 bg-cdx-primary-subtle"></span>
+    <span class="orb orb-2 bg-cdx-primary"></span>
+    <span class="orb orb-3 bg-cdx-primary-subtle"></span>
+  </div>
+
+  <div class="hero-grid pointer-events-none absolute inset-0 -z-10" aria-hidden="true"></div>
 
   <div class="mx-auto max-w-6xl px-4 py-24 sm:py-32">
     <h1
@@ -44,6 +52,90 @@ const installCmd = 'npm install -g @cngxjs/compodocx';
     </div>
   </div>
 </section>
+
+<style>
+  .hero-section {
+    --orb-opacity: 0.18;
+  }
+
+  .hero-section .orb {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(80px);
+    opacity: var(--orb-opacity);
+    will-change: transform;
+  }
+
+  .hero-section .orb-1 {
+    inline-size: 36rem;
+    block-size: 36rem;
+    inset-block-start: -8rem;
+    inset-inline-start: -10rem;
+    animation: hero-drift-1 22s ease-in-out infinite;
+  }
+
+  .hero-section .orb-2 {
+    inline-size: 32rem;
+    block-size: 32rem;
+    inset-block-start: 4rem;
+    inset-inline-end: -10rem;
+    animation: hero-drift-2 28s ease-in-out infinite;
+  }
+
+  .hero-section .orb-3 {
+    inline-size: 28rem;
+    block-size: 28rem;
+    inset-block-end: -10rem;
+    inset-inline-start: 30%;
+    animation: hero-drift-3 26s ease-in-out infinite;
+  }
+
+  .hero-section .hero-grid {
+    background-image:
+      linear-gradient(to right, var(--color-cdx-text) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--color-cdx-text) 1px, transparent 1px);
+    background-size: 56px 56px;
+    background-position: -1px -1px;
+    opacity: 0.04;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, #000 30%, transparent 80%);
+  }
+
+  @keyframes hero-drift-1 {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d(60px, 40px, 0) scale(1.08);
+    }
+  }
+
+  @keyframes hero-drift-2 {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d(-40px, 60px, 0) scale(0.94);
+    }
+  }
+
+  @keyframes hero-drift-3 {
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0) scale(1);
+    }
+    50% {
+      transform: translate3d(-30px, -50px, 0) scale(1.05);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-section .orb {
+      animation: none !important;
+    }
+  }
+</style>
 
 <script>
   import { initCopyButtons } from '../scripts/copy-button';
