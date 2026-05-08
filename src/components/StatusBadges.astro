@@ -1,45 +1,56 @@
 ---
-const repo = 'cngxjs/compodocx';
-const pkg = '@cngxjs/compodocx';
+async function fetchNpmVersion(): Promise<string | null> {
+  try {
+    const res = await fetch('https://registry.npmjs.org/@cngxjs/compodocx/latest', {
+      headers: { Accept: 'application/json' },
+    });
+    if (!res.ok) return null;
+    const data = (await res.json()) as { version?: string };
+    return data.version ?? null;
+  } catch {
+    return null;
+  }
+}
 
-const badges: Array<{ alt: string; src: string; href: string }> = [
-  {
-    alt: 'npm version',
-    src: `https://img.shields.io/npm/v/${pkg}?style=flat-square&label=npm`,
-    href: `https://www.npmjs.com/package/${pkg}`,
-  },
-  {
-    alt: 'Build status',
-    src: `https://img.shields.io/github/actions/workflow/status/${repo}/main.yml?branch=develop&style=flat-square&label=build`,
-    href: `https://github.com/${repo}/actions/workflows/main.yml`,
-  },
-  {
-    alt: 'License MIT',
-    src: `https://img.shields.io/github/license/${repo}?style=flat-square`,
-    href: `https://github.com/${repo}/blob/develop/LICENSE`,
-  },
-  {
-    alt: 'Node 22+',
-    src: `https://img.shields.io/node/v/${pkg}?style=flat-square&label=node`,
-    href: 'https://nodejs.org',
-  },
-];
+const version = await fetchNpmVersion();
+const repoUrl = 'https://github.com/cngxjs/compodocx';
+const pkgUrl = 'https://www.npmjs.com/package/@cngxjs/compodocx';
 ---
 
-<section class="border-cdx-border bg-cdx-bg-alt/30 border-y" aria-label="Project status">
-  <div class="mx-auto flex max-w-6xl flex-wrap items-center gap-3 px-4 py-4">
-    {
-      badges.map((badge) => (
-        <a
-          href={badge.href}
-          rel="noopener"
-          target="_blank"
-          class="inline-flex"
-          aria-label={badge.alt}
-        >
-          <img src={badge.src} alt={badge.alt} loading="lazy" decoding="async" height="20" />
-        </a>
-      ))
-    }
+<section class="bg-cdx-bg-alt/30 border-cdx-border border-y" aria-label="Project status">
+  <div class="mx-auto flex max-w-6xl flex-wrap items-center gap-3 px-4 py-5">
+    <a
+      href={pkgUrl}
+      rel="noopener"
+      target="_blank"
+      class="bg-cdx-bg-elevated text-cdx-text-secondary hover:text-cdx-text inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium"
+    >
+      <span class="text-cdx-text-muted">npm</span>
+      <span class="text-cdx-text font-mono">{version ? `v${version}` : 'latest'}</span>
+    </a>
+    <span
+      class="bg-cdx-bg-elevated text-cdx-text-secondary inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium"
+    >
+      <span class="text-cdx-text-muted">node</span>
+      <span class="text-cdx-text font-mono">≥ 22</span>
+    </span>
+    <a
+      href={`${repoUrl}/blob/develop/LICENSE`}
+      rel="noopener"
+      target="_blank"
+      class="bg-cdx-bg-elevated text-cdx-text-secondary hover:text-cdx-text inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium"
+    >
+      <span class="text-cdx-text-muted">license</span>
+      <span class="text-cdx-text">MIT</span>
+    </a>
+    <a
+      href={`${repoUrl}/actions/workflows/main.yml`}
+      rel="noopener"
+      target="_blank"
+      class="bg-cdx-bg-elevated text-cdx-text-secondary hover:text-cdx-text inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium"
+    >
+      <span class="text-cdx-text-muted">build</span>
+      <span class="text-cdx-text">CI</span>
+    </a>
   </div>
 </section>

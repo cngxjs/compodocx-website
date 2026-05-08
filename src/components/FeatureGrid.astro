@@ -1,22 +1,21 @@
 ---
+import SectionEyebrow from './SectionEyebrow.astro';
+
 const base = import.meta.env.BASE_URL;
 
 interface Feature {
   id: string;
+  category: string;
   title: string;
   blurb: string;
   anchor: string;
   iconPath: string;
 }
 
-const ICON = {
-  strokeWidth: '1.75',
-  size: 24,
-};
-
 const features: Feature[] = [
   {
     id: 'standalone',
+    category: 'Angular Support',
     title: 'Standalone-First Components',
     blurb:
       'Components, directives, and pipes documented as standalone artifacts — no NgModule wrapping, just the modern Angular surface.',
@@ -26,6 +25,7 @@ const features: Feature[] = [
   },
   {
     id: 'signals',
+    category: 'Angular Support',
     title: 'Signals & Computed',
     blurb:
       'First-class support for signal, computed, and linked-signal members — with optional effect detection.',
@@ -35,6 +35,7 @@ const features: Feature[] = [
   },
   {
     id: 'themes',
+    category: 'Theming',
     title: '7 Premium Themes',
     blurb:
       'Slate Noir, Ocean, Midnight, Nord, Rose Pine, Ember, Neon, and Brutalist — switch with one CSS-variable swap.',
@@ -44,6 +45,7 @@ const features: Feature[] = [
   },
   {
     id: 'versions',
+    category: 'Build & CI',
     title: 'Multi-Version Output',
     blurb:
       'Generate side-by-side docs for multiple library versions with an auto-detected versionLabel and a built-in switcher.',
@@ -53,6 +55,7 @@ const features: Feature[] = [
   },
   {
     id: 'cli',
+    category: 'Tooling',
     title: 'Migration & Diff CLIs',
     blurb:
       'compodocx migrate ports Handlebars overrides to JSX templates. compodocx diff produces semver-aware API snapshots for CI.',
@@ -62,6 +65,7 @@ const features: Feature[] = [
   },
   {
     id: 'llm',
+    category: 'Tooling',
     title: 'LLM-Context Export',
     blurb:
       'Export the entire docs surface as LLM-context markdown or typed JSON, ready for an agent or build pipeline.',
@@ -77,21 +81,24 @@ function paths(d: string): string[] {
 ---
 
 <section class="mx-auto max-w-6xl px-4 py-20" aria-labelledby="features-heading">
-  <h2 id="features-heading" class="sr-only">Highlights</h2>
+  <SectionEyebrow text="Features" />
+  <h2 id="features-heading" class="text-cdx-text mt-3 text-3xl font-semibold tracking-tight">
+    Built for modern Angular projects
+  </h2>
 
-  <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+  <div class="mt-12 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
     {
       features.map((feature) => (
-        <article class="border-cdx-border bg-cdx-bg-elevated hover:border-cdx-border-strong group flex flex-col rounded-xl border p-6 transition-colors">
-          <div class="bg-cdx-primary-subtle/40 text-cdx-primary inline-flex size-10 items-center justify-center rounded-lg">
+        <article class="bg-cdx-bg-elevated group flex flex-col rounded-xl p-6">
+          <div class="text-cdx-primary inline-flex size-10 items-center justify-center">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              width={ICON.size}
-              height={ICON.size}
+              width="28"
+              height="28"
               viewBox="0 0 24 24"
               fill="none"
               stroke="currentColor"
-              stroke-width={ICON.strokeWidth}
+              stroke-width="1.5"
               stroke-linecap="round"
               stroke-linejoin="round"
               aria-hidden="true"
@@ -101,11 +108,14 @@ function paths(d: string): string[] {
               ))}
             </svg>
           </div>
-          <h3 class="text-cdx-text mt-5 text-lg font-semibold">{feature.title}</h3>
+          <p class="text-cdx-text-muted mt-5 text-xs font-semibold tracking-[0.2em] uppercase">
+            {feature.category}
+          </p>
+          <h3 class="text-cdx-text mt-2 text-lg font-semibold">{feature.title}</h3>
           <p class="text-cdx-text-secondary mt-2 text-sm leading-relaxed">{feature.blurb}</p>
           <a
             href={`${base}features/#${feature.anchor}`}
-            class="text-cdx-primary group-hover:text-cdx-primary-hover mt-5 inline-flex items-center gap-1 text-sm font-medium"
+            class="text-cdx-primary group-hover:text-cdx-primary-hover mt-6 inline-flex items-center gap-1 text-sm font-medium"
           >
             Learn more
             <span aria-hidden="true">→</span>

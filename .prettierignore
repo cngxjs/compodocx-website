@@ -6,3 +6,4 @@ src/styles/vendor/
 .internal/
 .claude/
 CLAUDE.md
+.playwright-mcp/
