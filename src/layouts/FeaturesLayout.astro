@@ -24,22 +24,25 @@ if (!guide) {
   throw new Error(`unknown guide slug: ${currentSlug}`);
 }
 
+const relatedGuides = (guide.related ?? [])
+  .map((slug) => guides.find((g) => g.slug === slug))
+  .filter((g): g is (typeof guides)[number] => Boolean(g));
+
 const articleJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'TechArticle',
   headline: guide.title,
   description,
   url: canonical,
+  mainEntityOfPage: canonical,
   inLanguage: 'en',
-  isPartOf: {
-    '@type': 'WebSite',
-    name: 'compodocx',
-    url: new URL(base, siteUrl).href,
-  },
-  publisher: {
-    '@type': 'Organization',
-    name: 'cngxjs',
-    url: 'https://github.com/cngxjs',
+  proficiencyLevel: 'Intermediate',
+  dependencies: '@cngxjs/compodocx, Node.js >= 22, TypeScript',
+  isPartOf: { '@id': `${new URL(base, siteUrl).href}#website` },
+  publisher: { '@id': `${new URL(base, siteUrl).href}#organization` },
+  speakable: {
+    '@type': 'SpeakableSpecification',
+    cssSelector: ['article > header h1', 'article > div > p:first-of-type'],
   },
 };
 
@@ -96,8 +99,39 @@ const breadcrumbJsonLd = {
         <slot />
       </div>
 
+      {
+        relatedGuides.length > 0 && (
+          <aside
+            class="border-cdx-border mt-20 border-t pt-8"
+            aria-labelledby={`related-${guide.slug}`}
+          >
+            <h2
+              id={`related-${guide.slug}`}
+              class="text-cdx-text-muted text-xs font-semibold uppercase tracking-[0.2em]"
+            >
+              Related guides
+            </h2>
+            <ul class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {relatedGuides.map((r) => (
+                <li>
+                  <a
+                    href={`${base}guides/${r.slug}/`}
+                    class="bg-cdx-bg-elevated hover:bg-cdx-bg-alt group block rounded-lg p-4 transition-colors"
+                  >
+                    <span class="text-cdx-text-muted font-mono text-xs">
+                      {String(r.number).padStart(2, '0')}
+                    </span>
+                    <span class="text-cdx-text mt-1 block text-sm font-semibold">{r.title}</span>
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </aside>
+        )
+      }
+
       <nav
-        class="border-cdx-border mt-20 flex items-center justify-between gap-4 border-t pt-8 text-sm"
+        class="border-cdx-border mt-12 flex items-center justify-between gap-4 border-t pt-8 text-sm"
         aria-label="Guide pagination"
       >
         {

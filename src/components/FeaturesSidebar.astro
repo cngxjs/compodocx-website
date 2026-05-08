@@ -12,21 +12,37 @@ interface Guide {
   slug: string;
   number: number;
   title: string;
+  related?: string[];
 }
 
 export const guides: Guide[] = [
-  { slug: 'getting-started', number: 1, title: 'Getting Started' },
-  { slug: 'features', number: 2, title: 'Features' },
-  { slug: 'options', number: 6, title: 'Options' },
-  { slug: 'usage', number: 7, title: 'Usage' },
-  { slug: 'themes', number: 8, title: 'Themes' },
-  { slug: 'comments', number: 9, title: 'Comments' },
-  { slug: 'jsdoc-tags', number: 10, title: 'JSDoc Tags' },
-  { slug: 'routing', number: 11, title: 'Routing' },
-  { slug: 'coverage', number: 12, title: 'Documentation Coverage' },
-  { slug: 'tips', number: 13, title: 'Tips and Tricks' },
-  { slug: 'live-example', number: 16, title: 'Live Example Tab' },
-  { slug: 'tab-configuration', number: 17, title: 'Tab Configuration' },
+  { slug: 'getting-started', number: 1, title: 'Getting Started', related: ['usage', 'options'] },
+  { slug: 'features', number: 2, title: 'Features', related: ['themes', 'usage'] },
+  {
+    slug: 'options',
+    number: 6,
+    title: 'Options',
+    related: ['usage', 'getting-started', 'routing'],
+  },
+  { slug: 'usage', number: 7, title: 'Usage', related: ['options', 'tips', 'coverage'] },
+  { slug: 'themes', number: 8, title: 'Themes', related: ['options', 'features'] },
+  { slug: 'comments', number: 9, title: 'Comments', related: ['jsdoc-tags', 'live-example'] },
+  { slug: 'jsdoc-tags', number: 10, title: 'JSDoc Tags', related: ['comments', 'features'] },
+  { slug: 'routing', number: 11, title: 'Routing', related: ['options', 'tab-configuration'] },
+  { slug: 'coverage', number: 12, title: 'Documentation Coverage', related: ['usage', 'options'] },
+  { slug: 'tips', number: 13, title: 'Tips and Tricks', related: ['usage', 'themes', 'options'] },
+  {
+    slug: 'live-example',
+    number: 16,
+    title: 'Live Example Tab',
+    related: ['comments', 'features'],
+  },
+  {
+    slug: 'tab-configuration',
+    number: 17,
+    title: 'Tab Configuration',
+    related: ['features', 'options'],
+  },
 ];
 ---
 

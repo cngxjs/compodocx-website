@@ -15,7 +15,8 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "sync:tokens": "node scripts/sync-tokens.mjs",
-    "sync:screenshots": "node scripts/sync-screenshots.mjs"
+    "sync:screenshots": "node scripts/sync-screenshots.mjs",
+    "og:gen": "node scripts/gen-og.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.2",
@@ -27,6 +28,7 @@
     "@astrojs/check": "^0.9.9",
     "prettier": "^3.8.3",
     "prettier-plugin-astro": "^0.14.1",
+    "sharp": "^0.34.5",
     "typescript": "^6.0.3"
   }
 }
