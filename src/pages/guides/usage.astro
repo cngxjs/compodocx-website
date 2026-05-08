@@ -18,8 +18,8 @@ const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono te
   {/* prettier-ignore */}
   <pre class:list={codeBlock}><code>npx compodocx -p tsconfig.doc.json</code></pre>
   <p class="text-cdx-text-secondary">
-    Writes to <code class={inlineCode}>./documentation/&lt;versionLabel&gt;/</code> by default. The label is
-    read from the nearest <code class={inlineCode}>package.json</code>. Pass
+    Writes to <code class={inlineCode}>./documentation/&lt;versionLabel&gt;/</code> by default. The label
+    is read from the nearest <code class={inlineCode}>package.json</code>. Pass
     <code class={inlineCode}>--no-multiVersion</code> for a flat output.
   </p>
 
@@ -31,15 +31,17 @@ const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono te
     what ships.
   </p>
 
-  <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">Multi-version with a custom label</h2>
+  <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">
+    Multi-version with a custom label
+  </h2>
   {/* prettier-ignore */}
   <pre
     class:list={codeBlock}><code>npx compodocx -p tsconfig.doc.json --versionLabel v1.4.0</code></pre>
   <p class="text-cdx-text-secondary">
     Writes <code class={inlineCode}>./documentation/v1.4.0/</code> and updates
     <code class={inlineCode}>./documentation/versions.json</code>. The manifest is append-only,
-    deduplicated by label, and semver-sorted descending. The version-switcher in the navbar reads it at
-    runtime — no extra wiring.
+    deduplicated by label, and semver-sorted descending. The version-switcher in the navbar reads it
+    at runtime — no extra wiring.
   </p>
 
   <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">Wire into npm scripts</h2>
@@ -56,9 +58,10 @@ const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono te
     class:list={codeBlock}><code>npx compodocx -p tsconfig.doc.json --exportFormat json -d snapshots/next/
 npx compodocx diff snapshots/prev/&lt;label&gt;/api.json snapshots/next/&lt;label&gt;/api.json</code></pre>
   <p class="text-cdx-text-secondary">
-    Exits <code class={inlineCode}>0</code> on no public-API change, <code class={inlineCode}>1</code> on
-    additive changes, <code class={inlineCode}>2</code> on breaking changes (or fatal errors). Pipe the
-    JSON output to your bot of choice for PR comments.
+    Exits <code class={inlineCode}>0</code> on no public-API change, <code class={inlineCode}
+      >1</code
+    > on additive changes, <code class={inlineCode}>2</code> on breaking changes (or fatal errors). Pipe
+    the JSON output to your bot of choice for PR comments.
   </p>
 
   <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">LLM context for code review</h2>
@@ -67,8 +70,8 @@ npx compodocx diff snapshots/prev/&lt;label&gt;/api.json snapshots/next/&lt;labe
     class:list={codeBlock}><code>npx compodocx -p tsconfig.doc.json --exportFormat llm-md</code></pre>
   <p class="text-cdx-text-secondary">
     Without <code class={inlineCode}>-d</code>, writes to stdout — pipe straight into
-    <code class={inlineCode}>llm</code>, <code class={inlineCode}>claude</code>, or any tool that reads
-    markdown. With <code class={inlineCode}>-d</code>, writes
+    <code class={inlineCode}>llm</code>, <code class={inlineCode}>claude</code>, or any tool that
+    reads markdown. With <code class={inlineCode}>-d</code>, writes
     <code class={inlineCode}>&lt;output&gt;/llm-context.md</code>.
   </p>
 </FeaturesLayout>

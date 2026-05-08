@@ -32,16 +32,17 @@ const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono te
 export class CardComponent { ... }`}</code></pre>
 
   <p class="text-cdx-text-secondary">
-    The block above the class header becomes the entity description on the rendered page. Member-level
-    comments — properties, methods, accessors, host listeners — render inline on each member card.
+    The block above the class header becomes the entity description on the rendered page.
+    Member-level comments — properties, methods, accessors, host listeners — render inline on each
+    member card.
   </p>
 
   <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">Fenced code in descriptions</h2>
   <p class="text-cdx-text-secondary">
-    Fenced code blocks in descriptions are syntax-highlighted with Shiki, picking the same theme pair
-    your project is using. The default highlight language for description-level
-    <code class={inlineCode}>@example</code> blocks is HTML — assert against identifier text rather
-    than the language class when writing custom downstream tooling.
+    Fenced code blocks in descriptions are syntax-highlighted with Shiki, picking the same theme
+    pair your project is using. The default highlight language for description-level
+    <code class={inlineCode}>@example</code> blocks is HTML — assert against identifier text rather than
+    the language class when writing custom downstream tooling.
   </p>
 
   <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">Inline cross-references</h2>
@@ -62,9 +63,9 @@ export class CardComponent { ... }`}</code></pre>
   <p class="text-cdx-text-secondary">
     Markdown files outside the source tree can be wired in via a
     <code class={inlineCode}>summary.json</code> manifest. Slugs are derived from each page&rsquo;s
-    <code class={inlineCode}>title</code>; missing files surface a per-page warning rather than failing
-    the build. Nesting deeper than five levels is a hard error.
-    <code class={inlineCode}>{'{@link}'}</code> works inside additional-page markdown identically to
-    source comments.
+    <code class={inlineCode}>title</code>; missing files surface a per-page warning rather than
+    failing the build. Nesting deeper than five levels is a hard error.
+    <code class={inlineCode}>{'{@link}'}</code> works inside additional-page markdown identically to source
+    comments.
   </p>
 </FeaturesLayout>

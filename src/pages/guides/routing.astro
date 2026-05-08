@@ -15,8 +15,8 @@ const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono te
 
   <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">Why hash routing</h2>
   <p class="text-cdx-text-secondary">
-    Hash URLs work everywhere: GitHub Pages project sites, S3 prefixes, intranet hosts behind reverse
-    proxies, even <code class={inlineCode}>file://</code> previews. No server-side rewrites needed,
+    Hash URLs work everywhere: GitHub Pages project sites, S3 prefixes, intranet hosts behind
+    reverse proxies, even <code class={inlineCode}>file://</code> previews. No server-side rewrites needed,
     deep links survive moves between hosts, and refreshing on any page just works.
   </p>
 
@@ -33,8 +33,8 @@ const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono te
     Anchor scrolls account for the sticky NavBar height — clicking
     <code class={inlineCode}>#api</code> doesn&rsquo;t hide the heading behind the topbar. Back/forward
     navigation restores the prior scroll position. URL updates use
-    <code class={inlineCode}>history.replaceState</code> so the browser&rsquo;s history isn&rsquo;t
-    polluted with intermediate hash changes.
+    <code class={inlineCode}>history.replaceState</code> so the browser&rsquo;s history isn&rsquo;t polluted
+    with intermediate hash changes.
   </p>
 
   <h2 class="text-cdx-text text-xl font-semibold mt-12">No first-paint flash</h2>

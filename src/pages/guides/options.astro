@@ -23,7 +23,10 @@ const groups: OptionGroup[] = [
     items: [
       ['--multiVersion / --no-multiVersion', 'multi-version layout on by default'],
       ['--versionLabel', 'pin the label (auto-detected from package.json)'],
-      ['--versionsRoot', 'directory holding versions.json and per-version folders (defaults to -d)'],
+      [
+        '--versionsRoot',
+        'directory holding versions.json and per-version folders (defaults to -d)',
+      ],
       ['--maxVersionsShown', 'cap entries in the switcher (0–1000, 0 = unlimited, default 10)'],
     ],
   },
@@ -39,7 +42,10 @@ const groups: OptionGroup[] = [
   {
     heading: 'Customization',
     items: [
-      ['--theme', 'built-in name (ocean, midnight, nord, rose-pine, ember, neon, brutalist) or path to a CSS file'],
+      [
+        '--theme',
+        'built-in name (ocean, midnight, nord, rose-pine, ember, neon, brutalist) or path to a CSS file',
+      ],
       ['--templates', 'directory with JS partials overriding built-in templates'],
       ['--gaID', 'GA4 measurement ID — emits gtag.js + SPA pageview events'],
     ],
@@ -68,9 +74,9 @@ const groups: OptionGroup[] = [
   description="CLI flags for compodocx — the surface that controls what ends up in your docs."
 >
   <p class="text-cdx-text-secondary text-lg">
-    compodocx accepts CLI flags or a JSON config (passed via <code class={inlineCode}>-c</code>). The
-    two compose: flags override config values. Use the config for team consistency, flags for one-off
-    runs.
+    compodocx accepts CLI flags or a JSON config (passed via <code class={inlineCode}>-c</code>).
+    The two compose: flags override config values. Use the config for team consistency, flags for
+    one-off runs.
   </p>
 
   {

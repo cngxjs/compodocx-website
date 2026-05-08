@@ -22,8 +22,8 @@ npx compodocx -p tsconfig.doc.json</code></pre>
 
   <p class="text-cdx-text-secondary">
     The default output goes to <code class={inlineCode}>./documentation/&lt;versionLabel&gt;/</code> —
-    multi-version layout is on by default. <code class={inlineCode}>versionLabel</code> is
-    auto-detected from the nearest <code class={inlineCode}>package.json</code>. Pass
+    multi-version layout is on by default. <code class={inlineCode}>versionLabel</code> is auto-detected
+    from the nearest <code class={inlineCode}>package.json</code>. Pass
     <code class={inlineCode}>--no-multiVersion</code> for the flat single-version layout.
   </p>
 
@@ -49,8 +49,8 @@ npx compodocx -p tsconfig.doc.json</code></pre>
   <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">Coming from compodoc</h2>
   <p class="text-cdx-text-secondary">
     Most flags carry over. Two breaking changes worth knowing up front: the package is now
-    <code class={inlineCode}>@cngxjs/compodocx</code>, and the output is multi-version by default — pin
-    a label or pass <code class={inlineCode}>--no-multiVersion</code> if your CI publishes to a flat
+    <code class={inlineCode}>@cngxjs/compodocx</code>, and the output is multi-version by default —
+    pin a label or pass <code class={inlineCode}>--no-multiVersion</code> if your CI publishes to a flat
     folder. Custom Handlebars templates need a one-time port via
     <code class={inlineCode}>compodocx migrate templates</code>.
   </p>

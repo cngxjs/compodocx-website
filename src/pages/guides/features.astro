@@ -18,14 +18,18 @@ const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono te
       <ul class="text-cdx-text-secondary mt-3 space-y-2 text-sm">
         <li>Standalone components, directives, pipes — no NgModule scaffolding required.</li>
         <li>
-          Signals, <code class={inlineCode}>computed</code>, and <code class={inlineCode}>linked-signal</code>
+          Signals, <code class={inlineCode}>computed</code>, and <code class={inlineCode}
+            >linked-signal</code
+          >
           members rendered as first-class fields with their derived-state dependencies.
         </li>
         <li>
           <code class={inlineCode}>inject()</code> DI alongside constructor DI — both surfaced in a unified
           dependencies block.
         </li>
-        <li>Host bindings, host listeners, host structured attributes, providers / view providers.</li>
+        <li>
+          Host bindings, host listeners, host structured attributes, providers / view providers.
+        </li>
         <li>
           Effects rendered opt-in via <code class={inlineCode}>--showEffects</code>.
         </li>
@@ -39,12 +43,12 @@ const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono te
       <h2 class="text-cdx-text font-semibold">Multi-version output</h2>
       <ul class="text-cdx-text-secondary mt-3 space-y-2 text-sm">
         <li>
-          Default layout writes <code class={inlineCode}>&lt;output&gt;/&lt;versionLabel&gt;/</code> with a
-          shared <code class={inlineCode}>versions.json</code> manifest.
+          Default layout writes <code class={inlineCode}>&lt;output&gt;/&lt;versionLabel&gt;/</code> with
+          a shared <code class={inlineCode}>versions.json</code> manifest.
         </li>
         <li>
-          Version label auto-detected from the nearest <code class={inlineCode}>package.json</code>; override
-          with <code class={inlineCode}>--versionLabel</code>.
+          Version label auto-detected from the nearest <code class={inlineCode}>package.json</code>;
+          override with <code class={inlineCode}>--versionLabel</code>.
         </li>
         <li>
           A version-switcher widget reads the manifest at runtime — append-only, semver-sorted, no
@@ -84,8 +88,8 @@ const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono te
         <li>SPA hash-router with deep-link scroll restoration and tab activation by URL hash.</li>
         <li>
           Keyboard navigation: <code class={inlineCode}>j</code> / <code class={inlineCode}>k</code> through
-          member cards, <code class={inlineCode}>[</code> / <code class={inlineCode}>]</code> through the sidebar
-          entity list, <code class={inlineCode}>?</code> opens a shortcut overlay.
+          member cards, <code class={inlineCode}>[</code> / <code class={inlineCode}>]</code> through
+          the sidebar entity list, <code class={inlineCode}>?</code> opens a shortcut overlay.
         </li>
         <li>Shiki syntax highlighting with per-theme light/dark pairs.</li>
         <li>Flicker-free dark mode and theme switching — applied before paint, no FOUC.</li>
@@ -118,8 +122,8 @@ const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono te
       <ul class="text-cdx-text-secondary mt-3 space-y-2 text-sm">
         <li>Skip-to-content link on every page.</li>
         <li>
-          <code class={inlineCode}>:focus-visible</code> rings on every interactive element; ARIA patterns on
-          tabs, sidebar, and version switcher.
+          <code class={inlineCode}>:focus-visible</code> rings on every interactive element; ARIA patterns
+          on tabs, sidebar, and version switcher.
         </li>
         <li>
           Respects <code class={inlineCode}>prefers-reduced-motion</code> and
