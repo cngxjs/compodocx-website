@@ -28,44 +28,49 @@ const themeMetas: ThemeMeta[] = [
   {
     id: 'default',
     name: 'Slate Noir',
-    blurb: 'Pure neutral greys. The opinion-free default.',
+    blurb: 'Neutral greys, no accent hue. The opinion-free default.',
     source: defaultCss,
   },
   {
     id: 'ocean',
     name: 'Ocean',
-    blurb: 'Deep teal, cool surfaces, soft tension borders.',
+    blurb: 'Cool teal surfaces with github-light / github-dark Shiki.',
     source: oceanCss,
   },
   {
     id: 'midnight',
     name: 'Midnight',
-    blurb: 'Indigo night, low contrast, focus-friendly.',
+    blurb: 'Indigo night, low contrast. Pairs with tokyo-night Shiki.',
     source: midnightCss,
   },
-  { id: 'nord', name: 'Nord', blurb: 'Arctic palette, frost blue, calm primary.', source: nordCss },
+  {
+    id: 'nord',
+    name: 'Nord',
+    blurb: 'Arctic palette, frost blue, calm primary. Dark-only Shiki.',
+    source: nordCss,
+  },
   {
     id: 'rose-pine',
     name: 'Rose Pine',
-    blurb: 'Warm rose, muted greens, golden accents.',
+    blurb: 'Warm rose with muted greens and golden accents.',
     source: rosePineCss,
   },
   {
     id: 'ember',
     name: 'Ember',
-    blurb: 'Warm amber on ember-grey, low-glare reading.',
+    blurb: 'Warm amber on ember-grey, easy on the eyes for long reads.',
     source: emberCss,
   },
   {
     id: 'neon',
     name: 'Neon',
-    blurb: 'High-contrast electric primary on dark slate.',
+    blurb: 'High-contrast electric primary on dark slate. Synthwave-84 Shiki.',
     source: neonCss,
   },
   {
     id: 'brutalist',
     name: 'Brutalist',
-    blurb: 'Hard edges, raw concrete, maximum legibility.',
+    blurb: 'Hard edges, raw surfaces, maximum legibility.',
     source: brutalistCss,
   },
 ];
@@ -95,8 +100,10 @@ const themes: ThemeWithSwatches[] = themeMetas.map(({ source, ...rest }) => ({
     Eight bundled themes, one click apart
   </h2>
   <p class="text-cdx-text-secondary mt-3 max-w-2xl">
-    Try them live — clicking a card swaps a single CSS variable file. Your selection persists across
-    pages via localStorage.
+    Try them live — clicking a card swaps the active theme without a full reload. Your selection
+    persists across pages via localStorage. Roll your own by overriding any subset of the
+    <code class="text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono text-xs">--color-cdx-*</code>
+    tokens.
   </p>
 
   <div
@@ -139,5 +146,5 @@ const themes: ThemeWithSwatches[] = themeMetas.map(({ source, ...rest }) => ({
 
 <script>
   import { initThemeSwitcher } from '../scripts/theme-switcher';
-  initThemeSwitcher();
+  document.addEventListener('astro:page-load', () => initThemeSwitcher());
 </script>

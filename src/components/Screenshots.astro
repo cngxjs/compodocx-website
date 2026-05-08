@@ -101,5 +101,5 @@ const shots: Shot[] = [
 
 <script>
   import { initTabs } from '../scripts/tabs';
-  initTabs();
+  document.addEventListener('astro:page-load', () => initTabs());
 </script>

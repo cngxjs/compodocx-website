@@ -15,6 +15,8 @@ function activate(tab: HTMLButtonElement, allTabs: HTMLButtonElement[]): void {
   });
 }
 
+const BOUND = new WeakSet<HTMLButtonElement>();
+
 export function initTabs(): void {
   const groups = document.querySelectorAll<HTMLElement>('[data-tabs]');
   groups.forEach((group) => {
@@ -22,6 +24,8 @@ export function initTabs(): void {
     if (tabs.length === 0) return;
 
     tabs.forEach((tab, index) => {
+      if (BOUND.has(tab)) return;
+      BOUND.add(tab);
       tab.addEventListener('click', () => activate(tab, tabs));
       tab.addEventListener('keydown', (event) => {
         let nextIndex: number | null = null;

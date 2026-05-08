@@ -166,5 +166,5 @@ const installCmd = 'npm install -g @cngxjs/compodocx';
 
 <script>
   import { initCopyButtons } from '../scripts/copy-button';
-  initCopyButtons();
+  document.addEventListener('astro:page-load', () => initCopyButtons());
 </script>

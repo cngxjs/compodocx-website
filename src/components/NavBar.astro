@@ -154,11 +154,13 @@ const themes: Array<{ id: string; label: string }> = [
   import { initDarkToggle } from '../scripts/dark-mode';
   import { initThemeSwitcher } from '../scripts/theme-switcher';
 
-  initDarkToggle();
-  initThemeSwitcher();
+  function init(): void {
+    initDarkToggle();
+    initThemeSwitcher();
 
-  const menu = document.getElementById('theme-menu') as HTMLDetailsElement | null;
-  if (menu) {
+    const menu = document.getElementById('theme-menu') as HTMLDetailsElement | null;
+    if (!menu || menu.dataset.menuBound === 'true') return;
+    menu.dataset.menuBound = 'true';
     menu.addEventListener('click', (event) => {
       const target = event.target as HTMLElement | null;
       if (target?.closest('button[data-theme-id]')) {
@@ -170,4 +172,6 @@ const themes: Array<{ id: string; label: string }> = [
       if (!menu.contains(event.target as Node)) menu.open = false;
     });
   }
+
+  document.addEventListener('astro:page-load', init);
 </script>

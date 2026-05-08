@@ -1,4 +1,5 @@
 const STORAGE_KEY = 'compodocx-website-darkmode';
+const BOUND = new WeakSet<HTMLButtonElement>();
 
 export function initDarkToggle(): void {
   const button = document.getElementById('dark-toggle');
@@ -10,6 +11,9 @@ export function initDarkToggle(): void {
   };
 
   sync();
+
+  if (BOUND.has(button)) return;
+  BOUND.add(button);
 
   button.addEventListener('click', () => {
     const next = !document.documentElement.classList.contains('dark');
