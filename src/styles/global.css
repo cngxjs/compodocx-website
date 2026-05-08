@@ -40,3 +40,46 @@ body {
 ::-webkit-scrollbar-corner {
   background: transparent;
 }
+
+main > section {
+  animation: section-reveal 0.55s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+main > section:nth-of-type(1) {
+  animation-delay: 0s;
+}
+main > section:nth-of-type(2) {
+  animation-delay: 0.08s;
+}
+main > section:nth-of-type(3) {
+  animation-delay: 0.16s;
+}
+main > section:nth-of-type(4) {
+  animation-delay: 0.24s;
+}
+main > section:nth-of-type(5) {
+  animation-delay: 0.32s;
+}
+main > section:nth-of-type(6) {
+  animation-delay: 0.4s;
+}
+main > section:nth-of-type(7) {
+  animation-delay: 0.48s;
+}
+
+@keyframes section-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  main > section {
+    animation: none !important;
+  }
+}
