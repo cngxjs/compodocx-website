@@ -28,7 +28,7 @@ const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono te
 @Component({ ... })
 export class CardComponent { ... }`}</code></pre>
 
-  <h2 class="text-cdx-text pt-4 text-xl font-semibold">Enabling the tab</h2>
+  <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">Enabling the tab</h2>
   {/* prettier-ignore */}
   <pre class:list={codeBlock}><code>npx compodocx --liveExamples</code></pre>
 
@@ -37,7 +37,7 @@ export class CardComponent { ... }`}</code></pre>
     bundle. First example loads in roughly 250 ms; subsequent ones reuse the runtime.
   </p>
 
-  <h2 class="text-cdx-text pt-4 text-xl font-semibold">Multiple examples per symbol</h2>
+  <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">Multiple examples per symbol</h2>
   <p class="text-cdx-text-secondary">
     Repeat the <code class={inlineCode}>@example</code> tag with a heading on the first line and the body
     indented underneath:

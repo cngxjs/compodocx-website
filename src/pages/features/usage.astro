@@ -14,18 +14,18 @@ const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono te
     A few patterns we lean on. Adapt to taste — every flag has a config equivalent.
   </p>
 
-  <h2 class="text-cdx-text pt-4 text-xl font-semibold">Build once for CI</h2>
+  <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">Build once for CI</h2>
   {/* prettier-ignore */}
   <pre class:list={codeBlock}><code>npx compodocx -p tsconfig.doc.json</code></pre>
 
-  <h2 class="text-cdx-text pt-4 text-xl font-semibold">Watch during authoring</h2>
+  <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">Watch during authoring</h2>
   {/* prettier-ignore */}
   <pre class:list={codeBlock}><code>npx compodocx -p tsconfig.doc.json --watch --serve</code></pre>
   <p class="text-cdx-text-secondary">
     The dev server reuses the same routing as production. What you see locally matches what ships.
   </p>
 
-  <h2 class="text-cdx-text pt-4 text-xl font-semibold">Multi-version output</h2>
+  <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">Multi-version output</h2>
   {/* prettier-ignore */}
   <pre
     class:list={codeBlock}><code>npx compodocx -p tsconfig.doc.json --versionLabel v1.4 --output documentation/v1.4</code></pre>
@@ -34,13 +34,13 @@ const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono te
     widget reads it at runtime — no extra wiring.
   </p>
 
-  <h2 class="text-cdx-text pt-4 text-xl font-semibold">Wire into npm scripts</h2>
+  <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">Wire into npm scripts</h2>
   {/* prettier-ignore */}
   <pre
     class:list={codeBlock}><code>"docs": "compodocx -p tsconfig.doc.json",
 "docs:watch": "compodocx -p tsconfig.doc.json --watch --serve"</code></pre>
 
-  <h2 class="text-cdx-text pt-4 text-xl font-semibold">API diff in CI</h2>
+  <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">API diff in CI</h2>
   {/* prettier-ignore */}
   <pre
     class:list={codeBlock}><code>npx compodocx diff --against last-tag --exportFormat json</code></pre>

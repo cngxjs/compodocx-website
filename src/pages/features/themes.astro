@@ -27,7 +27,7 @@ const bundled = [
     text, primary, surface elevation, code blocks, and scrollbars.
   </p>
 
-  <h2 class="text-cdx-text pt-4 text-xl font-semibold">Bundled themes</h2>
+  <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">Bundled themes</h2>
   <ul class="text-cdx-text-secondary grid gap-2 text-sm md:grid-cols-2">
     {
       bundled.map(([name, blurb]) => (
@@ -38,12 +38,12 @@ const bundled = [
     }
   </ul>
 
-  <h2 class="text-cdx-text pt-4 text-xl font-semibold">Switching themes</h2>
+  <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">Switching themes</h2>
   {/* prettier-ignore */}
   <pre class:list={codeBlock}><code>--theme ocean
 --theme ./my-brand.css</code></pre>
 
-  <h2 class="text-cdx-text pt-4 text-xl font-semibold">Custom themes</h2>
+  <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">Custom themes</h2>
   <p class="text-cdx-text-secondary">
     A custom theme is one CSS file overriding any subset of the
     <code class={inlineCode}>--color-cdx-*</code> tokens. Unspecified tokens fall back to the default.

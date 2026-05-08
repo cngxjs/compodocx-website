@@ -15,7 +15,7 @@ const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono te
     transitions without shipping a framework runtime.
   </p>
 
-  <h2 class="text-cdx-text pt-4 text-xl font-semibold">Sub-path hosting</h2>
+  <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">Sub-path hosting</h2>
   <p class="text-cdx-text-secondary">
     For GitHub Pages project sites, S3 prefixes, or any nested host, set the base path. compodocx
     rewrites every internal href and the search index URLs so deep links survive.
@@ -24,7 +24,7 @@ const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono te
   {/* prettier-ignore */}
   <pre class:list={codeBlock}><code>npx compodocx --basePath /my-project/</code></pre>
 
-  <h2 class="text-cdx-text pt-4 text-xl font-semibold">Hash routing</h2>
+  <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">Hash routing</h2>
   <p class="text-cdx-text-secondary">
     For environments without rewrite rules (some intranet hosts, file:// previews), hash-based
     routing keeps deep links working without server config.
@@ -33,7 +33,7 @@ const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono te
   {/* prettier-ignore */}
   <pre class:list={codeBlock}><code>npx compodocx --routingMode hash</code></pre>
 
-  <h2 class="text-cdx-text pt-4 text-xl font-semibold">Scroll restoration</h2>
+  <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">Scroll restoration</h2>
   <p class="text-cdx-text-secondary">
     Anchor scrolls account for the sticky NavBar height — no clicking
     <code class={inlineCode}>#api</code> and landing with the heading hidden behind the topbar. Back /
