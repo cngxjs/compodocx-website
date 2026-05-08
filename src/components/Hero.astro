@@ -87,31 +87,39 @@ const installCmd = 'npm install -g @cngxjs/compodocx';
   }
 
   .hero-section .hero-headline {
-    animation: hero-headline-glow 3.2s cubic-bezier(0.22, 1, 0.36, 1) 0.2s 1 both;
+    background-image: linear-gradient(
+      100deg,
+      var(--color-cdx-text) 0%,
+      var(--color-cdx-text) 38%,
+      hsl(35 100% 62%) 47%,
+      hsl(20 100% 65%) 50%,
+      hsl(35 100% 62%) 53%,
+      var(--color-cdx-text) 62%,
+      var(--color-cdx-text) 100%
+    );
+    background-size: 250% 100%;
+    background-position: 150% 0;
+    background-repeat: no-repeat;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: hero-headline-shimmer 2.8s cubic-bezier(0.4, 0, 0.2, 1) 0.3s 1 forwards;
   }
 
-  @keyframes hero-headline-glow {
+  @keyframes hero-headline-shimmer {
     0% {
-      filter: drop-shadow(0 0 0 transparent);
-    }
-    25% {
-      filter:
-        drop-shadow(0 0 32px hsl(35 100% 60% / 0.85))
-        drop-shadow(0 0 64px hsl(20 90% 55% / 0.55));
-    }
-    55% {
-      filter:
-        drop-shadow(0 0 24px hsl(35 100% 60% / 0.55))
-        drop-shadow(0 0 48px hsl(20 90% 55% / 0.35));
+      background-position: 150% 0;
     }
     100% {
-      filter: drop-shadow(0 0 0 transparent);
+      background-position: -50% 0;
     }
   }
 
   @media (prefers-reduced-motion: reduce) {
     .hero-section .hero-headline {
       animation: none !important;
+      background-position: 0 0 !important;
     }
   }
 
