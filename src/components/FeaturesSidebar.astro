@@ -1,0 +1,68 @@
+---
+import SectionEyebrow from './SectionEyebrow.astro';
+
+interface Props {
+  currentSlug?: string;
+}
+
+const { currentSlug } = Astro.props;
+const base = import.meta.env.BASE_URL;
+
+interface Guide {
+  slug: string;
+  number: number;
+  title: string;
+}
+
+export const guides: Guide[] = [
+  { slug: 'getting-started', number: 1, title: 'Getting Started' },
+  { slug: 'overview', number: 2, title: 'Features' },
+  { slug: 'options', number: 6, title: 'Options' },
+  { slug: 'usage', number: 7, title: 'Usage' },
+  { slug: 'themes', number: 8, title: 'Themes' },
+  { slug: 'comments', number: 9, title: 'Comments' },
+  { slug: 'jsdoc-tags', number: 10, title: 'JSDoc Tags' },
+  { slug: 'routing', number: 11, title: 'Routing' },
+  { slug: 'coverage', number: 12, title: 'Documentation Coverage' },
+  { slug: 'tips', number: 13, title: 'Tips and Tricks' },
+  { slug: 'live-example', number: 16, title: 'Live Example Tab' },
+  { slug: 'tab-configuration', number: 17, title: 'Tab Configuration' },
+];
+---
+
+<aside class="hidden lg:block">
+  <nav class="sticky top-20" aria-label="Guide navigation">
+    <SectionEyebrow text="Guides" />
+    <ul class="mt-4 space-y-0.5 text-sm">
+      {
+        guides.map((g) => {
+          const active = g.slug === currentSlug;
+          return (
+            <li>
+              <a
+                href={`${base}features/${g.slug}/`}
+                aria-current={active ? 'page' : undefined}
+                class:list={[
+                  'flex gap-3 rounded px-3 py-2 transition-colors',
+                  active
+                    ? 'bg-cdx-bg-elevated text-cdx-text font-medium'
+                    : 'text-cdx-text-secondary hover:bg-cdx-bg-alt hover:text-cdx-text',
+                ]}
+              >
+                <span
+                  class:list={[
+                    'font-mono text-xs',
+                    active ? 'text-cdx-text-secondary' : 'text-cdx-text-muted',
+                  ]}
+                >
+                  {String(g.number).padStart(2, '0')}
+                </span>
+                <span>{g.title}</span>
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </nav>
+</aside>

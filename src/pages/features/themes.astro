@@ -1,0 +1,60 @@
+---
+import FeaturesLayout from '../../layouts/FeaturesLayout.astro';
+const codeBlock =
+  'bg-cdx-bg-alt/60 text-cdx-text overflow-x-auto rounded-lg p-3 font-mono text-xs leading-relaxed';
+const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono text-[0.85em]';
+
+const bundled = [
+  ['Slate Noir', 'Pure neutral greys. The opinion-free default.'],
+  ['Ocean', 'Deep teal, cool surfaces, soft tension borders.'],
+  ['Midnight', 'Indigo night, low contrast, focus-friendly.'],
+  ['Nord', 'Arctic palette, frost blue, calm primary.'],
+  ['Rose Pine', 'Warm rose, muted greens, golden accents.'],
+  ['Ember', 'Warm amber on ember-grey, low-glare reading.'],
+  ['Neon', 'High-contrast electric primary on dark slate.'],
+  ['Brutalist', 'Hard edges, raw concrete, maximum legibility.'],
+];
+---
+
+<FeaturesLayout
+  currentSlug="themes"
+  title="Themes — compodocx"
+  description="Eight bundled themes plus a CSS-variable contract for unlimited custom themes."
+>
+  <p class="text-cdx-text-secondary text-lg">
+    Eight themes ship in the box. A theme is a CSS file that overrides the
+    <code class={inlineCode}>--color-cdx-*</code> tokens — about 40 semantic variables for backgrounds,
+    text, primary, surface elevation, code blocks, and scrollbars.
+  </p>
+
+  <h2 class="text-cdx-text pt-4 text-xl font-semibold">Bundled themes</h2>
+  <ul class="text-cdx-text-secondary grid gap-2 text-sm md:grid-cols-2">
+    {
+      bundled.map(([name, blurb]) => (
+        <li>
+          <span class="text-cdx-text font-semibold">{name}</span> — {blurb}
+        </li>
+      ))
+    }
+  </ul>
+
+  <h2 class="text-cdx-text pt-4 text-xl font-semibold">Switching themes</h2>
+  {/* prettier-ignore */}
+  <pre class:list={codeBlock}><code>--theme ocean
+--theme ./my-brand.css</code></pre>
+
+  <h2 class="text-cdx-text pt-4 text-xl font-semibold">Custom themes</h2>
+  <p class="text-cdx-text-secondary">
+    A custom theme is one CSS file overriding any subset of the
+    <code class={inlineCode}>--color-cdx-*</code> tokens. Unspecified tokens fall back to the default.
+    Every component page exposes a <em>Theming Tokens</em> tab listing the variables that surface affects.
+  </p>
+
+  {/* prettier-ignore */}
+  <pre
+    class:list={codeBlock}><code>{`:root {
+  --color-cdx-bg: hsl(220 20% 96%);
+  --color-cdx-text: hsl(220 30% 12%);
+  --color-cdx-primary: hsl(220 70% 40%);
+}`}</code></pre>
+</FeaturesLayout>

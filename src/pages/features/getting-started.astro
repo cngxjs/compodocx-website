@@ -1,0 +1,43 @@
+---
+import FeaturesLayout from '../../layouts/FeaturesLayout.astro';
+const codeBlock =
+  'bg-cdx-bg-alt/60 text-cdx-text overflow-x-auto rounded-lg p-3 font-mono text-xs leading-relaxed';
+const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono text-[0.85em]';
+---
+
+<FeaturesLayout
+  currentSlug="getting-started"
+  title="Getting Started — compodocx"
+  description="Install, run, and produce your first compodocx documentation output."
+>
+  <p class="text-cdx-text-secondary text-lg">
+    A working compodocx setup is three things: the package, a tsconfig that points at your source,
+    and an output location. Defaults handle the rest.
+  </p>
+
+  {/* prettier-ignore */}
+  <pre
+    class:list={codeBlock}><code>npm install --save-dev @cngxjs/compodocx
+npx compodocx -p tsconfig.doc.json</code></pre>
+
+  <p class="text-cdx-text-secondary">
+    The default output is <code class={inlineCode}>./documentation</code> — ready to deploy as static
+    files. Add <code class={inlineCode}>--watch --serve</code> while authoring to get live reload at <code
+      class={inlineCode}>http://localhost:8080</code
+    >.
+  </p>
+
+  <h2 class="text-cdx-text pt-4 text-xl font-semibold">A minimal tsconfig</h2>
+  <p class="text-cdx-text-secondary">
+    compodocx uses TypeScript&rsquo;s own resolver. A doc-specific tsconfig keeps test files,
+    storybook, and dev-only entries out of the rendered API surface.
+  </p>
+
+  {/* prettier-ignore */}
+  <pre
+    class:list={codeBlock}><code>{`{
+  "extends": "./tsconfig.json",
+  "include": ["src/**/*.ts"],
+  "exclude": ["**/*.spec.ts", "**/*.stories.ts"]
+}`}</code></pre>
+</FeaturesLayout>

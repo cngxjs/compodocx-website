@@ -1,0 +1,51 @@
+---
+import FeaturesLayout from '../../layouts/FeaturesLayout.astro';
+const codeBlock =
+  'bg-cdx-bg-alt/60 text-cdx-text overflow-x-auto rounded-lg p-3 font-mono text-xs leading-relaxed';
+const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono text-[0.85em]';
+---
+
+<FeaturesLayout
+  currentSlug="usage"
+  title="Usage — compodocx"
+  description="Common compodocx command patterns: build, watch, serve, multi-version output, and CI integration."
+>
+  <p class="text-cdx-text-secondary text-lg">
+    A few patterns we lean on. Adapt to taste — every flag has a config equivalent.
+  </p>
+
+  <h2 class="text-cdx-text pt-4 text-xl font-semibold">Build once for CI</h2>
+  {/* prettier-ignore */}
+  <pre class:list={codeBlock}><code>npx compodocx -p tsconfig.doc.json</code></pre>
+
+  <h2 class="text-cdx-text pt-4 text-xl font-semibold">Watch during authoring</h2>
+  {/* prettier-ignore */}
+  <pre class:list={codeBlock}><code>npx compodocx -p tsconfig.doc.json --watch --serve</code></pre>
+  <p class="text-cdx-text-secondary">
+    The dev server reuses the same routing as production. What you see locally matches what ships.
+  </p>
+
+  <h2 class="text-cdx-text pt-4 text-xl font-semibold">Multi-version output</h2>
+  {/* prettier-ignore */}
+  <pre
+    class:list={codeBlock}><code>npx compodocx -p tsconfig.doc.json --versionLabel v1.4 --output documentation/v1.4</code></pre>
+  <p class="text-cdx-text-secondary">
+    A <code class={inlineCode}>versions.json</code> manifest is written at the output root. The version-switcher
+    widget reads it at runtime — no extra wiring.
+  </p>
+
+  <h2 class="text-cdx-text pt-4 text-xl font-semibold">Wire into npm scripts</h2>
+  {/* prettier-ignore */}
+  <pre
+    class:list={codeBlock}><code>"docs": "compodocx -p tsconfig.doc.json",
+"docs:watch": "compodocx -p tsconfig.doc.json --watch --serve"</code></pre>
+
+  <h2 class="text-cdx-text pt-4 text-xl font-semibold">API diff in CI</h2>
+  {/* prettier-ignore */}
+  <pre
+    class:list={codeBlock}><code>npx compodocx diff --against last-tag --exportFormat json</code></pre>
+  <p class="text-cdx-text-secondary">
+    Compares the current API against the previous tag, exits with code 1 on breaking changes (per
+    semver), 0 otherwise. Pipe the JSON to your bot of choice for PR comments.
+  </p>
+</FeaturesLayout>

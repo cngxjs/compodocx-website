@@ -1,0 +1,73 @@
+---
+import FeaturesLayout from '../../layouts/FeaturesLayout.astro';
+const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono text-[0.85em]';
+---
+
+<FeaturesLayout
+  currentSlug="overview"
+  title="Features — compodocx"
+  description="The full compodocx feature surface: modern Angular support, modern UX, tooling, and accessibility."
+>
+  <p class="text-cdx-text-secondary text-lg">
+    What lands on the page after a build, grouped by area.
+  </p>
+
+  <div class="grid gap-8 pt-4 md:grid-cols-2">
+    <div>
+      <h2 class="text-cdx-text font-semibold">Modern Angular surface</h2>
+      <ul class="text-cdx-text-secondary mt-3 space-y-2 text-sm">
+        <li>Standalone components, directives, pipes — no NgModule scaffolding required.</li>
+        <li>Signal, computed, and linked-signal members as first-class fields.</li>
+        <li>
+          <code class={inlineCode}>inject()</code> DI, host bindings, host listeners, providers trees.
+        </li>
+        <li>
+          Effects rendered opt-in via <code class={inlineCode}>--showEffects</code>.
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="text-cdx-text font-semibold">Modern UX</h2>
+      <ul class="text-cdx-text-secondary mt-3 space-y-2 text-sm">
+        <li>Cmd+K command palette across every page.</li>
+        <li>SPA navigation with deep-link scroll restoration.</li>
+        <li>Pagefind search index baked in at build time.</li>
+        <li>Shiki syntax highlighting (github-light / github-dark).</li>
+        <li>Flicker-free dark mode — no FOUC on first paint.</li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="text-cdx-text font-semibold">Tooling</h2>
+      <ul class="text-cdx-text-secondary mt-3 space-y-2 text-sm">
+        <li>
+          <code class={inlineCode}>compodocx migrate</code> ports compodoc Handlebars overrides to TSX.
+        </li>
+        <li>
+          <code class={inlineCode}>compodocx diff</code> produces semver-aware API snapshots with non-zero
+          exit on breaking changes.
+        </li>
+        <li>
+          <code class={inlineCode}>--exportFormat llm-md</code> emits an LLM-context markdown bundle.
+        </li>
+        <li>
+          <code class={inlineCode}>--exportFormat json</code> emits a typed schema with
+          <code class={inlineCode}>schemaVersion</code>.
+        </li>
+      </ul>
+    </div>
+    <div>
+      <h2 class="text-cdx-text font-semibold">Accessibility</h2>
+      <ul class="text-cdx-text-secondary mt-3 space-y-2 text-sm">
+        <li>Skip-to-content link on every page.</li>
+        <li>
+          <code class={inlineCode}>:focus-visible</code> rings on every interactive element.
+        </li>
+        <li>ARIA patterns on tabs, sidebar, and command palette.</li>
+        <li>
+          Respects <code class={inlineCode}>prefers-reduced-motion</code>.
+        </li>
+        <li>Color contrast AA on all bundled themes.</li>
+      </ul>
+    </div>
+  </div>
+</FeaturesLayout>

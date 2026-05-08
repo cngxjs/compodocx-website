@@ -1,0 +1,51 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import FeaturesSidebar, { guides } from '../../components/FeaturesSidebar.astro';
+import SectionEyebrow from '../../components/SectionEyebrow.astro';
+
+const base = import.meta.env.BASE_URL;
+---
+
+<Layout
+  title="Features — compodocx"
+  description="Twelve guides covering the full compodocx feature surface — Getting Started, Options, Usage, Themes, JSDoc Tags, Routing, Documentation Coverage, and more."
+>
+  <div class="mx-auto max-w-7xl px-4 py-16 lg:grid lg:grid-cols-[16rem_1fr] lg:gap-12">
+    <FeaturesSidebar currentSlug="" />
+
+    <div class="max-w-3xl">
+      <SectionEyebrow text="Reference" />
+      <h1 class="text-cdx-text mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">
+        Everything compodocx documents
+      </h1>
+      <p class="text-cdx-text-secondary mt-4 text-lg">
+        Twelve guides covering the output surface — what compodocx renders, how it&rsquo;s
+        configured, and the integration points worth knowing about before you adopt it.
+      </p>
+
+      <ul class="mt-12 grid gap-3 md:grid-cols-2">
+        {
+          guides.map((g) => (
+            <li>
+              <a
+                href={`${base}features/${g.slug}/`}
+                class="bg-cdx-bg-elevated hover:bg-cdx-bg-alt group flex items-center gap-4 rounded-xl p-4 transition-colors"
+              >
+                <span class="text-cdx-text-muted bg-cdx-bg-alt inline-flex size-10 items-center justify-center rounded-lg font-mono text-xs">
+                  {String(g.number).padStart(2, '0')}
+                </span>
+                <span class="text-cdx-text font-semibold">{g.title}</span>
+                <span
+                  class="text-cdx-text-muted group-hover:text-cdx-text ml-auto"
+                  aria-hidden="true"
+                >
+                  →
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</Layout>

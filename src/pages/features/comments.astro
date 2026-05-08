@@ -1,0 +1,54 @@
+---
+import FeaturesLayout from '../../layouts/FeaturesLayout.astro';
+const codeBlock =
+  'bg-cdx-bg-alt/60 text-cdx-text overflow-x-auto rounded-lg p-3 font-mono text-xs leading-relaxed';
+---
+
+<FeaturesLayout
+  currentSlug="comments"
+  title="Comments — compodocx"
+  description="Plain JSDoc-style block comments with markdown-rendered descriptions."
+>
+  <p class="text-cdx-text-secondary text-lg">
+    Use plain JSDoc-style block comments. Markdown is rendered in descriptions: lists, code spans,
+    tables, links, headings. Multi-paragraph descriptions are preserved as-is.
+  </p>
+
+  {/* prettier-ignore */}
+  <pre
+    class:list={codeBlock}><code>{`/**
+ * Renders a card with optional selection state.
+ *
+ * Use \`as="link"\` for a navigation-only card.
+ *
+ * | Mode    | Use case                  |
+ * |---------|---------------------------|
+ * | article | static content card       |
+ * | button  | clickable action card     |
+ * | link    | navigation card           |
+ */
+@Component({ ... })
+export class CardComponent { ... }`}</code></pre>
+
+  <p class="text-cdx-text-secondary">
+    The first paragraph becomes the <em>Description</em> block on the rendered page. Subsequent paragraphs
+    are folded under a <em>Long description</em> disclosure that&rsquo;s expanded by default but can be
+    collapsed.
+  </p>
+
+  <h2 class="text-cdx-text pt-4 text-xl font-semibold">Inline cross-references</h2>
+  <p class="text-cdx-text-secondary">
+    Reference other symbols with <code>@link</code>:
+  </p>
+
+  {/* prettier-ignore */}
+  <pre
+    class:list={codeBlock}><code>{`/**
+ * See {@link CngxButton} for the button-only variant.
+ */`}</code></pre>
+
+  <p class="text-cdx-text-secondary">
+    Resolution is project-wide and validated at build time — broken links surface as warnings, not
+    silent dead links.
+  </p>
+</FeaturesLayout>

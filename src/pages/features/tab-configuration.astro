@@ -1,0 +1,50 @@
+---
+import FeaturesLayout from '../../layouts/FeaturesLayout.astro';
+const codeBlock =
+  'bg-cdx-bg-alt/60 text-cdx-text overflow-x-auto rounded-lg p-3 font-mono text-xs leading-relaxed';
+const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono text-[0.85em]';
+---
+
+<FeaturesLayout
+  currentSlug="tab-configuration"
+  title="Tab Configuration — compodocx"
+  description="Reorder, hide, or extend the per-entity tab strip with a small TSX hook."
+>
+  <p class="text-cdx-text-secondary text-lg">
+    Each entity page renders one or more tabs: Info, API, DOM Tree, Source, Theming Tokens. Reorder
+    or hide them per project, or register your own.
+  </p>
+
+  <h2 class="text-cdx-text pt-4 text-xl font-semibold">Reordering and hiding</h2>
+  {/* prettier-ignore */}
+  <pre
+    class:list={codeBlock}><code>{`{
+  "tabs": ["info", "api", "source", "theming"]
+}`}</code></pre>
+  <p class="text-cdx-text-secondary">
+    Listed tabs render in order. Anything omitted is hidden — the DOM Tree tab is the most common
+    omission for projects that don&rsquo;t use Storybook-style structural docs.
+  </p>
+
+  <h2 class="text-cdx-text pt-4 text-xl font-semibold">Custom tabs</h2>
+  <p class="text-cdx-text-secondary">
+    Custom tabs are supported via the <code class={inlineCode}>--tabRegistry</code> hook — one TSX component
+    per tab, registered at config time:
+  </p>
+
+  {/* prettier-ignore */}
+  <pre
+    class:list={codeBlock}><code>{`// docs.config.tsx
+import { defineTab } from '@cngxjs/compodocx/tabs';
+import { ReleaseNotesTab } from './tabs/release-notes';
+
+export default {
+  tabs: ['info', 'api', defineTab('changelog', ReleaseNotesTab)],
+};`}</code></pre>
+
+  <p class="text-cdx-text-secondary">
+    The component receives the entity model (<code class={inlineCode}
+      >{`{ name, kind, file, ... }`}</code
+    >) and renders into the page. compodocx handles the routing, keyboard nav, and ARIA wiring.
+  </p>
+</FeaturesLayout>
