@@ -1,0 +1,143 @@
+---
+import SectionEyebrow from './SectionEyebrow.astro';
+import defaultCss from '../styles/vendor/compodocx/compodocx.css?raw';
+import oceanCss from '../styles/vendor/compodocx/themes/ocean.css?raw';
+import midnightCss from '../styles/vendor/compodocx/themes/midnight.css?raw';
+import nordCss from '../styles/vendor/compodocx/themes/nord.css?raw';
+import rosePineCss from '../styles/vendor/compodocx/themes/rose-pine.css?raw';
+import emberCss from '../styles/vendor/compodocx/themes/ember.css?raw';
+import neonCss from '../styles/vendor/compodocx/themes/neon.css?raw';
+import brutalistCss from '../styles/vendor/compodocx/themes/brutalist.css?raw';
+
+interface ThemeMeta {
+  id: string;
+  name: string;
+  blurb: string;
+  source: string;
+}
+
+const TOKENS_TO_EXTRACT = [
+  '--color-cdx-bg',
+  '--color-cdx-bg-alt',
+  '--color-cdx-bg-elevated',
+  '--color-cdx-primary',
+  '--color-cdx-text',
+];
+
+const themeMetas: ThemeMeta[] = [
+  {
+    id: 'default',
+    name: 'Slate Noir',
+    blurb: 'Pure neutral greys. The opinion-free default.',
+    source: defaultCss,
+  },
+  {
+    id: 'ocean',
+    name: 'Ocean',
+    blurb: 'Deep teal, cool surfaces, soft tension borders.',
+    source: oceanCss,
+  },
+  {
+    id: 'midnight',
+    name: 'Midnight',
+    blurb: 'Indigo night, low contrast, focus-friendly.',
+    source: midnightCss,
+  },
+  { id: 'nord', name: 'Nord', blurb: 'Arctic palette, frost blue, calm primary.', source: nordCss },
+  {
+    id: 'rose-pine',
+    name: 'Rose Pine',
+    blurb: 'Warm rose, muted greens, golden accents.',
+    source: rosePineCss,
+  },
+  {
+    id: 'ember',
+    name: 'Ember',
+    blurb: 'Warm amber on ember-grey, low-glare reading.',
+    source: emberCss,
+  },
+  {
+    id: 'neon',
+    name: 'Neon',
+    blurb: 'High-contrast electric primary on dark slate.',
+    source: neonCss,
+  },
+  {
+    id: 'brutalist',
+    name: 'Brutalist',
+    blurb: 'Hard edges, raw concrete, maximum legibility.',
+    source: brutalistCss,
+  },
+];
+
+interface ThemeWithSwatches extends Omit<ThemeMeta, 'source'> {
+  swatches: Record<string, string>;
+}
+
+function extractTokens(css: string): Record<string, string> {
+  const result: Record<string, string> = {};
+  for (const token of TOKENS_TO_EXTRACT) {
+    const match = css.match(new RegExp(`${token}\\s*:\\s*([^;]+);`));
+    if (match) result[token] = match[1].trim();
+  }
+  return result;
+}
+
+const themes: ThemeWithSwatches[] = themeMetas.map(({ source, ...rest }) => ({
+  ...rest,
+  swatches: extractTokens(source),
+}));
+---
+
+<section id="themes" class="mx-auto max-w-6xl px-4 py-20" aria-labelledby="themes-heading">
+  <SectionEyebrow text="Themes" />
+  <h2 id="themes-heading" class="text-cdx-text mt-3 text-3xl font-semibold tracking-tight">
+    Eight bundled themes, one click apart
+  </h2>
+  <p class="text-cdx-text-secondary mt-3 max-w-2xl">
+    Try them live — clicking a card swaps a single CSS variable file. Your selection persists across
+    pages via localStorage.
+  </p>
+
+  <div
+    class="mt-12 grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4"
+    role="radiogroup"
+    aria-label="Select a theme"
+  >
+    {
+      themes.map((theme) => (
+        <button
+          type="button"
+          data-theme-id={theme.id}
+          aria-pressed="false"
+          class="bg-cdx-bg-elevated grid cursor-pointer grid-rows-[auto_auto_1fr] gap-3 rounded-xl p-4 text-left transition-shadow aria-pressed:ring-2 aria-pressed:ring-cdx-primary"
+        >
+          <div
+            class="flex h-20 items-end gap-2 rounded-lg p-3"
+            style={`background-color: ${theme.swatches['--color-cdx-bg']}; color: ${theme.swatches['--color-cdx-text']}`}
+          >
+            <div
+              class="size-7 rounded-md"
+              style={`background-color: ${theme.swatches['--color-cdx-bg-elevated']}`}
+            />
+            <div
+              class="size-7 rounded-md"
+              style={`background-color: ${theme.swatches['--color-cdx-bg-alt']}`}
+            />
+            <div
+              class="size-7 rounded-md"
+              style={`background-color: ${theme.swatches['--color-cdx-primary']}`}
+            />
+          </div>
+          <p class="text-cdx-text text-sm font-semibold">{theme.name}</p>
+          <p class="text-cdx-text-secondary text-xs leading-relaxed">{theme.blurb}</p>
+        </button>
+      ))
+    }
+  </div>
+</section>
+
+<script>
+  import { initThemeSwitcher } from '../scripts/theme-switcher';
+  initThemeSwitcher();
+</script>

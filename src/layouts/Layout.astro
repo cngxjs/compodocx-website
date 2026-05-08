@@ -2,6 +2,13 @@
 import '../styles/global.css';
 import NavBar from '../components/NavBar.astro';
 import Footer from '../components/Footer.astro';
+import oceanUrl from '../styles/vendor/compodocx/themes/ocean.css?url';
+import midnightUrl from '../styles/vendor/compodocx/themes/midnight.css?url';
+import nordUrl from '../styles/vendor/compodocx/themes/nord.css?url';
+import rosePineUrl from '../styles/vendor/compodocx/themes/rose-pine.css?url';
+import emberUrl from '../styles/vendor/compodocx/themes/ember.css?url';
+import neonUrl from '../styles/vendor/compodocx/themes/neon.css?url';
+import brutalistUrl from '../styles/vendor/compodocx/themes/brutalist.css?url';
 
 interface Props {
   title: string;
@@ -10,6 +17,16 @@ interface Props {
 
 const { title, description } = Astro.props;
 const base = import.meta.env.BASE_URL;
+
+const themeUrls: Record<string, string> = {
+  ocean: oceanUrl,
+  midnight: midnightUrl,
+  nord: nordUrl,
+  'rose-pine': rosePineUrl,
+  ember: emberUrl,
+  neon: neonUrl,
+  brutalist: brutalistUrl,
+};
 ---
 
 <!doctype html>
@@ -22,7 +39,7 @@ const base = import.meta.env.BASE_URL;
     <link rel="icon" href={`${base}favicon.ico`} />
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
-    <script is:inline>
+    <script is:inline define:vars={{ themeUrls }}>
       (function () {
         try {
           const stored = localStorage.getItem('compodocx-website-darkmode');
@@ -33,6 +50,18 @@ const base = import.meta.env.BASE_URL;
           if (dark) document.documentElement.classList.add('dark');
         } catch (_) {
           // storage / matchMedia unavailable — fall through to light default
+        }
+        try {
+          const theme = localStorage.getItem('compodocx-website-theme');
+          if (theme && theme !== 'default' && themeUrls[theme]) {
+            const link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = themeUrls[theme];
+            link.setAttribute('data-active-theme', theme);
+            document.head.appendChild(link);
+          }
+        } catch (_) {
+          // ignore — fall through to default theme
         }
       })();
     </script>
