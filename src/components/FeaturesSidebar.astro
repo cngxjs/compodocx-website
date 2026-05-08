@@ -16,7 +16,7 @@ interface Guide {
 
 export const guides: Guide[] = [
   { slug: 'getting-started', number: 1, title: 'Getting Started' },
-  { slug: 'overview', number: 2, title: 'Features' },
+  { slug: 'features', number: 2, title: 'Features' },
   { slug: 'options', number: 6, title: 'Options' },
   { slug: 'usage', number: 7, title: 'Usage' },
   { slug: 'themes', number: 8, title: 'Themes' },
@@ -40,7 +40,7 @@ export const guides: Guide[] = [
           return (
             <li>
               <a
-                href={`${base}features/${g.slug}/`}
+                href={`${base}guides/${g.slug}/`}
                 aria-current={active ? 'page' : undefined}
                 class:list={[
                   'flex gap-3 rounded px-3 py-2 transition-colors',

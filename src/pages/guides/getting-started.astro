@@ -12,7 +12,7 @@ const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono te
 >
   <p class="text-cdx-text-secondary text-lg">
     A working compodocx setup is three things: the package, a tsconfig that points at your source,
-    and an output location. Defaults handle the rest.
+    and an output location. Defaults handle the rest. Requires Node 22 or newer.
   </p>
 
   {/* prettier-ignore */}
@@ -21,10 +21,15 @@ const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono te
 npx compodocx -p tsconfig.doc.json</code></pre>
 
   <p class="text-cdx-text-secondary">
-    The default output is <code class={inlineCode}>./documentation</code> — ready to deploy as static
-    files. Add <code class={inlineCode}>--watch --serve</code> while authoring to get live reload at <code
-      class={inlineCode}>http://localhost:8080</code
-    >.
+    The default output goes to <code class={inlineCode}>./documentation/&lt;versionLabel&gt;/</code> —
+    multi-version layout is on by default. <code class={inlineCode}>versionLabel</code> is
+    auto-detected from the nearest <code class={inlineCode}>package.json</code>. Pass
+    <code class={inlineCode}>--no-multiVersion</code> for the flat single-version layout.
+  </p>
+
+  <p class="text-cdx-text-secondary">
+    Add <code class={inlineCode}>--watch --serve</code> while authoring to get a local dev server with
+    live reload.
   </p>
 
   <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">A minimal tsconfig</h2>
@@ -40,4 +45,13 @@ npx compodocx -p tsconfig.doc.json</code></pre>
   "include": ["src/**/*.ts"],
   "exclude": ["**/*.spec.ts", "**/*.stories.ts"]
 }`}</code></pre>
+
+  <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">Coming from compodoc</h2>
+  <p class="text-cdx-text-secondary">
+    Most flags carry over. Two breaking changes worth knowing up front: the package is now
+    <code class={inlineCode}>@cngxjs/compodocx</code>, and the output is multi-version by default — pin
+    a label or pass <code class={inlineCode}>--no-multiVersion</code> if your CI publishes to a flat
+    folder. Custom Handlebars templates need a one-time port via
+    <code class={inlineCode}>compodocx migrate templates</code>.
+  </p>
 </FeaturesLayout>

@@ -1,0 +1,115 @@
+---
+import FeaturesLayout from '../../layouts/FeaturesLayout.astro';
+const codeBlock =
+  'bg-cdx-bg-alt/60 text-cdx-text overflow-x-auto rounded-lg p-3 font-mono text-xs leading-relaxed';
+const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono text-[0.85em]';
+
+interface TagGroup {
+  heading: string;
+  blurb?: string;
+  items: Array<[tag: string, desc: string]>;
+}
+
+const groups: TagGroup[] = [
+  {
+    heading: 'Members',
+    blurb: 'Recognized on properties, methods, host listeners, accessors.',
+    items: [
+      ['@param', 'paired with TypeScript type info; descriptions thread onto constructor args'],
+      ['@returns', 'return value description'],
+      ['@example', 'fenced code block, Shiki-highlighted'],
+      ['@see', 'appended as a See-also link block'],
+      ['@since', 'small version label next to the member name'],
+      ['@deprecated', 'strikethrough name + deprecation banner; takes an optional reason'],
+    ],
+  },
+  {
+    heading: 'Symbols',
+    blurb: 'Class, interface, enum, type alias, function, variable.',
+    items: [
+      ['@example', 'rendered as an Examples block on the Info tab; multiple allowed'],
+      ['@see', 'See-also section with link resolution'],
+      ['@since / @deprecated', 'same semantics as on members'],
+      ['@internal', 'hides the symbol from the public docs'],
+    ],
+  },
+  {
+    heading: 'Components — extras',
+    blurb: 'Recognized only when the symbol is decorated as @Component.',
+    items: [
+      ['@slot', 'documents an exposed content slot; rendered as a metadata card on the Info tab'],
+      [
+        '<example-url>',
+        'JSDoc marker pointing at a hosted demo URL — surfaces an Example tab with an iframe per URL',
+      ],
+    ],
+  },
+  {
+    heading: 'Theming tokens',
+    blurb: 'Parsed from JSDoc on CSS / SCSS files alongside @Component sources.',
+    items: [
+      ['@overview', 'description block at the top of the Theming tab'],
+      ['@type', 'token type (e.g. color, length, duration)'],
+      ['@default', 'default value, rendered next to the token name'],
+      ['@group', 'groups tokens under an H4 in the Theming tab'],
+      ['@example / @since / @see', 'same semantics as elsewhere'],
+      ['@deprecated', 'optional reason; empty marks deprecated without a message'],
+    ],
+  },
+  {
+    heading: 'Inline',
+    items: [
+      ['{@link Symbol}', 'project-wide cross-reference, resolved at build time'],
+    ],
+  },
+];
+---
+
+<FeaturesLayout
+  currentSlug="jsdoc-tags"
+  title="JSDoc Tags — compodocx"
+  description="Recognized JSDoc tags by surface — members, symbols, component extras, theming tokens, and inline links."
+>
+  <p class="text-cdx-text-secondary text-lg">
+    Recognized tags grouped by where they apply. Unknown tags are not an error — theming token blocks
+    fold them into the description, and member descriptions pass them through verbatim.
+  </p>
+
+  {
+    groups.map((group) => (
+      <section class="mt-12 first:mt-0">
+        <h2 class="text-cdx-text text-xl font-semibold">{group.heading}</h2>
+        {group.blurb && <p class="text-cdx-text-secondary mt-2 text-sm">{group.blurb}</p>}
+        <dl class="mt-4 grid gap-3 text-sm md:grid-cols-[auto_1fr] md:gap-x-6">
+          {group.items.map(([tag, desc]) => (
+            <>
+              <dt class="text-cdx-text">
+                <code class={inlineCode}>{tag}</code>
+              </dt>
+              <dd class="text-cdx-text-secondary">{desc}</dd>
+            </>
+          ))}
+        </dl>
+      </section>
+    ))
+  }
+
+  <h2 class="text-cdx-text text-xl font-semibold mt-12">Theming token example</h2>
+  {/* prettier-ignore */}
+  <pre
+    class:list={codeBlock}><code>{`/**
+ * @overview Card surface tokens.
+ */
+
+/**
+ * Background of the card body.
+ *
+ * @type color
+ * @default hsl(220 20% 98%)
+ * @group Surface
+ * @since 1.4.0
+ * @example
+ *   --color-app-card-bg: var(--color-cdx-bg-elevated);
+ */
+--color-app-card-bg: hsl(220 20% 98%);`}</code></pre>
+</FeaturesLayout>

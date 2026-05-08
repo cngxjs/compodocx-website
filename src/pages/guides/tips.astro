@@ -1,0 +1,67 @@
+---
+import FeaturesLayout from '../../layouts/FeaturesLayout.astro';
+const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono text-[0.85em]';
+---
+
+<FeaturesLayout
+  currentSlug="tips"
+  title="Tips and Tricks — compodocx"
+  description="Patterns that pay off in real-world compodocx setups: monorepos, watch + serve, CI diffs, narrow doc tsconfigs, multi-version, LLM context."
+>
+  <p class="text-cdx-text-secondary text-lg">
+    Patterns that pay off in real projects. None of these are required — they&rsquo;re what we reach
+    for once the basics are in place.
+  </p>
+
+  <ul class="text-cdx-text-secondary space-y-4 text-sm">
+    <li>
+      <strong class="text-cdx-text">Monorepos.</strong>
+      One compodocx run per project, each writing to its own version folder under a shared
+      <code class={inlineCode}>/documentation</code>. Each project keeps its own version-switcher and
+      theme. A static index page at the root links to each project&rsquo;s latest label.
+    </li>
+    <li>
+      <strong class="text-cdx-text">Watch + serve.</strong>
+      <code class={inlineCode}>--watch --serve</code> gives you instant feedback while authoring. The
+      dev server reuses production routing — what you see locally matches what ships.
+    </li>
+    <li>
+      <strong class="text-cdx-text">Diff in CI on every PR.</strong>
+      Generate a JSON snapshot per build (<code class={inlineCode}>--exportFormat json</code>), commit
+      it under <code class={inlineCode}>snapshots/</code>, and run
+      <code class={inlineCode}>compodocx diff prev.json next.json</code> in CI. Exit code 2 fails the
+      build on breaking changes; pipe the JSON output to your bot of choice for PR comments.
+    </li>
+    <li>
+      <strong class="text-cdx-text">LLM context for code review.</strong>
+      <code class={inlineCode}>--exportFormat llm-md</code> emits an LLM-context markdown bundle. Pipe
+      it into <code class={inlineCode}>llm</code>, <code class={inlineCode}>claude</code>, or any tool
+      that accepts a markdown corpus — the bundle is sized and structured for direct consumption,
+      with signatures capped to keep the prompt small.
+    </li>
+    <li>
+      <strong class="text-cdx-text">Migrating from compodoc.</strong>
+      <code class={inlineCode}>compodocx migrate templates</code> ports a folder of Handlebars
+      overrides to JS partials in one shot. Use
+      <code class={inlineCode}>compodocx migrate inspect</code> first to see what will change.
+    </li>
+    <li>
+      <strong class="text-cdx-text">Keep your doc tsconfig narrow.</strong>
+      Exclude test files, storybook entries, dev-only fixtures. Heavy generic types render slower —
+      a smaller surface keeps cold builds fast and keeps the rendered docs focused on what consumers
+      actually use.
+    </li>
+    <li>
+      <strong class="text-cdx-text">Public API filtering.</strong>
+      <code class={inlineCode}>--publicApiOnly</code> restricts output to the symbols matching your
+      public API allow-list — useful when you ship internal helpers in the same package and
+      don&rsquo;t want them on the docs page.
+    </li>
+    <li>
+      <strong class="text-cdx-text">Preserve comments through the build.</strong>
+      Some bundlers strip JSDoc by default. Set
+      <code class={inlineCode}>"removeComments": false</code> in your doc tsconfig if you see empty
+      descriptions in the rendered output.
+    </li>
+  </ul>
+</FeaturesLayout>

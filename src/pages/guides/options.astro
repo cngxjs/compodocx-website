@@ -1,0 +1,99 @@
+---
+import FeaturesLayout from '../../layouts/FeaturesLayout.astro';
+const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono text-[0.85em]';
+
+interface OptionGroup {
+  heading: string;
+  items: Array<[flag: string, desc: string]>;
+}
+
+const groups: OptionGroup[] = [
+  {
+    heading: 'Entry & output',
+    items: [
+      ['-p, --tsconfig', 'entry tsconfig (defaults to ./tsconfig.json)'],
+      ['-d, --output', 'output directory (defaults to ./documentation)'],
+      ['--exportFormat', 'html (default), json, or llm-md'],
+      ['--jsonIndent', 'indent for json export (0–8, default 0)'],
+      ['--publicApiOnly', 'restrict output to symbols matching the public API allow-list'],
+    ],
+  },
+  {
+    heading: 'Multi-version output',
+    items: [
+      ['--multiVersion / --no-multiVersion', 'multi-version layout on by default'],
+      ['--versionLabel', 'pin the label (auto-detected from package.json)'],
+      ['--versionsRoot', 'directory holding versions.json and per-version folders (defaults to -d)'],
+      ['--maxVersionsShown', 'cap entries in the switcher (0–1000, 0 = unlimited, default 10)'],
+    ],
+  },
+  {
+    heading: 'Content & tabs',
+    items: [
+      ['--showEffects', 'render Angular effect() members in component output'],
+      ['--disableDependenciesTab', 'hide the Dependencies tab on entity pages'],
+      ['--disableGraph', 'skip the overview dependency graph'],
+      ['--toggleMenuItems', 'comma-separated list of menu sections to start expanded'],
+    ],
+  },
+  {
+    heading: 'Customization',
+    items: [
+      ['--theme', 'built-in name (ocean, midnight, nord, rose-pine, ember, neon, brutalist) or path to a CSS file'],
+      ['--templates', 'directory with JS partials overriding built-in templates'],
+      ['--gaID', 'GA4 measurement ID — emits gtag.js + SPA pageview events'],
+    ],
+  },
+  {
+    heading: 'Coverage & search',
+    items: [
+      ['--coverageMinimum', 'CI gate threshold (0–100); non-zero exit when below'],
+      ['--search', 'enable Pagefind index generation'],
+      ['--disableSearch', 'skip search index generation entirely'],
+    ],
+  },
+  {
+    heading: 'Authoring',
+    items: [
+      ['--watch', 'rebuild on file changes'],
+      ['--serve', 'dev server with live reload'],
+    ],
+  },
+];
+---
+
+<FeaturesLayout
+  currentSlug="options"
+  title="Options — compodocx"
+  description="CLI flags for compodocx — the surface that controls what ends up in your docs."
+>
+  <p class="text-cdx-text-secondary text-lg">
+    compodocx accepts CLI flags or a JSON config (passed via <code class={inlineCode}>-c</code>). The
+    two compose: flags override config values. Use the config for team consistency, flags for one-off
+    runs.
+  </p>
+
+  {
+    groups.map((group) => (
+      <section class="mt-12 first:mt-0">
+        <h2 class="text-cdx-text text-xl font-semibold">{group.heading}</h2>
+        <dl class="mt-4 grid gap-3 text-sm md:grid-cols-[auto_1fr] md:gap-x-6">
+          {group.items.map(([flag, desc]) => (
+            <>
+              <dt class="text-cdx-text">
+                <code class={inlineCode}>{flag}</code>
+              </dt>
+              <dd class="text-cdx-text-secondary">{desc}</dd>
+            </>
+          ))}
+        </dl>
+      </section>
+    ))
+  }
+
+  <p class="text-cdx-text-secondary pt-8">
+    Run <code class={inlineCode}>compodocx --help</code> for the full surface, including project-level
+    options that don&rsquo;t fit a flag (e.g. <code class={inlineCode}>themingTabSections</code> for tab
+    composition).
+  </p>
+</FeaturesLayout>

@@ -1,0 +1,47 @@
+---
+import FeaturesLayout from '../../layouts/FeaturesLayout.astro';
+const codeBlock =
+  'bg-cdx-bg-alt/60 text-cdx-text overflow-x-auto rounded-lg p-3 font-mono text-xs leading-relaxed';
+const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono text-[0.85em]';
+---
+
+<FeaturesLayout
+  currentSlug="coverage"
+  title="Documentation Coverage — compodocx"
+  description="Per-symbol coverage report with CI gating — see what&rsquo;s undocumented and gate releases below a threshold."
+>
+  <p class="text-cdx-text-secondary text-lg">
+    Every run produces a coverage report — the percentage of public symbols carrying at least a
+    one-line description. Below the threshold, the CLI exits non-zero so CI can gate.
+  </p>
+
+  <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">Gating in CI</h2>
+  {/* prettier-ignore */}
+  <pre class:list={codeBlock}><code>npx compodocx -p tsconfig.doc.json --coverageMinimum 80</code></pre>
+  <p class="text-cdx-text-secondary">
+    Anything below 80% in the example above fails the build. Set the threshold on the strictness
+    you&rsquo;re aiming for — most projects start at 50% and move it up as gaps close.
+  </p>
+
+  <h2 class="text-cdx-text text-xl font-semibold mt-12">What counts as documented</h2>
+  <p class="text-cdx-text-secondary">
+    A public symbol counts as documented when its JSDoc block has a non-empty description on the
+    first line. Tags alone (<code class={inlineCode}>@param</code>, <code class={inlineCode}>@returns</code>)
+    do not satisfy the description requirement — they augment it. Members marked
+    <code class={inlineCode}>@internal</code> are excluded entirely.
+  </p>
+
+  <h2 class="text-cdx-text text-xl font-semibold mt-12">Coverage tab</h2>
+  <p class="text-cdx-text-secondary">
+    The HTML output renders a <em>Documentation Coverage</em> tab on the project root: the overall
+    percentage, breakdown by entity kind (components, directives, classes, interfaces, etc.), and a
+    sortable list of undocumented symbols with deep links to their source.
+  </p>
+
+  <h2 class="text-cdx-text text-xl font-semibold mt-12">Public-API filtering</h2>
+  <p class="text-cdx-text-secondary">
+    When <code class={inlineCode}>--publicApiOnly</code> is set, coverage is computed against the
+    allow-list — internal symbols stop dragging the percentage down, and the report focuses on the
+    surface consumers actually see.
+  </p>
+</FeaturesLayout>

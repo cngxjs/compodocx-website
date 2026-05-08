@@ -1,0 +1,58 @@
+---
+import FeaturesLayout from '../../layouts/FeaturesLayout.astro';
+const codeBlock =
+  'bg-cdx-bg-alt/60 text-cdx-text overflow-x-auto rounded-lg p-3 font-mono text-xs leading-relaxed';
+const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono text-[0.85em]';
+---
+
+<FeaturesLayout
+  currentSlug="live-example"
+  title="Live Example Tab — compodocx"
+  description="Embed live demos for components by pointing at hosted demo URLs via the <example-url> JSDoc marker."
+>
+  <p class="text-cdx-text-secondary text-lg">
+    Components can surface a dedicated <em>Example</em> tab with one or more live demos. Point at any
+    URL you control — a fixture page, a hosted demo, a StackBlitz project — and compodocx renders it
+    inside an iframe alongside the component&rsquo;s API and source.
+  </p>
+
+  <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">The marker</h2>
+  <p class="text-cdx-text-secondary">
+    Use an HTML-style <code class={inlineCode}>&lt;example-url&gt;</code> marker inside the
+    component&rsquo;s class JSDoc. Multiple markers render as multiple iframes inside one Example tab.
+    The tab is hidden automatically when no marker is present.
+  </p>
+
+  {/* prettier-ignore */}
+  <pre
+    class:list={codeBlock}><code>{`/**
+ * A selectable card surface.
+ *
+ * <example-url>https://demos.example.com/cards/article</example-url>
+ * <example-url>https://demos.example.com/cards/action</example-url>
+ */
+@Component({ ... })
+export class CardComponent { ... }`}</code></pre>
+
+  <p class="text-cdx-text-secondary">
+    Each URL renders as <code class={inlineCode}>&lt;iframe class="cdx-example-container"&gt;</code>.
+    Browsers that don&rsquo;t allow iframes show the localized
+    <code class={inlineCode}>no-iframes</code> fallback message.
+  </p>
+
+  <h2 class="text-cdx-text text-xl font-semibold mt-12">Example URLs vs. <code class={inlineCode}>@example</code></h2>
+  <p class="text-cdx-text-secondary">
+    Both can coexist on the same component. <code class={inlineCode}>@example</code> blocks render as
+    syntax-highlighted code under an <em>Examples</em> section on the Info tab.
+    <code class={inlineCode}>&lt;example-url&gt;</code> renders runnable demos in a separate Example
+    tab. Use <code class={inlineCode}>@example</code> for snippets readers should copy;
+    <code class={inlineCode}>&lt;example-url&gt;</code> for behavior they want to see.
+  </p>
+
+  <h2 class="text-cdx-text text-xl font-semibold mt-12">Hosting the demo</h2>
+  <p class="text-cdx-text-secondary">
+    The marker accepts any URL — your own demo site, a CodeSandbox, a StackBlitz project, or a static
+    fixture deployed alongside the docs. compodocx does not bundle a runtime sandbox; it links to
+    whatever you already host.
+  </p>
+</FeaturesLayout>

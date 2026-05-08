@@ -7,8 +7,8 @@ const base = import.meta.env.BASE_URL;
 ---
 
 <Layout
-  title="Features — compodocx"
-  description="Twelve guides covering the full compodocx feature surface — Getting Started, Options, Usage, Themes, JSDoc Tags, Routing, Documentation Coverage, and more."
+  title="Guides — compodocx"
+  description="Twelve guides covering the full compodocx feature surface — Getting Started, Features, Options, Usage, Themes, JSDoc Tags, Routing, Documentation Coverage, and more."
 >
   <div class="mx-auto max-w-6xl px-4 py-16 lg:grid lg:grid-cols-[14rem_1fr] lg:gap-10">
     <FeaturesSidebar currentSlug="" />
@@ -28,7 +28,7 @@ const base = import.meta.env.BASE_URL;
           guides.map((g) => (
             <li>
               <a
-                href={`${base}features/${g.slug}/`}
+                href={`${base}guides/${g.slug}/`}
                 class="bg-cdx-bg-elevated hover:bg-cdx-bg-alt group flex items-center gap-4 rounded-xl p-4 transition-colors"
               >
                 <span class="text-cdx-text-muted bg-cdx-bg-alt inline-flex size-10 items-center justify-center rounded-lg font-mono text-xs">

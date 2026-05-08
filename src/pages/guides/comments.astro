@@ -1,0 +1,70 @@
+---
+import FeaturesLayout from '../../layouts/FeaturesLayout.astro';
+const codeBlock =
+  'bg-cdx-bg-alt/60 text-cdx-text overflow-x-auto rounded-lg p-3 font-mono text-xs leading-relaxed';
+const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono text-[0.85em]';
+---
+
+<FeaturesLayout
+  currentSlug="comments"
+  title="Comments — compodocx"
+  description="Plain JSDoc-style block comments with markdown-rendered descriptions and project-wide cross-references."
+>
+  <p class="text-cdx-text-secondary text-lg">
+    Use plain JSDoc-style block comments. Markdown is rendered in descriptions: lists, fenced code,
+    tables, links, headings. Multi-paragraph descriptions are preserved.
+  </p>
+
+  {/* prettier-ignore */}
+  <pre
+    class:list={codeBlock}><code>{`/**
+ * Renders a card with optional selection state.
+ *
+ * Use \`as="link"\` for a navigation-only card.
+ *
+ * | Mode    | Use case                  |
+ * |---------|---------------------------|
+ * | article | static content card       |
+ * | button  | clickable action card     |
+ * | link    | navigation card           |
+ */
+@Component({ ... })
+export class CardComponent { ... }`}</code></pre>
+
+  <p class="text-cdx-text-secondary">
+    The block above the class header becomes the entity description on the rendered page. Member-level
+    comments — properties, methods, accessors, host listeners — render inline on each member card.
+  </p>
+
+  <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">Fenced code in descriptions</h2>
+  <p class="text-cdx-text-secondary">
+    Fenced code blocks in descriptions are syntax-highlighted with Shiki, picking the same theme pair
+    your project is using. The default highlight language for description-level
+    <code class={inlineCode}>@example</code> blocks is HTML — assert against identifier text rather
+    than the language class when writing custom downstream tooling.
+  </p>
+
+  <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">Inline cross-references</h2>
+  <p class="text-cdx-text-secondary">
+    Reference another symbol with <code class={inlineCode}>{'{@link}'}</code>. Resolution is
+    project-wide and runs across additional pages too.
+  </p>
+
+  {/* prettier-ignore */}
+  <pre
+    class:list={codeBlock}><code>{`/**
+ * See {@link Button} for the button-only variant.
+ *
+ * @see {@link Card.Header}
+ */`}</code></pre>
+
+  <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">Additional pages</h2>
+  <p class="text-cdx-text-secondary">
+    Markdown files outside the source tree can be wired in via a
+    <code class={inlineCode}>summary.json</code> manifest. Slugs are derived from each page&rsquo;s
+    <code class={inlineCode}>title</code>; missing files surface a per-page warning rather than failing
+    the build. Nesting deeper than five levels is a hard error.
+    <code class={inlineCode}>{'{@link}'}</code> works inside additional-page markdown identically to
+    source comments.
+  </p>
+</FeaturesLayout>

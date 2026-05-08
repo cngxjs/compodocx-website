@@ -1,0 +1,56 @@
+---
+import FeaturesLayout from '../../layouts/FeaturesLayout.astro';
+const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono text-[0.85em]';
+---
+
+<FeaturesLayout
+  currentSlug="routing"
+  title="Routing — compodocx"
+  description="How compodocx routes its static SPA — hash-based deep links that survive any host without server config."
+>
+  <p class="text-cdx-text-secondary text-lg">
+    The output is a static SPA. A small hash router handles deep links, scroll restoration, tab
+    activation, and view transitions — without shipping a framework runtime.
+  </p>
+
+  <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">Why hash routing</h2>
+  <p class="text-cdx-text-secondary">
+    Hash URLs work everywhere: GitHub Pages project sites, S3 prefixes, intranet hosts behind reverse
+    proxies, even <code class={inlineCode}>file://</code> previews. No server-side rewrites needed,
+    deep links survive moves between hosts, and refreshing on any page just works.
+  </p>
+
+  <h2 class="text-cdx-text text-xl font-semibold mt-12">Tab activation by hash</h2>
+  <p class="text-cdx-text-secondary">
+    Each entity tab — Info, API, Source, Theming Tokens, Example — has a stable hash id. Sharing a
+    URL like <code class={inlineCode}>#api</code> opens the API tab; sharing
+    <code class={inlineCode}>#L42</code> on a Source tab scrolls to that line. Hash-based line anchors
+    take priority over same-named DOM ids, so <code class={inlineCode}>#L\d+</code> always wins.
+  </p>
+
+  <h2 class="text-cdx-text text-xl font-semibold mt-12">Scroll restoration</h2>
+  <p class="text-cdx-text-secondary">
+    Anchor scrolls account for the sticky NavBar height — clicking
+    <code class={inlineCode}>#api</code> doesn&rsquo;t hide the heading behind the topbar. Back/forward
+    navigation restores the prior scroll position. URL updates use
+    <code class={inlineCode}>history.replaceState</code> so the browser&rsquo;s history isn&rsquo;t
+    polluted with intermediate hash changes.
+  </p>
+
+  <h2 class="text-cdx-text text-xl font-semibold mt-12">No first-paint flash</h2>
+  <p class="text-cdx-text-secondary">
+    Hash-targeted content is hidden during initial parse via a
+    <code class={inlineCode}>cdx-hash-pending</code> class on
+    <code class={inlineCode}>&lt;html&gt;</code>; the router removes it after applying the initial
+    hash, so deep-linked pages never flash their default state before settling.
+  </p>
+
+  <h2 class="text-cdx-text text-xl font-semibold mt-12">Sub-path hosting</h2>
+  <p class="text-cdx-text-secondary">
+    Because routing is hash-based, the document root can sit anywhere — a project subdomain, a
+    sub-folder under a marketing site, a per-version folder under
+    <code class={inlineCode}>/documentation/&lt;label&gt;/</code>. The version-switcher uses the
+    pathname segments (<code class={inlineCode}>lastIndexOf(currentLabel)</code>) to compute target
+    URLs, so version hops work even when the docs live deep inside a host.
+  </p>
+</FeaturesLayout>
