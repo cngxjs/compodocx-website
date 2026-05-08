@@ -1,0 +1,70 @@
+---
+import SectionEyebrow from './SectionEyebrow.astro';
+
+interface Step {
+  id: string;
+  label: string;
+  caption: string;
+  code: string;
+}
+
+const steps: Step[] = [
+  {
+    id: 'install',
+    label: 'Install',
+    caption: 'Pin compodocx as a dev dependency in your Angular library or app.',
+    code: 'npm install --save-dev @cngxjs/compodocx',
+  },
+  {
+    id: 'run',
+    label: 'Run',
+    caption: 'Point at a TS project and emit static documentation under ./documentation.',
+    code: 'npx compodocx -p tsconfig.doc.json',
+  },
+  {
+    id: 'configure',
+    label: 'Configure',
+    caption: 'Or co-locate options in a JSON config and skip CLI flags entirely.',
+    code: `{
+  "tsconfig": "tsconfig.doc.json",
+  "output": "documentation",
+  "theme": "ocean",
+  "exportFormat": "html"
+}`,
+  },
+];
+---
+
+<section id="install" class="mx-auto max-w-6xl px-4 py-20" aria-labelledby="install-heading">
+  <SectionEyebrow text="Get Started" />
+  <h2 id="install-heading" class="text-cdx-text mt-3 text-3xl font-semibold tracking-tight">
+    Three commands to first docs
+  </h2>
+  <p class="text-cdx-text-secondary mt-3 max-w-2xl">
+    Install, run, and optionally drop a config file. compodocx infers the rest from your tsconfig
+    and package.json.
+  </p>
+
+  <div class="mt-12 grid gap-4 md:grid-cols-3">
+    {
+      steps.map((step, idx) => (
+        <div class="bg-cdx-bg-elevated grid grid-rows-[auto_auto_1fr_auto] gap-3 rounded-xl p-5">
+          <p class="text-cdx-text-muted font-mono text-xs tracking-wider uppercase">
+            {String(idx + 1).padStart(2, '0')} · {step.label}
+          </p>
+          <p class="text-cdx-text-secondary text-sm leading-relaxed">{step.caption}</p>
+          {/* prettier-ignore */}
+          <pre class="bg-cdx-bg-alt/60 text-cdx-text overflow-x-auto rounded-lg p-3 font-mono text-xs leading-relaxed"><code id={`gs-${step.id}-code`}>{step.code}</code></pre>
+          <button
+            type="button"
+            data-copy-target={`gs-${step.id}-code`}
+            aria-live="polite"
+            class="text-cdx-text-secondary hover:text-cdx-text hover:bg-cdx-bg-alt mt-1 inline-flex w-fit items-center gap-1.5 rounded px-2 py-1 text-xs transition-colors"
+          >
+            Copy
+          </button>
+        </div>
+      ))
+    }
+  </div>
+</section>

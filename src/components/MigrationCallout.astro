@@ -1,0 +1,58 @@
+---
+import SectionEyebrow from './SectionEyebrow.astro';
+
+const migrationGuideUrl = 'https://github.com/cngxjs/compodocx/blob/develop/MIGRATION.md';
+---
+
+<section class="mx-auto max-w-6xl px-4 py-20" aria-labelledby="migration-heading">
+  <SectionEyebrow text="Migration" />
+  <aside class="bg-cdx-bg-elevated border-cdx-primary mt-3 rounded-r-xl border-l-4 p-8 sm:p-10">
+    <h2
+      id="migration-heading"
+      class="text-cdx-text text-2xl font-semibold tracking-tight sm:text-3xl"
+    >
+      Coming from compodoc?
+    </h2>
+    <p class="text-cdx-text-secondary mt-3 max-w-2xl">
+      compodocx is a drop-in fork. The migration path is short and reversible.
+    </p>
+
+    <ul class="mt-8 grid gap-6 md:grid-cols-3">
+      <li class="text-sm">
+        <p class="text-cdx-text font-semibold">CLI alias compatible</p>
+        <p class="text-cdx-text-secondary mt-1.5 leading-relaxed">
+          Existing
+          <code class="text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono text-xs"
+            >compodoc</code
+          >
+          scripts run unchanged — the binary registers both names.
+        </p>
+      </li>
+      <li class="text-sm">
+        <p class="text-cdx-text font-semibold">JSX template overrides</p>
+        <p class="text-cdx-text-secondary mt-1.5 leading-relaxed">
+          Custom templates port to TSX components. No more Handlebars partials to maintain.
+        </p>
+      </li>
+      <li class="text-sm">
+        <p class="text-cdx-text font-semibold">Automatic migration command</p>
+        <p class="text-cdx-text-secondary mt-1.5 leading-relaxed">
+          <code class="text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono text-xs"
+            >compodocx migrate</code
+          >
+          walks your config and overrides, applies codemods, prints a diff report.
+        </p>
+      </li>
+    </ul>
+
+    <a
+      href={migrationGuideUrl}
+      rel="noopener"
+      target="_blank"
+      class="text-cdx-primary hover:text-cdx-primary-hover mt-8 inline-flex items-center gap-1 text-sm font-medium"
+    >
+      Read the migration guide
+      <span aria-hidden="true">→</span>
+    </a>
+  </aside>
+</section>
