@@ -16,27 +16,81 @@ interface Props {
   description?: string;
   image?: string;
   ogType?: 'website' | 'article';
+  keywords?: string[];
   jsonLd?: object | object[];
+  prevUrl?: string;
+  nextUrl?: string;
 }
 
-const { title, description, image, ogType = 'website', jsonLd } = Astro.props;
+const {
+  title,
+  description,
+  image,
+  ogType = 'website',
+  keywords,
+  jsonLd,
+  prevUrl,
+  nextUrl,
+} = Astro.props;
 const base = import.meta.env.BASE_URL;
 const siteUrl = Astro.site ?? new URL(base, 'https://cngxjs.github.io');
 const canonical = new URL(Astro.url.pathname, siteUrl).href;
+const homeUrl = new URL(base, siteUrl).href;
 const ogImage = new URL(image ?? `${base}og-image.png`, siteUrl).href;
 const fallbackDescription =
   'Modern documentation tool for Angular applications. Fork of compodoc, modernized: standalone-first, Signals, theming tokens, multi-version, migration tools.';
 const metaDescription = description ?? fallbackDescription;
+const defaultKeywords = [
+  'angular documentation',
+  'compodocx',
+  'compodoc',
+  'angular standalone',
+  'angular signals',
+  'jsdoc angular',
+  'typescript documentation',
+  'static documentation generator',
+  'angular cli docs',
+  'multi-version docs',
+];
+const metaKeywords = (keywords ?? defaultKeywords).join(', ');
+
+const organizationJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': `${homeUrl}#organization`,
+  name: 'cngxjs',
+  url: 'https://github.com/cngxjs',
+  logo: {
+    '@type': 'ImageObject',
+    url: ogImage,
+    width: 1200,
+    height: 630,
+  },
+  sameAs: [
+    'https://github.com/cngxjs',
+    'https://github.com/cngxjs/compodocx',
+    'https://www.npmjs.com/package/@cngxjs/compodocx',
+  ],
+};
 
 const websiteJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'WebSite',
+  '@id': `${homeUrl}#website`,
   name: 'compodocx',
-  url: new URL(base, siteUrl).href,
+  url: homeUrl,
   description: fallbackDescription,
+  inLanguage: 'en',
+  publisher: { '@id': `${homeUrl}#organization` },
+  potentialAction: {
+    '@type': 'ReadAction',
+    target: homeUrl,
+  },
 };
+
 const jsonLdEntries = (Array.isArray(jsonLd) ? jsonLd : jsonLd ? [jsonLd] : []).concat([
   websiteJsonLd,
+  organizationJsonLd,
 ]);
 
 function scopeTheme(css: string, themeId: string): string {
@@ -84,9 +138,33 @@ const themeBundle = minifyCss(
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
+    <meta name="author" content="cngxjs" />
+    <meta name="publisher" content="cngxjs" />
+    <meta name="copyright" content={`© ${new Date().getFullYear()} cngxjs`} />
+    <meta name="keywords" content={metaKeywords} />
+    <meta
+      name="robots"
+      content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
+    />
+    <meta name="googlebot" content="index, follow" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="color-scheme" content="light dark" />
     <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
     <link rel="icon" href={`${base}favicon.ico`} />
+    <link rel="apple-touch-icon" sizes="180x180" href={`${base}apple-touch-icon.png`} />
+    <link rel="manifest" href={`${base}manifest.webmanifest`} />
     <link rel="canonical" href={canonical} />
+    {prevUrl && <link rel="prev" href={prevUrl} />}
+    {nextUrl && <link rel="next" href={nextUrl} />}
+    <link
+      rel="alternate"
+      type="application/xml"
+      title="Sitemap"
+      href={`${base}sitemap-index.xml`}
+    />
+    <link rel="dns-prefetch" href="https://github.com" />
+    <link rel="dns-prefetch" href="https://www.npmjs.com" />
     <title>{title}</title>
     <meta name="description" content={metaDescription} />
 

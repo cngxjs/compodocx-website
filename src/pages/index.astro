@@ -14,10 +14,14 @@ const softwareJsonLd = {
   name: 'compodocx',
   alternateName: '@cngxjs/compodocx',
   applicationCategory: 'DeveloperApplication',
+  applicationSubCategory: 'Documentation Generator',
   operatingSystem: 'Cross-platform (Node.js)',
   description:
     'Modern documentation generator for Angular applications. Standalone-first, Signals, theming tokens, multi-version output, migration tools.',
   url: 'https://www.npmjs.com/package/@cngxjs/compodocx',
+  downloadUrl: 'https://www.npmjs.com/package/@cngxjs/compodocx',
+  installUrl: 'https://www.npmjs.com/package/@cngxjs/compodocx',
+  softwareVersion: '0.3.0',
   softwareRequirements: 'Node.js >= 22',
   license: 'https://opensource.org/license/MIT',
   offers: {
@@ -30,14 +34,76 @@ const softwareJsonLd = {
     name: 'cngxjs',
     url: 'https://github.com/cngxjs',
   },
+  maintainer: {
+    '@type': 'Organization',
+    name: 'cngxjs',
+    url: 'https://github.com/cngxjs',
+  },
   programmingLanguage: 'TypeScript',
+  keywords:
+    'angular documentation, compodoc fork, standalone components, signals, multi-version, jsdoc',
+};
+
+const faqJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'Is compodocx compatible with compodoc?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes. compodocx is a drop-in fork. The compodoc CLI alias still works, and a compodocx migrate command ports Handlebars overrides to JS partials automatically.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Does compodocx support Angular Signals and standalone components?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes. signal, computed, and linked-signal members render as first-class fields with derived-state dependencies. Standalone components, directives, and pipes are documented without NgModule scaffolding.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Can I generate docs for multiple library versions?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes. Multi-version output is the default. compodocx detects the version from package.json, writes a versions.json manifest, and ships a runtime version-switcher widget — no server-side config needed.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How do I theme compodocx output?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Eight themes ship in the box (Slate Noir, Ocean, Midnight, Nord, Rose Pine, Ember, Neon, Brutalist). Roll your own by overriding any subset of the --color-cdx-* CSS custom properties in a single CSS file passed via --theme.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Does compodocx integrate with CI?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes. compodocx diff compares two JSON snapshots and exits non-zero on breaking changes. --exportFormat json emits a typed schema with schemaVersion. --coverageMinimum gates merges on documentation completeness.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Is compodocx free?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Yes. compodocx is open source under the MIT license. The compodoc upstream attribution to Vincent Ogloblinsky is preserved.',
+      },
+    },
+  ],
 };
 ---
 
 <Layout
   title="compodocx — modern Angular documentation"
   description="Generate a static documentation site from your TypeScript source. Standalone-first, Signals support, multi-version output, theming tokens, migration tools — all in one CLI."
-  jsonLd={softwareJsonLd}
+  jsonLd={[softwareJsonLd, faqJsonLd]}
 >
   <Hero />
   <StatusBadges />

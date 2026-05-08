@@ -7,9 +7,10 @@ interface Props {
   currentSlug: string;
   title: string;
   description?: string;
+  extraJsonLd?: object | object[];
 }
 
-const { currentSlug, title, description } = Astro.props;
+const { currentSlug, title, description, extraJsonLd } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const siteUrl = Astro.site ?? new URL(base, 'https://cngxjs.github.io');
 const canonical = new URL(Astro.url.pathname, siteUrl).href;
@@ -72,7 +73,13 @@ const breadcrumbJsonLd = {
   title={title}
   description={description}
   ogType="article"
-  jsonLd={[articleJsonLd, breadcrumbJsonLd]}
+  jsonLd={[
+    articleJsonLd,
+    breadcrumbJsonLd,
+    ...(Array.isArray(extraJsonLd) ? extraJsonLd : extraJsonLd ? [extraJsonLd] : []),
+  ]}
+  prevUrl={prev ? new URL(`${base}guides/${prev.slug}/`, siteUrl).href : undefined}
+  nextUrl={next ? new URL(`${base}guides/${next.slug}/`, siteUrl).href : undefined}
 >
   <div class="mx-auto max-w-6xl px-4 py-16 lg:grid lg:grid-cols-[14rem_1fr] lg:gap-10">
     <FeaturesSidebar currentSlug={currentSlug} />
