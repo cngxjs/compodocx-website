@@ -1,0 +1,36 @@
+---
+const year = new Date().getFullYear();
+const repoUrl = 'https://github.com/cngxjs/compodocx';
+---
+
+<footer
+  class="border-cdx-border bg-cdx-bg-alt/40 text-cdx-text-secondary mt-24 border-t py-8 text-sm"
+>
+  <div
+    class="mx-auto flex max-w-6xl flex-col items-start gap-3 px-4 sm:flex-row sm:items-center sm:justify-between"
+  >
+    <p>
+      © {year} cngxjs · Fork of
+      <a
+        href="https://github.com/compodoc/compodoc"
+        rel="noopener"
+        target="_blank"
+        class="hover:text-cdx-text underline-offset-2 hover:underline"
+      >
+        compodoc
+      </a>
+      by Vincent Ogloblinsky (MIT)
+    </p>
+    <div class="flex items-center gap-4">
+      <a
+        href={`${repoUrl}/blob/develop/LICENSE`}
+        rel="noopener"
+        target="_blank"
+        class="hover:text-cdx-text"
+      >
+        MIT License
+      </a>
+      <a href={repoUrl} rel="noopener" target="_blank" class="hover:text-cdx-text"> GitHub </a>
+    </div>
+  </div>
+</footer>

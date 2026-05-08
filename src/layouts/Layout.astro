@@ -1,0 +1,53 @@
+---
+import '../styles/global.css';
+import NavBar from '../components/NavBar.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
+    <link rel="icon" href={`${base}favicon.ico`} />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    <script is:inline>
+      (function () {
+        try {
+          const stored = localStorage.getItem('compodocx-website-darkmode');
+          const dark =
+            stored === null
+              ? window.matchMedia('(prefers-color-scheme: dark)').matches
+              : stored === 'true';
+          if (dark) document.documentElement.classList.add('dark');
+        } catch (_) {
+          // storage / matchMedia unavailable — fall through to light default
+        }
+      })();
+    </script>
+  </head>
+  <body class="bg-cdx-bg text-cdx-text min-h-screen antialiased">
+    <a
+      href="#main"
+      class="bg-cdx-bg-elevated text-cdx-text border-cdx-border sr-only rounded border px-3 py-2 focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50"
+    >
+      Skip to content
+    </a>
+    <NavBar />
+    <main id="main">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

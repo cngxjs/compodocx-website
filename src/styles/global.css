@@ -1,2 +1,4 @@
 @import 'tailwindcss';
 @import './vendor/compodocx/compodocx.css';
+
+@custom-variant dark (&:where(.dark, .dark *));
