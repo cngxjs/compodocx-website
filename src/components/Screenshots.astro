@@ -1,0 +1,105 @@
+---
+import SectionEyebrow from './SectionEyebrow.astro';
+
+interface Shot {
+  id: string;
+  label: string;
+  caption: string;
+}
+
+const shots: Shot[] = [
+  {
+    id: 'component-page',
+    label: 'Component Page',
+    caption: 'Standalone component page with Info / API / DOM Tree tabs and the theming aside.',
+  },
+  {
+    id: 'theming-tab',
+    label: 'Theming Tab',
+    caption: 'Per-component theming tokens listed with live preview swatches.',
+  },
+  {
+    id: 'source-viewer',
+    label: 'Source Viewer',
+    caption: 'Shiki-highlighted source with line links and copy-anchor support.',
+  },
+  {
+    id: 'multi-version',
+    label: 'Multi-Version Switcher',
+    caption: 'Top-bar pill switcher reading versions.json — works across the entire docs surface.',
+  },
+];
+---
+
+<section class="mx-auto max-w-6xl px-4 py-20" aria-labelledby="screenshots-heading">
+  <SectionEyebrow text="Tour" />
+  <h2 id="screenshots-heading" class="text-cdx-text mt-3 text-3xl font-semibold tracking-tight">
+    See it before you install
+  </h2>
+  <p class="text-cdx-text-secondary mt-3 max-w-2xl">
+    Four representative views from a live compodocx output. Tab through them — each panel renders
+    the same theme tokens you can switch above.
+  </p>
+
+  <div class="mt-12" data-tabs>
+    <div
+      role="tablist"
+      aria-label="Screenshots"
+      class="border-cdx-border flex flex-wrap gap-1 border-b"
+    >
+      {
+        shots.map((shot, index) => (
+          <button
+            type="button"
+            role="tab"
+            id={`tab-${shot.id}`}
+            aria-controls={`panel-${shot.id}`}
+            aria-selected={index === 0 ? 'true' : 'false'}
+            tabindex={index === 0 ? 0 : -1}
+            class="text-cdx-text-secondary aria-selected:text-cdx-text aria-selected:border-cdx-primary -mb-px cursor-pointer border-b-2 border-transparent px-4 py-3 text-sm font-medium transition-colors"
+          >
+            {shot.label}
+          </button>
+        ))
+      }
+    </div>
+
+    {
+      shots.map((shot, index) => (
+        <div
+          role="tabpanel"
+          id={`panel-${shot.id}`}
+          aria-labelledby={`tab-${shot.id}`}
+          hidden={index !== 0}
+          class="mt-6"
+        >
+          <figure>
+            <div class="bg-cdx-bg-elevated relative aspect-[16/10] overflow-hidden rounded-xl">
+              <div class="absolute inset-0 flex items-center justify-center">
+                <div class="text-center">
+                  <p class="text-cdx-text-muted font-mono text-xs tracking-wider uppercase">
+                    {shot.label}
+                  </p>
+                  <p class="text-cdx-text-muted/60 mt-2 text-xs">screenshot pending</p>
+                  <p class="text-cdx-text-muted/40 mt-4 font-mono text-[10px]">
+                    npm run sync:screenshots
+                  </p>
+                </div>
+              </div>
+              <div
+                aria-hidden="true"
+                class="from-cdx-bg-alt/0 via-cdx-bg-alt/40 to-cdx-bg-alt/0 absolute inset-x-0 top-0 h-12 bg-gradient-to-b"
+              />
+            </div>
+            <figcaption class="text-cdx-text-secondary mt-3 text-sm">{shot.caption}</figcaption>
+          </figure>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<script>
+  import { initTabs } from '../scripts/tabs';
+  initTabs();
+</script>

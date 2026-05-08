@@ -14,7 +14,8 @@
     "lint": "astro check && tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "sync:tokens": "node scripts/sync-tokens.mjs"
+    "sync:tokens": "node scripts/sync-tokens.mjs",
+    "sync:screenshots": "node scripts/sync-screenshots.mjs"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.4",
