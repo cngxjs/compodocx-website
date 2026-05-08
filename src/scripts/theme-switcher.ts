@@ -12,6 +12,8 @@ const KNOWN_THEMES = new Set([
   'brutalist',
 ]);
 
+const BOUND = new WeakSet<HTMLButtonElement>();
+
 function readSaved(): string {
   try {
     return localStorage.getItem(STORAGE_KEY) ?? DEFAULT_THEME;
@@ -36,7 +38,9 @@ function applyTheme(id: string): void {
 
 function syncCardStates(active: string): void {
   document.querySelectorAll<HTMLButtonElement>('button[data-theme-id]').forEach((btn) => {
-    btn.setAttribute('aria-pressed', btn.dataset.themeId === active ? 'true' : 'false');
+    const isActive = btn.dataset.themeId === active;
+    btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    btn.setAttribute('aria-checked', isActive ? 'true' : 'false');
   });
 }
 
@@ -47,6 +51,8 @@ export function initThemeSwitcher(): void {
   syncCardStates(readSaved());
 
   cards.forEach((card) => {
+    if (BOUND.has(card)) return;
+    BOUND.add(card);
     card.addEventListener('click', () => {
       const id = card.dataset.themeId;
       if (!id) return;

@@ -1,10 +1,21 @@
 ---
 const base = import.meta.env.BASE_URL;
 const repoUrl = 'https://github.com/cngxjs/compodocx';
+
+const themes: Array<{ id: string; label: string }> = [
+  { id: 'default', label: 'Slate Noir' },
+  { id: 'ocean', label: 'Ocean' },
+  { id: 'midnight', label: 'Midnight' },
+  { id: 'nord', label: 'Nord' },
+  { id: 'rose-pine', label: 'Rose Pine' },
+  { id: 'ember', label: 'Ember' },
+  { id: 'neon', label: 'Neon' },
+  { id: 'brutalist', label: 'Brutalist' },
+];
 ---
 
 <header
-  class="sticky top-0 z-40 border-b border-cdx-border bg-cdx-bg/85 backdrop-blur supports-[backdrop-filter]:bg-cdx-bg/70"
+  class="border-cdx-border bg-cdx-bg/85 supports-[backdrop-filter]:bg-cdx-bg/70 sticky top-0 z-40 border-b backdrop-blur"
 >
   <div class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3">
     <a
@@ -42,6 +53,53 @@ const repoUrl = 'https://github.com/cngxjs/compodocx';
           ></path>
         </svg>
       </a>
+
+      <details id="theme-menu" class="relative">
+        <summary
+          class="text-cdx-text hover:bg-cdx-bg-alt flex cursor-pointer list-none items-center rounded p-2"
+          aria-label="Choose theme"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.75"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <path
+              d="M12 22a10 10 0 1 1 10-10 4 4 0 0 1-4 4h-1.8a2 2 0 0 0-1.4 3.4l.4.4a2 2 0 0 1-1.4 3.4Z"
+            ></path>
+            <circle cx="13.5" cy="6.5" r="1"></circle>
+            <circle cx="17.5" cy="10.5" r="1"></circle>
+            <circle cx="6.5" cy="12.5" r="1"></circle>
+            <circle cx="8.5" cy="7.5" r="1"></circle>
+          </svg>
+        </summary>
+        <div
+          class="bg-cdx-bg-elevated border-cdx-border absolute right-0 top-full z-50 mt-1 w-48 rounded-lg border py-1 shadow-lg"
+          role="menu"
+        >
+          {
+            themes.map((t) => (
+              <button
+                type="button"
+                role="menuitemradio"
+                data-theme-id={t.id}
+                aria-checked="false"
+                class="text-cdx-text-secondary hover:text-cdx-text hover:bg-cdx-bg-alt aria-checked:text-cdx-text aria-checked:font-medium block w-full px-4 py-2 text-left text-sm"
+              >
+                {t.label}
+              </button>
+            ))
+          }
+        </div>
+      </details>
+
       <button
         id="dark-toggle"
         type="button"
@@ -94,5 +152,22 @@ const repoUrl = 'https://github.com/cngxjs/compodocx';
 
 <script>
   import { initDarkToggle } from '../scripts/dark-mode';
+  import { initThemeSwitcher } from '../scripts/theme-switcher';
+
   initDarkToggle();
+  initThemeSwitcher();
+
+  const menu = document.getElementById('theme-menu') as HTMLDetailsElement | null;
+  if (menu) {
+    menu.addEventListener('click', (event) => {
+      const target = event.target as HTMLElement | null;
+      if (target?.closest('button[data-theme-id]')) {
+        menu.open = false;
+      }
+    });
+    document.addEventListener('click', (event) => {
+      if (!menu.open) return;
+      if (!menu.contains(event.target as Node)) menu.open = false;
+    });
+  }
 </script>
