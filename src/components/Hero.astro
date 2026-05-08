@@ -18,7 +18,7 @@ const installCmd = 'npm install -g @cngxjs/compodocx';
 
   <div class="mx-auto max-w-6xl px-4 py-24 sm:py-32">
     <h1
-      class="text-cdx-text max-w-4xl text-balance text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl"
+      class="hero-headline text-cdx-text relative isolate max-w-4xl text-balance text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl"
     >
       The modern documentation tool for your Angular application
     </h1>
@@ -84,6 +84,49 @@ const installCmd = 'npm install -g @cngxjs/compodocx';
     );
     opacity: 0.45;
     animation: hero-drift-2 28s ease-in-out infinite;
+  }
+
+  .hero-section .hero-headline {
+    --glow-color: 35 95% 55%;
+  }
+
+  .hero-section .hero-headline::before {
+    content: '';
+    position: absolute;
+    inset-block: -3rem;
+    inset-inline: -4rem;
+    z-index: -1;
+    background: radial-gradient(
+      ellipse 55% 70% at 18% 60%,
+      hsl(var(--glow-color) / 0.55) 0%,
+      hsl(var(--glow-color) / 0.18) 35%,
+      transparent 70%
+    );
+    opacity: 0;
+    animation: hero-headline-glow 2.6s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
+    pointer-events: none;
+  }
+
+  @keyframes hero-headline-glow {
+    0% {
+      opacity: 0;
+      transform: translate3d(-30px, 0, 0) scale(0.92);
+    }
+    25% {
+      opacity: 1;
+      transform: translate3d(10px, 0, 0) scale(1.02);
+    }
+    100% {
+      opacity: 0;
+      transform: translate3d(60px, 0, 0) scale(1.05);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-section .hero-headline::before {
+      animation: none !important;
+      opacity: 0 !important;
+    }
   }
 
   .hero-section .hero-grid {
