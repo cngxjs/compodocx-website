@@ -1,0 +1,48 @@
+{
+  "source": "https://github.com/cngxjs/compodocx",
+  "ref": "develop",
+  "sha": "d98f6caddc9a097f06511ea5efdfef3593d165b2",
+  "syncedAt": "2026-05-08T13:12:12.005Z",
+  "files": [
+    {
+      "dst": "src/styles/vendor/compodocx/compodocx.css",
+      "src": "src/styles/compodocx.css",
+      "mode": "extracted"
+    },
+    {
+      "dst": "src/styles/vendor/compodocx/themes/ocean.css",
+      "src": "src/themes/ocean.css",
+      "mode": "verbatim"
+    },
+    {
+      "dst": "src/styles/vendor/compodocx/themes/midnight.css",
+      "src": "src/themes/midnight.css",
+      "mode": "verbatim"
+    },
+    {
+      "dst": "src/styles/vendor/compodocx/themes/nord.css",
+      "src": "src/themes/nord.css",
+      "mode": "verbatim"
+    },
+    {
+      "dst": "src/styles/vendor/compodocx/themes/rose-pine.css",
+      "src": "src/themes/rose-pine.css",
+      "mode": "verbatim"
+    },
+    {
+      "dst": "src/styles/vendor/compodocx/themes/ember.css",
+      "src": "src/themes/ember.css",
+      "mode": "verbatim"
+    },
+    {
+      "dst": "src/styles/vendor/compodocx/themes/neon.css",
+      "src": "src/themes/neon.css",
+      "mode": "verbatim"
+    },
+    {
+      "dst": "src/styles/vendor/compodocx/themes/brutalist.css",
+      "src": "src/themes/brutalist.css",
+      "mode": "verbatim"
+    }
+  ]
+}
