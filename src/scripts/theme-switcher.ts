@@ -1,23 +1,16 @@
-import oceanUrl from '../styles/vendor/compodocx/themes/ocean.css?url';
-import midnightUrl from '../styles/vendor/compodocx/themes/midnight.css?url';
-import nordUrl from '../styles/vendor/compodocx/themes/nord.css?url';
-import rosePineUrl from '../styles/vendor/compodocx/themes/rose-pine.css?url';
-import emberUrl from '../styles/vendor/compodocx/themes/ember.css?url';
-import neonUrl from '../styles/vendor/compodocx/themes/neon.css?url';
-import brutalistUrl from '../styles/vendor/compodocx/themes/brutalist.css?url';
-
 const STORAGE_KEY = 'compodocx-website-theme';
 const DEFAULT_THEME = 'default';
 
-const URLS: Record<string, string> = {
-  ocean: oceanUrl,
-  midnight: midnightUrl,
-  nord: nordUrl,
-  'rose-pine': rosePineUrl,
-  ember: emberUrl,
-  neon: neonUrl,
-  brutalist: brutalistUrl,
-};
+const KNOWN_THEMES = new Set([
+  'default',
+  'ocean',
+  'midnight',
+  'nord',
+  'rose-pine',
+  'ember',
+  'neon',
+  'brutalist',
+]);
 
 function readSaved(): string {
   try {
@@ -28,14 +21,11 @@ function readSaved(): string {
 }
 
 function applyTheme(id: string): void {
-  const existing = document.head.querySelector('link[data-active-theme]');
-  if (existing) existing.remove();
-  if (id !== DEFAULT_THEME && URLS[id]) {
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = URLS[id];
-    link.setAttribute('data-active-theme', id);
-    document.head.appendChild(link);
+  if (!KNOWN_THEMES.has(id)) return;
+  if (id === DEFAULT_THEME) {
+    document.documentElement.removeAttribute('data-theme');
+  } else {
+    document.documentElement.setAttribute('data-theme', id);
   }
   try {
     localStorage.setItem(STORAGE_KEY, id);
