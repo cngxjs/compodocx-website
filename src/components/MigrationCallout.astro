@@ -14,7 +14,8 @@ const migrationGuideUrl = 'https://github.com/cngxjs/compodocx/blob/develop/MIGR
       Coming from compodoc?
     </h2>
     <p class="text-cdx-text-secondary mt-3 max-w-2xl">
-      compodocx is a drop-in fork. The migration path is short and reversible.
+      compodocx is a near-drop-in successor — same surface, modern internals. Most projects migrate
+      in a single PR.
     </p>
 
     <ul class="mt-8 grid gap-6 md:grid-cols-3">
@@ -29,18 +30,23 @@ const migrationGuideUrl = 'https://github.com/cngxjs/compodocx/blob/develop/MIGR
         </p>
       </li>
       <li class="text-sm">
-        <p class="text-cdx-text font-semibold">JSX template overrides</p>
+        <p class="text-cdx-text font-semibold">JS template overrides</p>
         <p class="text-cdx-text-secondary mt-1.5 leading-relaxed">
-          Custom templates port to TSX components. No more Handlebars partials to maintain.
+          Custom templates become JS partials returning HTML strings. No Handlebars helpers, no
+          partials registry — just <code
+            class="text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono text-xs"
+            >module.exports = (data, helpers) =&gt; '...'</code
+          >.
         </p>
       </li>
       <li class="text-sm">
-        <p class="text-cdx-text font-semibold">Automatic migration command</p>
+        <p class="text-cdx-text font-semibold">Migrate sub-CLI</p>
         <p class="text-cdx-text-secondary mt-1.5 leading-relaxed">
           <code class="text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono text-xs"
             >compodocx migrate</code
           >
-          walks your config and overrides, applies codemods, prints a diff report.
+          ports Handlebars templates and CSS — subcommands for inspecting, single files, full
+          template folders, and stylesheets.
         </p>
       </li>
     </ul>

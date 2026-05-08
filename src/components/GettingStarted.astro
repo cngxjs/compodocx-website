@@ -12,19 +12,20 @@ const steps: Step[] = [
   {
     id: 'install',
     label: 'Install',
-    caption: 'Pin compodocx as a dev dependency in your Angular library or app.',
+    caption: 'Pin compodocx as a dev dependency in your Angular library or app. Node 22 or newer.',
     code: 'npm install --save-dev @cngxjs/compodocx',
   },
   {
     id: 'run',
     label: 'Run',
-    caption: 'Point at a TS project and emit static documentation under ./documentation.',
+    caption:
+      'Point at a tsconfig and emit static docs to ./documentation/<versionLabel>/. Label auto-detected from package.json.',
     code: 'npx compodocx -p tsconfig.doc.json',
   },
   {
     id: 'configure',
     label: 'Configure',
-    caption: 'Or co-locate options in a JSON config and skip CLI flags entirely.',
+    caption: 'Or commit the options to a JSON config so the team runs the same surface every time.',
     code: `{
   "tsconfig": "tsconfig.doc.json",
   "output": "documentation",
@@ -41,8 +42,8 @@ const steps: Step[] = [
     Three commands to first docs
   </h2>
   <p class="text-cdx-text-secondary mt-3 max-w-2xl">
-    Install, run, and optionally drop a config file. compodocx infers the rest from your tsconfig
-    and package.json.
+    Install, run, and optionally commit a JSON config. compodocx infers the rest from your tsconfig
+    and the nearest package.json.
   </p>
 
   <div class="mt-12 grid gap-4 md:grid-cols-3">
