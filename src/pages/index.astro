@@ -7,11 +7,37 @@ import Screenshots from '../components/Screenshots.astro';
 import MigrationCallout from '../components/MigrationCallout.astro';
 import GettingStarted from '../components/GettingStarted.astro';
 import ThemesGrid from '../components/ThemesGrid.astro';
+
+const softwareJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'compodocx',
+  alternateName: '@cngxjs/compodocx',
+  applicationCategory: 'DeveloperApplication',
+  operatingSystem: 'Cross-platform (Node.js)',
+  description:
+    'Modern documentation generator for Angular applications. Standalone-first, Signals, theming tokens, multi-version output, migration tools.',
+  url: 'https://www.npmjs.com/package/@cngxjs/compodocx',
+  softwareRequirements: 'Node.js >= 22',
+  license: 'https://opensource.org/license/MIT',
+  offers: {
+    '@type': 'Offer',
+    price: '0',
+    priceCurrency: 'USD',
+  },
+  author: {
+    '@type': 'Organization',
+    name: 'cngxjs',
+    url: 'https://github.com/cngxjs',
+  },
+  programmingLanguage: 'TypeScript',
+};
 ---
 
 <Layout
   title="compodocx — modern Angular documentation"
-  description="Modern documentation tool for Angular applications. Fork of compodoc, modernized: standalone-first, Signals, theming tokens, multi-version, migration tools."
+  description="Generate a static documentation site from your TypeScript source. Standalone-first, Signals support, multi-version output, theming tokens, migration tools — all in one CLI."
+  jsonLd={softwareJsonLd}
 >
   <Hero />
   <StatusBadges />

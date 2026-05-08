@@ -16,5 +16,24 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
 
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      changefreq: 'weekly',
+      priority: 0.7,
+      lastmod: new Date(),
+      serialize(item) {
+        if (item.url.endsWith('/compodocx-website/')) {
+          item.priority = 1.0;
+          item.changefreq = 'weekly';
+        } else if (item.url.endsWith('/guides/')) {
+          item.priority = 0.9;
+          item.changefreq = 'weekly';
+        } else if (item.url.includes('/guides/')) {
+          item.priority = 0.7;
+          item.changefreq = 'monthly';
+        }
+        return item;
+      },
+    }),
+  ],
 });
