@@ -1,0 +1,51 @@
+---
+const installCmd = 'npm install -g @cngxjs/compodocx';
+---
+
+<section class="relative overflow-hidden">
+  <div
+    class="from-cdx-bg-alt/60 to-cdx-bg pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b"
+    aria-hidden="true"
+  >
+  </div>
+
+  <div class="mx-auto max-w-6xl px-4 py-24 sm:py-32">
+    <h1
+      class="text-cdx-text max-w-4xl text-balance text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl"
+    >
+      The modern documentation tool for your Angular application
+    </h1>
+    <p class="text-cdx-text-secondary mt-6 max-w-2xl text-pretty text-lg sm:text-xl">
+      Fork of compodoc, modernized: standalone-first, Signals, theming tokens, multi-version,
+      migration tools.
+    </p>
+
+    <div class="mt-10 flex flex-col items-stretch gap-4 sm:flex-row sm:items-center">
+      <div
+        class="bg-cdx-bg-elevated border-cdx-border flex items-center gap-3 rounded-lg border px-4 py-3 font-mono text-sm shadow-sm"
+      >
+        <span class="text-cdx-text-muted select-none" aria-hidden="true">$</span>
+        <code id="hero-install-cmd" class="text-cdx-text whitespace-nowrap">{installCmd}</code>
+        <button
+          type="button"
+          data-copy-target="hero-install-cmd"
+          aria-live="polite"
+          class="text-cdx-text-secondary hover:text-cdx-text border-cdx-border hover:bg-cdx-bg-alt ml-2 rounded border px-2 py-1 text-xs transition-colors"
+        >
+          Copy
+        </button>
+      </div>
+      <a
+        href="#install"
+        class="bg-cdx-primary text-cdx-text-inverse hover:bg-cdx-primary-hover inline-flex items-center justify-center rounded-lg px-5 py-3 text-sm font-medium transition-colors"
+      >
+        Get Started
+      </a>
+    </div>
+  </div>
+</section>
+
+<script>
+  import { initCopyButtons } from '../scripts/copy-button';
+  initCopyButtons();
+</script>

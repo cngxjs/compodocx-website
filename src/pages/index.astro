@@ -1,16 +1,13 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import Hero from '../components/Hero.astro';
+import StatusBadges from '../components/StatusBadges.astro';
 ---
 
 <Layout
   title="compodocx — modern Angular documentation"
   description="Modern documentation tool for Angular applications. Fork of compodoc, modernized: standalone-first, Signals, theming tokens, multi-version, migration tools."
 >
-  <section class="mx-auto max-w-6xl px-4 py-24">
-    <h1 class="text-cdx-text text-4xl font-semibold tracking-tight sm:text-5xl">compodocx</h1>
-    <p class="text-cdx-text-secondary mt-4 max-w-2xl text-lg">
-      Modern documentation tool for Angular applications. Hero, features, and getting-started
-      content land in the next steps.
-    </p>
-  </section>
+  <Hero />
+  <StatusBadges />
 </Layout>

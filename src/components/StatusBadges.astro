@@ -1,0 +1,45 @@
+---
+const repo = 'cngxjs/compodocx';
+const pkg = '@cngxjs/compodocx';
+
+const badges: Array<{ alt: string; src: string; href: string }> = [
+  {
+    alt: 'npm version',
+    src: `https://img.shields.io/npm/v/${pkg}?style=flat-square&label=npm`,
+    href: `https://www.npmjs.com/package/${pkg}`,
+  },
+  {
+    alt: 'Build status',
+    src: `https://img.shields.io/github/actions/workflow/status/${repo}/main.yml?branch=develop&style=flat-square&label=build`,
+    href: `https://github.com/${repo}/actions/workflows/main.yml`,
+  },
+  {
+    alt: 'License MIT',
+    src: `https://img.shields.io/github/license/${repo}?style=flat-square`,
+    href: `https://github.com/${repo}/blob/develop/LICENSE`,
+  },
+  {
+    alt: 'Node 22+',
+    src: `https://img.shields.io/node/v/${pkg}?style=flat-square&label=node`,
+    href: 'https://nodejs.org',
+  },
+];
+---
+
+<section class="border-cdx-border bg-cdx-bg-alt/30 border-y" aria-label="Project status">
+  <div class="mx-auto flex max-w-6xl flex-wrap items-center gap-3 px-4 py-4">
+    {
+      badges.map((badge) => (
+        <a
+          href={badge.href}
+          rel="noopener"
+          target="_blank"
+          class="inline-flex"
+          aria-label={badge.alt}
+        >
+          <img src={badge.src} alt={badge.alt} loading="lazy" decoding="async" height="20" />
+        </a>
+      ))
+    }
+  </div>
+</section>
