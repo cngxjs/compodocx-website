@@ -23,25 +23,30 @@ const pkgUrl = 'https://www.npmjs.com/package/@cngxjs/compodocx';
       href={pkgUrl}
       rel="noopener"
       target="_blank"
+      aria-label={`npm package version ${version ?? 'latest'} (opens in new tab)`}
       class="bg-cdx-bg-elevated text-cdx-text-secondary hover:text-cdx-text inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium"
     >
-      <span class="text-cdx-text-muted">npm</span>
-      <span class="text-cdx-text font-mono">{version ? `v${version}` : 'latest'}</span>
+      <span class="text-cdx-text-muted" aria-hidden="true">npm</span>
+      <span class="text-cdx-text font-mono" aria-hidden="true">
+        {version ? `v${version}` : 'latest'}
+      </span>
     </a>
     <span
+      aria-label="Node.js version 22 or higher required"
       class="bg-cdx-bg-elevated text-cdx-text-secondary inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium"
     >
-      <span class="text-cdx-text-muted">node</span>
-      <span class="text-cdx-text font-mono">≥ 22</span>
+      <span class="text-cdx-text-muted" aria-hidden="true">node</span>
+      <span class="text-cdx-text font-mono" aria-hidden="true">≥ 22</span>
     </span>
     <a
       href={`${repoUrl}/blob/develop/LICENSE`}
       rel="noopener"
       target="_blank"
+      aria-label="MIT license (opens in new tab)"
       class="bg-cdx-bg-elevated text-cdx-text-secondary hover:text-cdx-text inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium"
     >
-      <span class="text-cdx-text-muted">license</span>
-      <span class="text-cdx-text">MIT</span>
+      <span class="text-cdx-text-muted" aria-hidden="true">license</span>
+      <span class="text-cdx-text" aria-hidden="true">MIT</span>
     </a>
   </div>
 </section>

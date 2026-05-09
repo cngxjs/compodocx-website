@@ -9,6 +9,7 @@ interface Feature {
   title: string;
   blurb: string;
   slug: string;
+  cta: string;
   iconBody: string;
   iconColor: string;
 }
@@ -21,6 +22,7 @@ const features: Feature[] = [
     blurb:
       'Components, directives, and pipes documented as standalone artifacts — no NgModule wrapping required.',
     slug: 'features',
+    cta: 'Standalone reference',
     iconColor: 'text-rose-500 dark:text-rose-400',
     iconBody: `<path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/><path d="M12 22V12"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="m7.5 4.27 9 5.15"/>`,
   },
@@ -31,6 +33,7 @@ const features: Feature[] = [
     blurb:
       'Signals, computed, and linked-signal members rendered with their derived-state dependencies. Effects are opt-in.',
     slug: 'features',
+    cta: 'Signals deep dive',
     iconColor: 'text-sky-500 dark:text-sky-400',
     iconBody: `<path d="M4 14a1 1 0 0 1-.78-1.63l9.9-10.2a.5.5 0 0 1 .86.46l-1.92 6.02A1 1 0 0 0 13 10h7a1 1 0 0 1 .78 1.63l-9.9 10.2a.5.5 0 0 1-.86-.46l1.92-6.02A1 1 0 0 0 11 14z"/>`,
   },
@@ -41,6 +44,7 @@ const features: Feature[] = [
     blurb:
       'Slate Noir, Ocean, Midnight, Nord, Rose Pine, Ember, Neon, Brutalist — or roll your own by overriding the --color-cdx-* tokens.',
     slug: 'themes',
+    cta: 'Theming guide',
     iconColor: 'text-violet-500 dark:text-violet-400',
     iconBody: `<path d="M12 22a10 10 0 1 1 10-10 4 4 0 0 1-4 4h-1.8a2 2 0 0 0-1.4 3.4l.4.4a2 2 0 0 1-1.4 3.4z"/><circle cx="13.5" cy="6.5" r=".75" fill="currentColor" stroke="none"/><circle cx="17.5" cy="10.5" r=".75" fill="currentColor" stroke="none"/><circle cx="6.5" cy="12.5" r=".75" fill="currentColor" stroke="none"/><circle cx="8.5" cy="7.5" r=".75" fill="currentColor" stroke="none"/>`,
   },
@@ -51,6 +55,7 @@ const features: Feature[] = [
     blurb:
       'Side-by-side docs for every released version. Label auto-detected from package.json, manifest written automatically, switcher widget built in.',
     slug: 'usage',
+    cta: 'Multi-version setup',
     iconColor: 'text-emerald-500 dark:text-emerald-400',
     iconBody: `<path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/><path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"/><path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"/>`,
   },
@@ -61,6 +66,7 @@ const features: Feature[] = [
     blurb:
       'compodocx migrate ports Handlebars templates to JS partials. compodocx diff compares two JSON snapshots and exits non-zero on breaking changes.',
     slug: 'usage',
+    cta: 'CLI reference',
     iconColor: 'text-amber-500 dark:text-amber-400',
     iconBody: `<path d="m7 11 2-2-2-2"/><path d="M11 13h4"/><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>`,
   },
@@ -71,6 +77,7 @@ const features: Feature[] = [
     blurb:
       'Export the API surface as LLM-context markdown or a typed JSON snapshot — feed it to an agent, a code-review bot, or a downstream pipeline.',
     slug: 'options',
+    cta: 'Export options',
     iconColor: 'text-fuchsia-500 dark:text-fuchsia-400',
     iconBody: `<path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/>`,
   },
@@ -109,9 +116,10 @@ const features: Feature[] = [
           <p class="text-cdx-text-secondary mt-2 text-sm leading-relaxed">{feature.blurb}</p>
           <a
             href={`${base}guides/${feature.slug}/`}
+            aria-label={`${feature.cta} — ${feature.title}`}
             class="text-cdx-primary group-hover:text-cdx-primary-hover mt-6 inline-flex items-center gap-1 text-sm font-medium"
           >
-            Learn more
+            {feature.cta}
             <span aria-hidden="true">→</span>
           </a>
         </article>

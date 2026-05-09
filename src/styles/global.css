@@ -83,3 +83,13 @@ main > section:nth-of-type(7) {
     animation: none !important;
   }
 }
+
+.copy-btn .copy-icon-done {
+  display: none;
+}
+.copy-btn[data-copied='true'] .copy-icon-default {
+  display: none;
+}
+.copy-btn[data-copied='true'] .copy-icon-done {
+  display: inline-block;
+}

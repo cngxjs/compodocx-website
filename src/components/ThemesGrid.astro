@@ -117,10 +117,30 @@ const themes: ThemeWithSwatches[] = themeMetas.map(({ source, ...rest }) => ({
       themes.map((theme) => (
         <button
           type="button"
+          role="radio"
           data-theme-id={theme.id}
-          aria-pressed="false"
-          class="bg-cdx-bg-elevated grid cursor-pointer grid-rows-[auto_auto_1fr] gap-3 rounded-xl p-4 text-left transition-shadow aria-pressed:ring-2 aria-pressed:ring-cdx-primary"
+          aria-checked="false"
+          aria-label={`Apply ${theme.name} theme`}
+          class="bg-cdx-bg-elevated focus-visible:ring-cdx-primary aria-checked:ring-cdx-primary group relative grid cursor-pointer grid-rows-[auto_auto_1fr] gap-3 rounded-xl p-4 text-left transition aria-checked:ring-2 focus-visible:ring-2 focus-visible:outline-none"
         >
+          <span
+            aria-hidden="true"
+            class="bg-cdx-primary text-cdx-text-inverse absolute right-3 top-3 hidden size-5 items-center justify-center rounded-full text-[10px] font-bold group-aria-checked:inline-flex"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="12"
+              height="12"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+          </span>
           <div
             class="flex h-20 items-end gap-2 rounded-lg p-3"
             style={`background-color: ${theme.swatches['--color-cdx-bg']}; color: ${theme.swatches['--color-cdx-text']}`}
@@ -138,7 +158,12 @@ const themes: ThemeWithSwatches[] = themeMetas.map(({ source, ...rest }) => ({
               style={`background-color: ${theme.swatches['--color-cdx-primary']}`}
             />
           </div>
-          <p class="text-cdx-text text-sm font-semibold">{theme.name}</p>
+          <p class="text-cdx-text flex items-center gap-2 text-sm font-semibold">
+            {theme.name}
+            <span class="text-cdx-primary hidden text-xs font-medium group-aria-checked:inline">
+              · Active
+            </span>
+          </p>
           <p class="text-cdx-text-secondary text-xs leading-relaxed">{theme.blurb}</p>
         </button>
       ))
