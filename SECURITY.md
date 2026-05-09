@@ -30,5 +30,5 @@ There is **no bug bounty programme**. This is a small open-source project mainta
 ## Out of scope
 
 - Attacks against the underlying `@cngxjs/compodocx` tool — report those at https://github.com/cngxjs/compodocx/security.
-- Third-party platforms (GitHub Pages, world4you DNS, npm registry) — report those to the platform owner.
+- Third-party platforms (GitHub Pages, npm registry) — report those to the platform owner.
 - Self-hosted forks of this site.
