@@ -249,19 +249,21 @@ const themeBundle = minifyCss(
       id="screenshot-lightbox"
       class="lightbox-dialog backdrop:bg-black/70 backdrop:backdrop-blur-sm"
       aria-label="Screenshot preview"
+      aria-describedby="lightbox-caption"
     >
       <button
         type="button"
-        class="lightbox-close bg-cdx-bg-elevated text-cdx-text hover:bg-cdx-bg-alt absolute right-3 top-3 z-10 inline-flex size-9 items-center justify-center rounded-full text-lg font-semibold shadow-lg"
+        class="lightbox-close bg-cdx-bg-elevated text-cdx-text hover:bg-cdx-bg-alt absolute -top-12 right-0 z-10 inline-flex size-9 items-center justify-center rounded-full text-lg font-semibold shadow-lg"
         aria-label="Close preview"
       >
         ×
       </button>
-      <img
-        id="lightbox-img"
-        alt=""
-        class="block max-h-[90vh] max-w-full rounded-xl object-contain"
-      />
+      <figure class="lightbox-figure">
+        <div id="lightbox-frame" class="lightbox-frame">
+          <img id="lightbox-img" alt="" />
+        </div>
+        <figcaption id="lightbox-caption" class="lightbox-caption" aria-live="polite"></figcaption>
+      </figure>
     </dialog>
 
     <style is:global>
@@ -272,10 +274,56 @@ const themeBundle = minifyCss(
         padding: 0;
         border: none;
         background: transparent;
-        max-width: min(92vw, 2048px);
-        max-height: 92vh;
-        width: max-content;
-        height: max-content;
+        overflow: visible;
+        width: min(2048px, 92vw);
+        max-height: calc(92vh - 3.5rem);
+        flex-direction: column;
+      }
+      .lightbox-dialog[open] {
+        display: flex;
+      }
+      .lightbox-figure {
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 auto;
+        min-height: 0;
+      }
+      .lightbox-frame {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 16 / 10;
+        max-height: 100%;
+        min-height: 0;
+        flex: 0 1 auto;
+        background-color: var(--color-cdx-bg-elevated);
+        background-size: cover;
+        background-position: center;
+        border-radius: 0.75rem;
+        overflow: hidden;
+      }
+      #lightbox-img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        opacity: 0;
+        transition: opacity 0.4s ease-out;
+      }
+      #lightbox-img[data-loaded] {
+        opacity: 1;
+      }
+      .lightbox-caption {
+        flex: 0 0 auto;
+        margin: 0;
+        padding: 0.75rem 0.25rem 0;
+        font-size: 0.875rem;
+        line-height: 1.45;
+        color: rgba(255, 255, 255, 0.85);
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+      }
+      .lightbox-caption:empty {
+        display: none;
       }
       .lightbox-dialog::backdrop {
         animation: lightbox-backdrop 200ms ease-out;
