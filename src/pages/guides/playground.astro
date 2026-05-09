@@ -102,19 +102,19 @@ const howToJsonLd = {
   <ul>
     <li>
       <strong>Inline snippet.</strong>
-      <code class="cdx-code">@playground &lt;title&gt;</code> followed by a fenced HTML or TS code
-      block in the JSDoc. Best for short single-template demos.
+      <code class="cdx-code">@playground &lt;title&gt;</code> followed by a fenced HTML or TS code block
+      in the JSDoc. Best for short single-template demos.
     </li>
     <li>
       <strong>HTML file reference.</strong>
-      <code class="cdx-code">@playground &lt;title&gt; ./path/to/file.html</code> &mdash; the file
-      body becomes the AppComponent template literal. Best for longer markup demos.
+      <code class="cdx-code">@playground &lt;title&gt; ./path/to/file.html</code> &mdash; the file body
+      becomes the AppComponent template literal. Best for longer markup demos.
     </li>
     <li>
       <strong>TS component file reference.</strong>
-      <code class="cdx-code">@playground &lt;title&gt; ./path/to/file.component.ts</code> &mdash; a
-      real <code class="cdx-code">@Component</code> class replaces the AppComponent. Best for
-      stateful demos with signals, event handlers, or composed widgets.
+      <code class="cdx-code">@playground &lt;title&gt; ./path/to/file.component.ts</code> &mdash; a real
+      <code class="cdx-code">@Component</code> class replaces the AppComponent. Best for stateful demos
+      with signals, event handlers, or composed widgets.
     </li>
   </ul>
 
@@ -144,16 +144,16 @@ export class MyButton { /* ... */ }`}
   />
 
   <p>
-    Multiple <code class="cdx-code">@playground</code> blocks render as a vertical stack of sections
-    in source order, each with its own &ldquo;Open in StackBlitz&rdquo; button. The tab is hidden
-    automatically when no block is parsed. Zero-config when you don&rsquo;t need it.
+    Multiple <code class="cdx-code">@playground</code> blocks render as a vertical stack of sections in
+    source order, each with its own &ldquo;Open in StackBlitz&rdquo; button. The tab is hidden automatically
+    when no block is parsed. Zero-config when you don&rsquo;t need it.
   </p>
 
   <h2>Mode 2 — HTML file reference</h2>
   <p>
-    Append a relative path ending in <code class="cdx-code">.html</code> to the title line. The
-    file&rsquo;s contents become the AppComponent template body. Path is resolved against the file
-    holding the JSDoc comment.
+    Append a relative path ending in <code class="cdx-code">.html</code> to the title line. The file&rsquo;s
+    contents become the AppComponent template body. Path is resolved against the file holding the JSDoc
+    comment.
   </p>
 
   <CodeBlock
@@ -185,10 +185,10 @@ export class MyButton { /* ... */ }`}
   <h2>Mode 3 — TS component file reference</h2>
   <p>
     Append a relative path ending in <code class="cdx-code">.ts</code>. The file must export a real
-    standalone <code class="cdx-code">@Component</code> class &mdash; it REPLACES the AppComponent
-    in the StackBlitz project entirely. Optional <code class="cdx-code">templateUrl</code>,
-    <code class="cdx-code">styleUrl</code>, <code class="cdx-code">styleUrls</code> siblings and
-    relative imports are walked and packed automatically.
+    standalone <code class="cdx-code">@Component</code> class &mdash; it REPLACES the AppComponent in
+    the StackBlitz project entirely. Optional <code class="cdx-code">templateUrl</code>,
+    <code class="cdx-code">styleUrl</code>, <code class="cdx-code">styleUrls</code> siblings and relative
+    imports are walked and packed automatically.
   </p>
 
   <CodeBlock
@@ -224,15 +224,13 @@ export class CounterExample {
   />
 
   <p>
-    Use <code class="cdx-code">selector: &lsquo;app-root&rsquo;</code> on the entry &mdash; that is
-    the host the scaffold bootstraps. The class name itself can be anything; compodocx appends
-    <code class="cdx-code">export &#123; YourClass as AppComponent &#125;</code> automatically so
-    the import in <code class="cdx-code">src/main.ts</code> resolves.
+    Use <code class="cdx-code">selector: &lsquo;app-root&rsquo;</code> on the entry &mdash; that is the
+    host the scaffold bootstraps. The class name itself can be anything; compodocx appends
+    <code class="cdx-code">export &#123; YourClass as AppComponent &#125;</code> automatically so the
+    import in <code class="cdx-code">src/main.ts</code> resolves.
   </p>
 
-  <p>
-    Recommended folder layout for a library component with multiple demos:
-  </p>
+  <p>Recommended folder layout for a library component with multiple demos:</p>
 
   <CodeBlock
     lang="text"
@@ -253,8 +251,8 @@ export class CounterExample {
   <h2>Authoring rules</h2>
   <ul>
     <li>
-      Title (text between <code class="cdx-code">@playground</code> and the optional path) is
-      required. Path-only tags (no title) are dropped with a build-time warning.
+      Title (text between <code class="cdx-code">@playground</code> and the optional path) is required.
+      Path-only tags (no title) are dropped with a build-time warning.
     </li>
     <li>
       Mutual exclusion: a tag with both a fileRef AND a fenced body is dropped with a
@@ -267,19 +265,19 @@ export class CounterExample {
     </li>
     <li>
       <code class="cdx-code">templateUrl</code>, <code class="cdx-code">styleUrl</code>,
-      <code class="cdx-code">styleUrls</code> in the entry must use string literals &mdash; template
-      literals are not parsed.
+      <code class="cdx-code">styleUrls</code> in the entry must use string literals &mdash; template literals
+      are not parsed.
     </li>
     <li>
-      Titles can contain slashes (<em>e.g.</em> &ldquo;A / B comparison&rdquo;) &mdash; only a
-      trailing path with <code class="cdx-code">.html</code>/<code class="cdx-code">.ts</code>
+      Titles can contain slashes (<em>e.g.</em> &ldquo;A / B comparison&rdquo;) &mdash; only a trailing
+      path with <code class="cdx-code">.html</code>/<code class="cdx-code">.ts</code>
       extension triggers file-ref mode.
     </li>
     <li>The Playground tab is component-only. Other entity types ignore the tag.</li>
     <li>
       Runs alongside <code class="cdx-code">@example</code> on the Info tab and
-      <code class="cdx-code">&lt;example-url&gt;</code> on the Example tab. All three can coexist on
-      the same component.
+      <code class="cdx-code">&lt;example-url&gt;</code> on the Example tab. All three can coexist on the
+      same component.
     </li>
   </ul>
 
@@ -309,31 +307,31 @@ export class CounterExample {
     At build time compodocx assembles a StackBlitz WebContainer-templated (<code class="cdx-code"
       >template: 'node'</code
     >) Angular CLI 21 project per block: a minimal <code class="cdx-code">main.ts</code>,
-    <code class="cdx-code">app.component.ts</code> that hosts your snippet (or IS your TS-mode
-    entry), the documented component&rsquo;s source plus any transitive imports, and a
+    <code class="cdx-code">app.component.ts</code> that hosts your snippet (or IS your TS-mode entry),
+    the documented component&rsquo;s source plus any transitive imports, and a
     <code class="cdx-code">package.json</code> with the dependency table.
   </p>
   <p>
-    The manifest&rsquo;s <code class="cdx-code">dependencies</code> map starts with the eight
-    Angular peers (<code class="cdx-code">@angular/core</code>,
+    The manifest&rsquo;s <code class="cdx-code">dependencies</code> map starts with the eight Angular
+    peers (<code class="cdx-code">@angular/core</code>,
     <code class="cdx-code">@angular/common</code>, <code class="cdx-code">@angular/compiler</code>,
     <code class="cdx-code">@angular/forms</code>, <code class="cdx-code">@angular/router</code>,
     <code class="cdx-code">@angular/animations</code>, and the
-    <code class="cdx-code">platform-browser</code> pair) all aligned on a single major derived from
-    your <code class="cdx-code">@angular/core</code>. Non-Angular runtime peers
+    <code class="cdx-code">platform-browser</code> pair) all aligned on a single major derived from your
+    <code class="cdx-code">@angular/core</code>. Non-Angular runtime peers
     <code class="cdx-code">zone.js</code>, <code class="cdx-code">rxjs</code>,
     <code class="cdx-code">tslib</code> are always present.
     <code class="cdx-code">@angular/material</code> and <code class="cdx-code">@angular/cdk</code> are
-    forwarded only when your <code class="cdx-code">package.json</code> declares them OR when
-    Material auto-detection scans recognise widget selectors in your demo.
+    forwarded only when your <code class="cdx-code">package.json</code> declares them OR when Material
+    auto-detection scans recognise widget selectors in your demo.
   </p>
   <p>
-    Beyond those tables, every bare-specifier import seen in any walked source or in your snippet
-    is auto-forwarded with the version your <code class="cdx-code">package.json</code> declares.
-    Missing roots are skipped silently. The
-    <code class="cdx-code">playgroundDependencies</code> config-only key (no CLI flag) lets you
-    inject extra packages or pin a specific version per build &mdash; useful for libraries the
-    consumer ships but doesn&rsquo;t install directly.
+    Beyond those tables, every bare-specifier import seen in any walked source or in your snippet is
+    auto-forwarded with the version your <code class="cdx-code">package.json</code> declares. Missing
+    roots are skipped silently. The
+    <code class="cdx-code">playgroundDependencies</code> config-only key (no CLI flag) lets you inject
+    extra packages or pin a specific version per build &mdash; useful for libraries the consumer ships
+    but doesn&rsquo;t install directly.
   </p>
   <p>
     Dependency walking is bounded: depth 3, 25 files maximum, 8000 characters per file. When the
@@ -345,10 +343,10 @@ export class CounterExample {
   <h2>Library-author workflow</h2>
   <p>
     Component-library authors who want first-class runnable demos &mdash; the way Angular Material
-    ships them &mdash; pair compodocx with a sibling dev-app inside the workspace. The library
-    lives at <code class="cdx-code">projects/&lt;library&gt;/</code>; a dev-app at
-    <code class="cdx-code">projects/dev-app/</code> imports the SAME example components compodocx
-    embeds in the docs. Single source of truth, no copy-paste drift.
+    ships them &mdash; pair compodocx with a sibling dev-app inside the workspace. The library lives
+    at <code class="cdx-code">projects/&lt;library&gt;/</code>; a dev-app at
+    <code class="cdx-code">projects/dev-app/</code> imports the SAME example components compodocx embeds
+    in the docs. Single source of truth, no copy-paste drift.
   </p>
   <p>The example folder layout sits inside each component:</p>
 
@@ -369,9 +367,9 @@ projects/dev-app/src/app/app.component.ts:
   />
 
   <p>
-    Run compodocx against the library&rsquo;s tsconfig (not the dev-app), and pin the library&rsquo;s
-    version in <code class="cdx-code">playgroundDependencies</code> if your published package
-    should appear in the StackBlitz <code class="cdx-code">package.json</code> alongside the inline
+    Run compodocx against the library&rsquo;s tsconfig (not the dev-app), and pin the
+    library&rsquo;s version in <code class="cdx-code">playgroundDependencies</code> if your published
+    package should appear in the StackBlitz <code class="cdx-code">package.json</code> alongside the inline
     sources:
   </p>
 

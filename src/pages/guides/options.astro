@@ -530,14 +530,15 @@ const groups: OptGroup[] = [
   {
     id: 'playground',
     heading: 'Playground (@playground)',
-    blurb: "Runnable StackBlitz demos via @playground JSDoc blocks. See the Playground guide for the full authoring story.",
+    blurb:
+      'Runnable StackBlitz demos via @playground JSDoc blocks. See the Playground guide for the full authoring story.',
     items: [
       {
         key: 'disablePlaygroundTab',
         cli: '--disablePlaygroundTab',
         type: 'boolean',
         default: 'false',
-        desc: "Hide the per-component Playground tab even when @playground blocks are parsed. Independent of --disableDependenciesTab. No effect on components without @playground blocks (the tab is already absent).",
+        desc: 'Hide the per-component Playground tab even when @playground blocks are parsed. Independent of --disableDependenciesTab. No effect on components without @playground blocks (the tab is already absent).',
       },
       {
         key: 'playgroundDependencies',
@@ -550,7 +551,8 @@ const groups: OptGroup[] = [
   {
     id: 'integrations',
     heading: 'Integrations',
-    blurb: 'Legacy StackBlitz @stackblitz tag, Google Analytics 4. For runnable demos prefer the modern @playground tag (see Playground group above).',
+    blurb:
+      'Legacy StackBlitz @stackblitz tag, Google Analytics 4. For runnable demos prefer the modern @playground tag (see Playground group above).',
     items: [
       {
         key: 'stackblitz',
