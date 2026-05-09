@@ -2,6 +2,36 @@
 import FeaturesLayout from '../../layouts/FeaturesLayout.astro';
 import CodeBlock from '../../components/CodeBlock.astro';
 
+const howToJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'Author a custom compodocx theme',
+  description:
+    'Three steps to ship your own compodocx theme: write a CSS file overriding --color-cdx-* tokens for light and dark, then pass it via --theme.',
+  totalTime: 'PT10M',
+  tool: [{ '@type': 'HowToTool', name: '@cngxjs/compodocx' }],
+  step: [
+    {
+      '@type': 'HowToStep',
+      position: 1,
+      name: 'Create a brand CSS file',
+      text: 'Create my-brand.css next to your tsconfig. Open with :root { } for the light mode block and .dark { } for the dark mode block.',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 2,
+      name: 'Override --color-cdx-* tokens',
+      text: 'Set --color-cdx-bg, --color-cdx-text, --color-cdx-primary, and any other tokens you want to brand. Unspecified tokens fall back to the default theme.',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 3,
+      name: 'Pass the file to compodocx',
+      text: 'Run compodocx with --theme ./my-brand.css. The theme is bundled into the static output and applies before paint, no FOUC.',
+    },
+  ],
+};
+
 const bundled = [
   ['Slate Noir', 'Pure neutral greys. The opinion-free default.'],
   ['Ocean', 'Deep teal, cool surfaces, soft tension borders.'],
@@ -18,6 +48,7 @@ const bundled = [
   currentSlug="themes"
   title="Themes — 8 bundled palettes & custom themes in compodocx"
   description="Eight bundled compodocx themes — Slate Noir, Ocean, Midnight, Nord, Rose Pine, Ember, Neon, Brutalist. Author your own by overriding --color-cdx-* tokens."
+  extraJsonLd={howToJsonLd}
 >
   <p class="text-cdx-text-secondary text-lg">
     Eight themes ship in the box. A theme is a CSS file that overrides the

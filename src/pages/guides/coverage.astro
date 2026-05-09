@@ -1,12 +1,43 @@
 ---
 import FeaturesLayout from '../../layouts/FeaturesLayout.astro';
 import CodeBlock from '../../components/CodeBlock.astro';
+
+const howToJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'Gate a CI build on documentation coverage',
+  description:
+    'Use compodocx --coverageMinimum to make CI fail when public-symbol documentation drops below your threshold.',
+  totalTime: 'PT5M',
+  tool: [{ '@type': 'HowToTool', name: '@cngxjs/compodocx' }],
+  step: [
+    {
+      '@type': 'HowToStep',
+      position: 1,
+      name: 'Pick a starting threshold',
+      text: 'Most projects start at 50% and ratchet up. Set whatever number reflects the strictness you can defend on every PR.',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 2,
+      name: 'Run compodocx with --coverageMinimum',
+      text: 'Add --coverageMinimum 80 to the docs build command in your CI pipeline. Anything below 80% public-symbol documentation will exit non-zero.',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 3,
+      name: 'Optionally scope to public API only',
+      text: 'Pass --publicApiOnly to compute coverage against the exported allow-list, so internal helpers do not drag the percentage down.',
+    },
+  ],
+};
 ---
 
 <FeaturesLayout
   currentSlug="coverage"
   title="Documentation Coverage — CI gating in compodocx"
   description="Per-symbol compodocx documentation coverage with CI threshold gating via --coverageMinimum. coverage.json with schemaVersion for dashboard ingestion."
+  extraJsonLd={howToJsonLd}
 >
   <p class="text-cdx-text-secondary text-lg">
     Every run produces a coverage report. The percentage of public symbols carrying at least a

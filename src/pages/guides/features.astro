@@ -15,15 +15,22 @@ import FeaturesLayout from '../../layouts/FeaturesLayout.astro';
     <div>
       <h2 class="text-cdx-text font-semibold">Modern Angular surface</h2>
       <ul class="text-cdx-text-secondary mt-3 space-y-2 text-sm">
-        <li>Standalone components, directives, pipes — no NgModule scaffolding required.</li>
+        <li>Standalone components, directives, pipes. No NgModule scaffolding required.</li>
         <li>
-          Signals, <code class="cdx-code">computed</code>, and <code class="cdx-code"
+          <a
+            href="https://angular.dev/guide/signals"
+            rel="noopener"
+            target="_blank"
+            class="text-cdx-primary underline-offset-2 hover:underline"
+          >
+            Signals<span class="sr-only"> (opens in new tab)</span>
+          </a>, <code class="cdx-code">computed</code>, and <code class="cdx-code"
             >linked-signal</code
           >
           members rendered as first-class fields with their derived-state dependencies.
         </li>
         <li>
-          <code class="cdx-code">inject()</code> DI alongside constructor DI — both surfaced in a unified
+          <code class="cdx-code">inject()</code> DI alongside constructor DI. Both surfaced in a unified
           dependencies block.
         </li>
         <li>
@@ -50,7 +57,7 @@ import FeaturesLayout from '../../layouts/FeaturesLayout.astro';
           override with <code class="cdx-code">--versionLabel</code>.
         </li>
         <li>
-          A version-switcher widget reads the manifest at runtime — append-only, semver-sorted, no
+          A version-switcher widget reads the manifest at runtime. Append-only, semver-sorted, no
           server config needed.
         </li>
         <li>
@@ -63,8 +70,8 @@ import FeaturesLayout from '../../layouts/FeaturesLayout.astro';
       <h2 class="text-cdx-text font-semibold">Tooling</h2>
       <ul class="text-cdx-text-secondary mt-3 space-y-2 text-sm">
         <li>
-          <code class="cdx-code">compodocx migrate</code> ports compodoc Handlebars overrides to JS partials
-          — subcommands for inspecting, single-template, full-template-folder, and CSS migration.
+          <code class="cdx-code">compodocx migrate</code> ports compodoc Handlebars overrides to JS partials.
+          Subcommands for inspecting, single-template, full-template-folder, and CSS migration.
         </li>
         <li>
           <code class="cdx-code">compodocx diff</code> compares two
@@ -91,7 +98,7 @@ import FeaturesLayout from '../../layouts/FeaturesLayout.astro';
           sidebar entity list, <code class="cdx-code">?</code> opens a shortcut overlay.
         </li>
         <li>Shiki syntax highlighting with per-theme light/dark pairs.</li>
-        <li>Flicker-free dark mode and theme switching — applied before paint, no FOUC.</li>
+        <li>Flicker-free dark mode and theme switching. Applied before paint, no FOUC.</li>
         <li>
           Optional Pagefind search index for production builds (opt-in via
           <code class="cdx-code">--search</code>).

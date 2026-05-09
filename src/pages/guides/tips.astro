@@ -8,7 +8,7 @@ import FeaturesLayout from '../../layouts/FeaturesLayout.astro';
   description="compodocx tips: monorepo layout, watch + serve dev loop, CI API diffs, narrow doc tsconfigs, multi-version setup, LLM-context exports, JSDoc preservation."
 >
   <p class="text-cdx-text-secondary text-lg">
-    Patterns that pay off in real projects. None of these are required — they&rsquo;re what we reach
+    Patterns that pay off in real projects. None of these are required. They&rsquo;re what we reach
     for once the basics are in place.
   </p>
 
@@ -21,40 +21,39 @@ import FeaturesLayout from '../../layouts/FeaturesLayout.astro';
     </li>
     <li>
       <strong class="text-cdx-text">Watch + serve.</strong>
-      <code class="cdx-code">--watch --serve</code> gives you instant feedback while authoring. The dev
-      server reuses production routing — what you see locally matches what ships.
+      <code class="cdx-code">--watch --serve</code> gives instant feedback while authoring. The dev server
+      reuses production routing, so what you see locally matches what ships.
     </li>
     <li>
       <strong class="text-cdx-text">Diff in CI on every PR.</strong>
       Generate a JSON snapshot per build (<code class="cdx-code">--exportFormat json</code>), commit
       it under <code class="cdx-code">snapshots/</code>, and run
       <code class="cdx-code">compodocx diff prev.json next.json</code> in CI. Exit code 2 fails the build
-      on breaking changes; pipe the JSON output to your bot of choice for PR comments.
+      on breaking changes. Pipe the JSON output to your bot of choice for PR comments.
     </li>
     <li>
       <strong class="text-cdx-text">LLM context for code review.</strong>
       <code class="cdx-code">--exportFormat llm-md</code> emits an LLM-context markdown bundle. Pipe it
       into <code class="cdx-code">llm</code>, <code class="cdx-code">claude</code>, or any tool that
-      accepts a markdown corpus — the bundle is sized and structured for direct consumption, with
+      accepts a markdown corpus. The bundle is sized and structured for direct consumption, with
       signatures capped to keep the prompt small.
     </li>
     <li>
       <strong class="text-cdx-text">Migrating from compodoc.</strong>
       <code class="cdx-code">compodocx migrate templates</code> ports a folder of Handlebars overrides
-      to JS partials in one shot. Use
+      to JS partials in one shot. Run
       <code class="cdx-code">compodocx migrate inspect</code> first to see what will change.
     </li>
     <li>
       <strong class="text-cdx-text">Keep your doc tsconfig narrow.</strong>
-      Exclude test files, storybook entries, dev-only fixtures. Heavy generic types render slower — a
-      smaller surface keeps cold builds fast and keeps the rendered docs focused on what consumers actually
-      use.
+      Exclude test files, storybook entries, dev-only fixtures. Heavy generic types render slower. A smaller
+      surface keeps cold builds fast and keeps the rendered docs focused on what consumers actually use.
     </li>
     <li>
       <strong class="text-cdx-text">Public API filtering.</strong>
       <code class="cdx-code">--publicApiOnly</code> restricts output to the symbols matching your public
-      API allow-list — useful when you ship internal helpers in the same package and don&rsquo;t want
-      them on the docs page.
+      API allow-list. Useful when you ship internal helpers in the same package and don&rsquo;t want them
+      on the docs page.
     </li>
     <li>
       <strong class="text-cdx-text">Preserve comments through the build.</strong>
