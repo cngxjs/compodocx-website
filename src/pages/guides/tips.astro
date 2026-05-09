@@ -79,39 +79,38 @@ const tips: Tip[] = [
     the basics are in place.
   </p>
 
-  <ul class="grid gap-5 lg:grid-cols-2" aria-label="Tips and patterns">
+  <ul class="space-y-4" aria-label="Tips and patterns">
     {
       tips.map((tip) => (
         <li>
           <article
             id={tip.id}
-            class="bg-cdx-bg-elevated flex h-full flex-col rounded-xl p-6 scroll-mt-24"
+            class="bg-cdx-bg-elevated flex gap-5 rounded-xl p-6 scroll-mt-24 sm:gap-6 sm:p-7"
           >
-            <header class="flex items-start gap-3">
-              <span
-                aria-hidden="true"
-                class={`${tip.iconColor} bg-cdx-bg-alt inline-flex size-10 shrink-0 items-center justify-center rounded-lg`}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  set:html={tip.iconBody}
-                />
-              </span>
-              <h2 class="text-cdx-text mt-1 text-lg font-semibold tracking-tight">{tip.title}</h2>
-            </header>
-
-            <p
-              class="text-cdx-text-secondary mt-4 text-sm leading-relaxed"
-              set:html={tip.body}
-            />
+            <span
+              aria-hidden="true"
+              class={`${tip.iconColor} bg-cdx-bg-alt inline-flex size-11 shrink-0 items-center justify-center rounded-lg`}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                set:html={tip.iconBody}
+              />
+            </span>
+            <div class="min-w-0 flex-1">
+              <h2 class="text-cdx-text text-lg font-semibold tracking-tight">{tip.title}</h2>
+              <p
+                class="text-cdx-text-secondary mt-2 leading-relaxed"
+                set:html={tip.body}
+              />
+            </div>
           </article>
         </li>
       ))
