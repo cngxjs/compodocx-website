@@ -72,8 +72,6 @@ public/               favicon, manifest, og-image, robots.txt, CNAME
 scripts/              token sync, screenshot capture, og + lqip generators
 ```
 
-For deeper conventions (theming system, JSON-LD strategy, ARIA patterns, the inline theme bundle, view-transition state preservation), see [`CLAUDE.md`](CLAUDE.md).
-
 ## Contributing
 
 Pull requests are welcome — typo fixes, content additions, visual improvements, accessibility fixes. See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the workflow and what fits this repo.
