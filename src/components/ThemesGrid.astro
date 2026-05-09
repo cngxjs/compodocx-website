@@ -138,21 +138,209 @@ const themes: ThemeWithSwatches[] = themeMetas.map(({ source, ...rest }) => ({
             </svg>
           </span>
           <div
-            class="flex h-20 items-end gap-2 rounded-lg p-3"
-            style={`background-color: ${theme.swatches['--color-cdx-bg']}; color: ${theme.swatches['--color-cdx-text']}`}
+            class="rounded-lg ring-1 ring-black/10 overflow-hidden dark:ring-white/10"
+            aria-hidden="true"
           >
-            <div
-              class="size-7 rounded-md ring-1 ring-black/10 dark:ring-white/10"
-              style={`background-color: ${theme.swatches['--color-cdx-bg-elevated']}`}
-            />
-            <div
-              class="size-7 rounded-md ring-1 ring-black/10 dark:ring-white/10"
-              style={`background-color: ${theme.swatches['--color-cdx-bg-alt']}`}
-            />
-            <div
-              class="size-7 rounded-md ring-1 ring-black/10 dark:ring-white/10"
-              style={`background-color: ${theme.swatches['--color-cdx-primary']}`}
-            />
+            <svg
+              viewBox="0 0 100 60"
+              xmlns="http://www.w3.org/2000/svg"
+              class="block w-full"
+              preserveAspectRatio="xMidYMid meet"
+            >
+              <rect width="100" height="60" fill={theme.swatches['--color-cdx-bg']} />
+              <rect
+                x="0"
+                y="0"
+                width="100"
+                height="9"
+                fill={theme.swatches['--color-cdx-bg-elevated']}
+              />
+              <circle cx="6" cy="4.5" r="1.6" fill={theme.swatches['--color-cdx-primary']} />
+              <rect
+                x="11"
+                y="3.5"
+                width="8"
+                height="2"
+                rx="1"
+                fill={theme.swatches['--color-cdx-text']}
+                fill-opacity="0.6"
+              />
+              <rect
+                x="22"
+                y="3.5"
+                width="8"
+                height="2"
+                rx="1"
+                fill={theme.swatches['--color-cdx-text']}
+                fill-opacity="0.35"
+              />
+              <rect
+                x="33"
+                y="3.5"
+                width="8"
+                height="2"
+                rx="1"
+                fill={theme.swatches['--color-cdx-text']}
+                fill-opacity="0.35"
+              />
+              <rect
+                x="0"
+                y="9"
+                width="22"
+                height="51"
+                fill={theme.swatches['--color-cdx-bg-alt']}
+              />
+              <rect
+                x="3"
+                y="14"
+                width="16"
+                height="2"
+                rx="1"
+                fill={theme.swatches['--color-cdx-text']}
+                fill-opacity="0.55"
+              />
+              <rect
+                x="3"
+                y="19"
+                width="14"
+                height="2"
+                rx="1"
+                fill={theme.swatches['--color-cdx-text']}
+                fill-opacity="0.35"
+              />
+              <rect
+                x="3"
+                y="24"
+                width="15"
+                height="2"
+                rx="1"
+                fill={theme.swatches['--color-cdx-primary']}
+              />
+              <rect
+                x="3"
+                y="29"
+                width="13"
+                height="2"
+                rx="1"
+                fill={theme.swatches['--color-cdx-text']}
+                fill-opacity="0.35"
+              />
+              <rect
+                x="3"
+                y="34"
+                width="14"
+                height="2"
+                rx="1"
+                fill={theme.swatches['--color-cdx-text']}
+                fill-opacity="0.35"
+              />
+              <rect
+                x="26"
+                y="14"
+                width="40"
+                height="3"
+                rx="1"
+                fill={theme.swatches['--color-cdx-text']}
+                fill-opacity="0.85"
+              />
+              <rect
+                x="26"
+                y="20"
+                width="60"
+                height="1.5"
+                rx="0.5"
+                fill={theme.swatches['--color-cdx-text']}
+                fill-opacity="0.35"
+              />
+              <rect
+                x="26"
+                y="23"
+                width="55"
+                height="1.5"
+                rx="0.5"
+                fill={theme.swatches['--color-cdx-text']}
+                fill-opacity="0.35"
+              />
+              <rect
+                x="26"
+                y="26"
+                width="40"
+                height="1.5"
+                rx="0.5"
+                fill={theme.swatches['--color-cdx-text']}
+                fill-opacity="0.35"
+              />
+              <rect
+                x="26"
+                y="32"
+                width="65"
+                height="10"
+                rx="1.2"
+                fill={theme.swatches['--color-cdx-bg-elevated']}
+              />
+              <rect
+                x="29"
+                y="34.5"
+                width="22"
+                height="1.6"
+                rx="0.5"
+                fill={theme.swatches['--color-cdx-text']}
+                fill-opacity="0.7"
+              />
+              <rect
+                x="29"
+                y="37.5"
+                width="40"
+                height="1.2"
+                rx="0.5"
+                fill={theme.swatches['--color-cdx-text']}
+                fill-opacity="0.35"
+              />
+              <rect
+                x="29"
+                y="40"
+                width="32"
+                height="1.2"
+                rx="0.5"
+                fill={theme.swatches['--color-cdx-text']}
+                fill-opacity="0.35"
+              />
+              <rect
+                x="26"
+                y="44"
+                width="65"
+                height="10"
+                rx="1.2"
+                fill={theme.swatches['--color-cdx-bg-elevated']}
+              />
+              <rect
+                x="29"
+                y="46.5"
+                width="20"
+                height="1.6"
+                rx="0.5"
+                fill={theme.swatches['--color-cdx-text']}
+                fill-opacity="0.7"
+              />
+              <rect
+                x="29"
+                y="49.5"
+                width="44"
+                height="1.2"
+                rx="0.5"
+                fill={theme.swatches['--color-cdx-text']}
+                fill-opacity="0.35"
+              />
+              <rect
+                x="29"
+                y="52"
+                width="34"
+                height="1.2"
+                rx="0.5"
+                fill={theme.swatches['--color-cdx-text']}
+                fill-opacity="0.35"
+              />
+            </svg>
           </div>
           <p class="text-cdx-text flex items-center gap-2 text-sm font-semibold">
             {theme.name}

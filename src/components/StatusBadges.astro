@@ -1,20 +1,58 @@
 ---
-async function fetchNpmVersion(): Promise<string | null> {
+async function fetchJson<T>(url: string): Promise<T | null> {
   try {
-    const res = await fetch('https://registry.npmjs.org/@cngxjs/compodocx/latest', {
-      headers: { Accept: 'application/json' },
-    });
+    const res = await fetch(url, { headers: { Accept: 'application/json' } });
     if (!res.ok) return null;
-    const data = (await res.json()) as { version?: string };
-    return data.version ?? null;
+    return (await res.json()) as T;
   } catch {
     return null;
   }
 }
 
-const version = await fetchNpmVersion();
 const repoUrl = 'https://github.com/cngxjs/compodocx';
 const pkgUrl = 'https://www.npmjs.com/package/@cngxjs/compodocx';
+
+const [npmData, downloadsData, repoData, releaseData] = await Promise.all([
+  fetchJson<{ version?: string }>('https://registry.npmjs.org/@cngxjs/compodocx/latest'),
+  fetchJson<{ downloads?: number }>(
+    'https://api.npmjs.org/downloads/point/last-week/@cngxjs/compodocx',
+  ),
+  fetchJson<{ stargazers_count?: number }>('https://api.github.com/repos/cngxjs/compodocx'),
+  fetchJson<{ tag_name?: string; published_at?: string }>(
+    'https://api.github.com/repos/cngxjs/compodocx/releases/latest',
+  ),
+]);
+
+const version = npmData?.version ?? null;
+const weeklyDownloads = downloadsData?.downloads ?? null;
+const stars = repoData?.stargazers_count ?? null;
+const releaseDate = releaseData?.published_at ?? null;
+
+function formatNum(n: number): string {
+  if (n >= 1000) return `${(n / 1000).toFixed(1).replace(/\.0$/, '')}K`;
+  return n.toString();
+}
+
+function relativeTime(iso: string): string | null {
+  try {
+    const then = new Date(iso).getTime();
+    if (Number.isNaN(then)) return null;
+    const diffMs = then - Date.now();
+    const diffDays = Math.round(diffMs / 86_400_000);
+    const rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' });
+    if (Math.abs(diffDays) >= 30) return rtf.format(Math.round(diffDays / 30), 'month');
+    if (Math.abs(diffDays) >= 7) return rtf.format(Math.round(diffDays / 7), 'week');
+    return rtf.format(diffDays, 'day');
+  } catch {
+    return null;
+  }
+}
+
+const releaseRelative = releaseDate ? relativeTime(releaseDate) : null;
+
+const pillBase =
+  'bg-cdx-bg-elevated text-cdx-text-secondary inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium';
+const pillLink = `${pillBase} hover:text-cdx-text transition-colors`;
 ---
 
 <section class="bg-cdx-bg-alt/30 border-cdx-border border-y" aria-label="Project status">
@@ -23,27 +61,132 @@ const pkgUrl = 'https://www.npmjs.com/package/@cngxjs/compodocx';
       href={pkgUrl}
       rel="noopener"
       target="_blank"
-      aria-label={`npm package version ${version ?? 'latest'} (opens in new tab)`}
-      class="bg-cdx-bg-elevated text-cdx-text-secondary hover:text-cdx-text inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium"
+      aria-label={`npm package, version ${version ?? 'latest'} (opens in new tab)`}
+      class={pillLink}
     >
-      <span class="text-cdx-text-muted" aria-hidden="true">npm</span>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="13"
+        height="13"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        aria-hidden="true"
+        class="text-cdx-text-muted"
+      >
+        <path d="M0 0v24h24V0H0zm19.2 19.2h-4.8V9.6H9.6v9.6H4.8V4.8h14.4v14.4z"></path>
+      </svg>
       <span class="text-cdx-text font-mono" aria-hidden="true">
         {version ? `v${version}` : 'latest'}
       </span>
     </a>
-    <span
-      aria-label="Node.js version 22 or higher required"
-      class="bg-cdx-bg-elevated text-cdx-text-secondary inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium"
-    >
+
+    {
+      weeklyDownloads !== null && (
+        <a
+          href={pkgUrl}
+          rel="noopener"
+          target="_blank"
+          aria-label={`${weeklyDownloads} weekly downloads on npm (opens in new tab)`}
+          class={pillLink}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="13"
+            height="13"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+            class="text-cdx-text-muted"
+          >
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+            <polyline points="7 10 12 15 17 10" />
+            <line x1="12" y1="15" x2="12" y2="3" />
+          </svg>
+          <span class="text-cdx-text font-mono" aria-hidden="true">
+            {formatNum(weeklyDownloads)}/wk
+          </span>
+        </a>
+      )
+    }
+
+    {
+      stars !== null && stars > 0 && (
+        <a
+          href={repoUrl}
+          rel="noopener"
+          target="_blank"
+          aria-label={`${stars} stars on GitHub (opens in new tab)`}
+          class={pillLink}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="13"
+            height="13"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+            class="text-cdx-text-muted"
+          >
+            <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" />
+          </svg>
+          <span class="text-cdx-text font-mono" aria-hidden="true">
+            {formatNum(stars)}
+          </span>
+        </a>
+      )
+    }
+
+    {
+      releaseRelative && (
+        <a
+          href={`${repoUrl}/releases/latest`}
+          rel="noopener"
+          target="_blank"
+          aria-label={`Latest release ${releaseRelative} (opens in new tab)`}
+          class={pillLink}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="13"
+            height="13"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            aria-hidden="true"
+            class="text-cdx-text-muted"
+          >
+            <path d="M20.59 13.41 13.42 20.58a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" />
+            <line x1="7" y1="7" x2="7.01" y2="7" />
+          </svg>
+          <span class="text-cdx-text" aria-hidden="true">
+            {releaseRelative}
+          </span>
+        </a>
+      )
+    }
+
+    <span aria-label="Node.js version 22 or higher required" class={pillBase}>
       <span class="text-cdx-text-muted" aria-hidden="true">node</span>
       <span class="text-cdx-text font-mono" aria-hidden="true">≥ 22</span>
     </span>
+
     <a
       href={`${repoUrl}/blob/develop/LICENSE`}
       rel="noopener"
       target="_blank"
       aria-label="MIT license (opens in new tab)"
-      class="bg-cdx-bg-elevated text-cdx-text-secondary hover:text-cdx-text inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-medium"
+      class={pillLink}
     >
       <span class="text-cdx-text-muted" aria-hidden="true">license</span>
       <span class="text-cdx-text" aria-hidden="true">MIT</span>
