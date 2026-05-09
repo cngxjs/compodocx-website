@@ -1,0 +1,111 @@
+---
+import { Image, getImage } from 'astro:assets';
+import SectionEyebrow from './SectionEyebrow.astro';
+
+import multiVersionLight from '../assets/screenshots/multi-version-light.png';
+import multiVersionDark from '../assets/screenshots/multi-version-dark.png';
+
+const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono text-xs';
+const altText =
+  'compodocx component page with the version-switcher dropdown open in the topbar, showing v1.1.0 active and v1.0.0 below';
+
+const fullLight = (
+  await getImage({ src: multiVersionLight, width: 2048, format: 'avif', quality: 80 })
+).src;
+const fullDark = (
+  await getImage({ src: multiVersionDark, width: 2048, format: 'avif', quality: 80 })
+).src;
+---
+
+<section class="mx-auto max-w-6xl px-4 py-24" aria-labelledby="multi-version-heading">
+  <div class="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
+    <figure class="lg:order-1">
+      <button
+        type="button"
+        class="screenshot-zoom group bg-cdx-bg-elevated relative block aspect-[16/10] w-full cursor-zoom-in overflow-hidden rounded-xl"
+        data-zoom-light={fullLight}
+        data-zoom-dark={fullDark}
+        data-zoom-alt={altText}
+        aria-label="View multi-version switcher screenshot at full resolution"
+      >
+        <Image
+          src={multiVersionLight}
+          alt={altText}
+          class="absolute inset-0 size-full object-cover dark:hidden"
+          loading="lazy"
+          widths={[640, 960, 1280]}
+          sizes="(min-width: 1024px) 512px, 100vw"
+        />
+        <Image
+          src={multiVersionDark}
+          alt={altText}
+          class="absolute inset-0 hidden size-full object-cover dark:block"
+          loading="lazy"
+          widths={[640, 960, 1280]}
+          sizes="(min-width: 1024px) 512px, 100vw"
+        />
+        <span
+          aria-hidden="true"
+          class="bg-cdx-bg-elevated/90 text-cdx-text-secondary absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium opacity-0 backdrop-blur transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.3-4.3"></path>
+            <path d="M11 8v6"></path>
+            <path d="M8 11h6"></path>
+          </svg>
+          Click to zoom
+        </span>
+      </button>
+    </figure>
+
+    <div class="lg:order-2">
+      <SectionEyebrow text="Versioning" />
+      <h2
+        id="multi-version-heading"
+        class="text-cdx-text mt-3 text-3xl font-semibold tracking-tight"
+      >
+        Ship docs for every release on a single domain
+      </h2>
+      <p class="text-cdx-text-secondary mt-4">
+        Multi-version output writes each release into its own folder under one root. A
+        <code class={inlineCode}>versions.json</code> manifest powers a runtime version-switcher in the
+        topbar — append-only, semver-sorted, no server-side config.
+      </p>
+      <ul class="text-cdx-text-secondary mt-6 space-y-3 text-sm">
+        <li class="flex gap-3">
+          <span class="text-cdx-primary mt-0.5" aria-hidden="true">→</span>
+          <span>
+            Version label auto-detected from the nearest <code class={inlineCode}>package.json</code
+            >
+            — overridable with <code class={inlineCode}>--versionLabel</code>.
+          </span>
+        </li>
+        <li class="flex gap-3">
+          <span class="text-cdx-primary mt-0.5" aria-hidden="true">→</span>
+          <span>
+            Manifest is append-only and deduplicated by label — past links never break when a new
+            release ships.
+          </span>
+        </li>
+        <li class="flex gap-3">
+          <span class="text-cdx-primary mt-0.5" aria-hidden="true">→</span>
+          <span>
+            Switcher reads the manifest at runtime — works on GitHub Pages, S3, intranets, even
+            <code class={inlineCode}>file://</code>.
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>

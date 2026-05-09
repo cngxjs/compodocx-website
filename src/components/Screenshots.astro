@@ -1,34 +1,71 @@
 ---
+import { Image, getImage } from 'astro:assets';
 import SectionEyebrow from './SectionEyebrow.astro';
+
+import componentInfoLight from '../assets/screenshots/component-info-light.png';
+import componentInfoDark from '../assets/screenshots/component-info-dark.png';
+import componentApiLight from '../assets/screenshots/component-api-light.png';
+import componentApiDark from '../assets/screenshots/component-api-dark.png';
+import projectGraphLight from '../assets/screenshots/project-graph-light.png';
+import projectGraphDark from '../assets/screenshots/project-graph-dark.png';
+import sourceViewerLight from '../assets/screenshots/source-viewer-light.png';
+import sourceViewerDark from '../assets/screenshots/source-viewer-dark.png';
 
 interface Shot {
   id: string;
   label: string;
   caption: string;
+  light: ImageMetadata;
+  dark: ImageMetadata;
+  alt: string;
 }
 
 const shots: Shot[] = [
   {
-    id: 'component-page',
+    id: 'component-info',
     label: 'Component Page',
-    caption: 'Standalone component page with Info / API / DOM Tree tabs and the theming aside.',
+    caption:
+      'Every standalone component, directive, and pipe gets its own page with imports, providers, and member cards.',
+    light: componentInfoLight,
+    dark: componentInfoDark,
+    alt: 'Generated compodocx component page showing imports, description, and an example block',
   },
   {
-    id: 'theming-tab',
-    label: 'Theming Tab',
-    caption: 'Per-component theming tokens listed with live preview swatches.',
+    id: 'component-api',
+    label: 'API Surface',
+    caption:
+      'Inputs, outputs, signals, computed, and linked-signal members — every modern Angular surface as a flat, scannable list.',
+    light: componentApiLight,
+    dark: componentApiDark,
+    alt: 'API tab with grouped index of properties, methods, inputs, outputs, derived state, host bindings, and accessors',
+  },
+  {
+    id: 'project-graph',
+    label: 'Dependency Graph',
+    caption:
+      'Interactive graph showing how your project connects — clickable nodes, deep-linked panels, smooth zoom.',
+    light: projectGraphLight,
+    dark: projectGraphDark,
+    alt: 'Project overview page with an interactive force-directed dependency graph of components, directives, pipes, modules, and injectables',
   },
   {
     id: 'source-viewer',
     label: 'Source Viewer',
-    caption: 'Shiki-highlighted source with line links and copy-anchor support.',
-  },
-  {
-    id: 'multi-version',
-    label: 'Multi-Version Switcher',
-    caption: 'Top-bar pill switcher reading versions.json — works across the entire docs surface.',
+    caption:
+      'Shiki syntax highlighting with a VSCode-style sticky source scope — the surrounding class and method stay pinned as you scroll.',
+    light: sourceViewerLight,
+    dark: sourceViewerDark,
+    alt: 'Source viewer showing the signal-card component file with line numbers, syntax highlighting, and a sticky stack of the enclosing class and method',
   },
 ];
+
+const enrichedShots = await Promise.all(
+  shots.map(async (s) => ({
+    ...s,
+    fullLight: (await getImage({ src: s.light, width: 2048, format: 'avif', quality: 80 })).src,
+    fullDark: (await getImage({ src: s.dark, width: 2048, format: 'avif', quality: 80 })).src,
+  })),
+);
 ---
 
 <section class="mx-auto max-w-6xl px-4 py-24" aria-labelledby="screenshots-heading">
@@ -48,7 +85,7 @@ const shots: Shot[] = [
       class="border-cdx-border flex flex-wrap gap-1 border-b"
     >
       {
-        shots.map((shot, index) => (
+        enrichedShots.map((shot, index) => (
           <button
             type="button"
             role="tab"
@@ -65,7 +102,7 @@ const shots: Shot[] = [
     </div>
 
     {
-      shots.map((shot, index) => (
+      enrichedShots.map((shot, index) => (
         <div
           role="tabpanel"
           id={`panel-${shot.id}`}
@@ -74,23 +111,53 @@ const shots: Shot[] = [
           class="mt-6"
         >
           <figure>
-            <div class="bg-cdx-bg-elevated relative aspect-[16/10] overflow-hidden rounded-xl">
-              <div class="absolute inset-0 flex items-center justify-center">
-                <div class="text-center">
-                  <p class="text-cdx-text-muted font-mono text-xs tracking-wider uppercase">
-                    {shot.label}
-                  </p>
-                  <p class="text-cdx-text-muted/60 mt-2 text-xs">screenshot pending</p>
-                  <p class="text-cdx-text-muted/40 mt-4 font-mono text-[10px]">
-                    npm run sync:screenshots
-                  </p>
-                </div>
-              </div>
-              <div
-                aria-hidden="true"
-                class="from-cdx-bg-alt/0 via-cdx-bg-alt/40 to-cdx-bg-alt/0 absolute inset-x-0 top-0 h-12 bg-gradient-to-b"
+            <button
+              type="button"
+              class="screenshot-zoom group bg-cdx-bg-elevated relative block aspect-[16/10] w-full cursor-zoom-in overflow-hidden rounded-xl"
+              data-zoom-light={shot.fullLight}
+              data-zoom-dark={shot.fullDark}
+              data-zoom-alt={shot.alt}
+              aria-label={`View ${shot.label} screenshot at full resolution`}
+            >
+              <Image
+                src={shot.light}
+                alt={shot.alt}
+                class="absolute inset-0 size-full object-cover dark:hidden"
+                loading={index === 0 ? 'eager' : 'lazy'}
+                widths={[640, 960, 1280]}
+                sizes="(min-width: 1024px) 1024px, 100vw"
               />
-            </div>
+              <Image
+                src={shot.dark}
+                alt={shot.alt}
+                class="absolute inset-0 hidden size-full object-cover dark:block"
+                loading={index === 0 ? 'eager' : 'lazy'}
+                widths={[640, 960, 1280]}
+                sizes="(min-width: 1024px) 1024px, 100vw"
+              />
+              <span
+                aria-hidden="true"
+                class="bg-cdx-bg-elevated/90 text-cdx-text-secondary absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium opacity-0 backdrop-blur transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <circle cx="11" cy="11" r="8" />
+                  <path d="m21 21-4.3-4.3" />
+                  <path d="M11 8v6" />
+                  <path d="M8 11h6" />
+                </svg>
+                Click to zoom
+              </span>
+            </button>
             <figcaption class="text-cdx-text-secondary mt-3 text-sm">{shot.caption}</figcaption>
           </figure>
         </div>

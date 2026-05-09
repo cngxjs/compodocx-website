@@ -1,0 +1,102 @@
+---
+import { Image, getImage } from 'astro:assets';
+import SectionEyebrow from './SectionEyebrow.astro';
+
+import coverageLight from '../assets/screenshots/coverage-report-light.png';
+import coverageDark from '../assets/screenshots/coverage-report-dark.png';
+
+const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono text-xs';
+const altText =
+  'Documentation coverage page with a donut chart, totals, and a sortable list of components by coverage percentage';
+
+const fullLight = (await getImage({ src: coverageLight, width: 2048, format: 'avif', quality: 80 }))
+  .src;
+const fullDark = (await getImage({ src: coverageDark, width: 2048, format: 'avif', quality: 80 }))
+  .src;
+---
+
+<section class="mx-auto max-w-6xl px-4 py-24" aria-labelledby="coverage-heading">
+  <div class="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
+    <div>
+      <SectionEyebrow text="CI" />
+      <h2 id="coverage-heading" class="text-cdx-text mt-3 text-3xl font-semibold tracking-tight">
+        Catch undocumented surface before it ships
+      </h2>
+      <p class="text-cdx-text-secondary mt-4">
+        Per-symbol coverage rolls up into a sortable report — what&rsquo;s documented, what
+        isn&rsquo;t, broken down by entity kind. Set
+        <code class={inlineCode}>--coverageMinimum</code> to fail your build below your threshold.
+      </p>
+      <ul class="text-cdx-text-secondary mt-6 space-y-3 text-sm">
+        <li class="flex gap-3">
+          <span class="text-cdx-primary mt-0.5" aria-hidden="true">→</span>
+          <span> Sortable list of undocumented symbols with deep links straight into source. </span>
+        </li>
+        <li class="flex gap-3">
+          <span class="text-cdx-primary mt-0.5" aria-hidden="true">→</span>
+          <span>
+            Breakdown by component, directive, pipe, class, and interface — see exactly where the
+            gaps are.
+          </span>
+        </li>
+        <li class="flex gap-3">
+          <span class="text-cdx-primary mt-0.5" aria-hidden="true">→</span>
+          <span>
+            <code class={inlineCode}>--publicApiOnly</code> scopes the report to your allow-list so internal
+            helpers don&rsquo;t drag the percentage down.
+          </span>
+        </li>
+      </ul>
+    </div>
+
+    <figure>
+      <button
+        type="button"
+        class="screenshot-zoom group bg-cdx-bg-elevated relative block aspect-[16/10] w-full cursor-zoom-in overflow-hidden rounded-xl"
+        data-zoom-light={fullLight}
+        data-zoom-dark={fullDark}
+        data-zoom-alt={altText}
+        aria-label="View documentation coverage screenshot at full resolution"
+      >
+        <Image
+          src={coverageLight}
+          alt={altText}
+          class="absolute inset-0 size-full object-cover dark:hidden"
+          loading="lazy"
+          widths={[640, 960, 1280]}
+          sizes="(min-width: 1024px) 512px, 100vw"
+        />
+        <Image
+          src={coverageDark}
+          alt={altText}
+          class="absolute inset-0 hidden size-full object-cover dark:block"
+          loading="lazy"
+          widths={[640, 960, 1280]}
+          sizes="(min-width: 1024px) 512px, 100vw"
+        />
+        <span
+          aria-hidden="true"
+          class="bg-cdx-bg-elevated/90 text-cdx-text-secondary absolute right-3 top-3 inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-medium opacity-0 backdrop-blur transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <circle cx="11" cy="11" r="8"></circle>
+            <path d="m21 21-4.3-4.3"></path>
+            <path d="M11 8v6"></path>
+            <path d="M8 11h6"></path>
+          </svg>
+          Click to zoom
+        </span>
+      </button>
+    </figure>
+  </div>
+</section>
