@@ -1,6 +1,31 @@
 ---
 import FeaturesLayout from '../../layouts/FeaturesLayout.astro';
 import CodeBlock from '../../components/CodeBlock.astro';
+import defaultCss from '../../styles/vendor/compodocx/compodocx.css?raw';
+import oceanCss from '../../styles/vendor/compodocx/themes/ocean.css?raw';
+import midnightCss from '../../styles/vendor/compodocx/themes/midnight.css?raw';
+import nordCss from '../../styles/vendor/compodocx/themes/nord.css?raw';
+import rosePineCss from '../../styles/vendor/compodocx/themes/rose-pine.css?raw';
+import emberCss from '../../styles/vendor/compodocx/themes/ember.css?raw';
+import neonCss from '../../styles/vendor/compodocx/themes/neon.css?raw';
+import brutalistCss from '../../styles/vendor/compodocx/themes/brutalist.css?raw';
+
+const SWATCH_TOKENS = [
+  '--color-cdx-bg',
+  '--color-cdx-bg-elevated',
+  '--color-cdx-bg-alt',
+  '--color-cdx-primary',
+  '--color-cdx-text',
+];
+
+function extractTokens(css: string): Record<string, string> {
+  const out: Record<string, string> = {};
+  for (const token of SWATCH_TOKENS) {
+    const match = css.match(new RegExp(`${token}\\s*:\\s*([^;]+);`));
+    if (match) out[token] = match[1].trim();
+  }
+  return out;
+}
 
 const howToJsonLd = {
   '@context': 'https://schema.org',
@@ -32,15 +57,62 @@ const howToJsonLd = {
   ],
 };
 
-const bundled = [
-  ['Slate Noir', 'Pure neutral greys. The opinion-free default.'],
-  ['Ocean', 'Deep teal, cool surfaces, soft tension borders.'],
-  ['Midnight', 'Indigo night, low contrast, focus-friendly.'],
-  ['Nord', 'Arctic palette, frost blue, calm primary.'],
-  ['Rose Pine', 'Warm rose, muted greens, golden accents.'],
-  ['Ember', 'Warm amber on ember-grey, low-glare reading.'],
-  ['Neon', 'High-contrast electric primary on dark slate.'],
-  ['Brutalist', 'Hard edges, raw concrete, maximum legibility.'],
+interface Bundled {
+  name: string;
+  flag: string;
+  blurb: string;
+  swatches: Record<string, string>;
+}
+
+const bundled: Bundled[] = [
+  {
+    name: 'Slate Noir',
+    flag: 'default',
+    blurb: 'Pure neutral greys. The opinion-free default.',
+    swatches: extractTokens(defaultCss),
+  },
+  {
+    name: 'Ocean',
+    flag: 'ocean',
+    blurb: 'Deep teal, cool surfaces, soft tension borders.',
+    swatches: extractTokens(oceanCss),
+  },
+  {
+    name: 'Midnight',
+    flag: 'midnight',
+    blurb: 'Indigo night, low contrast, focus-friendly.',
+    swatches: extractTokens(midnightCss),
+  },
+  {
+    name: 'Nord',
+    flag: 'nord',
+    blurb: 'Arctic palette, frost blue, calm primary.',
+    swatches: extractTokens(nordCss),
+  },
+  {
+    name: 'Rose Pine',
+    flag: 'rose-pine',
+    blurb: 'Warm rose, muted greens, golden accents.',
+    swatches: extractTokens(rosePineCss),
+  },
+  {
+    name: 'Ember',
+    flag: 'ember',
+    blurb: 'Warm amber on ember-grey, low-glare reading.',
+    swatches: extractTokens(emberCss),
+  },
+  {
+    name: 'Neon',
+    flag: 'neon',
+    blurb: 'High-contrast electric primary on dark slate.',
+    swatches: extractTokens(neonCss),
+  },
+  {
+    name: 'Brutalist',
+    flag: 'brutalist',
+    blurb: 'Hard edges, raw concrete, maximum legibility.',
+    swatches: extractTokens(brutalistCss),
+  },
 ];
 
 interface TokenGroup {
@@ -266,11 +338,31 @@ const totalTokens = tokenGroups.reduce(
   </p>
 
   <h2>Bundled themes</h2>
-  <ul class="text-cdx-text-secondary grid gap-2 text-sm md:grid-cols-2">
+  <ul class="grid gap-3 sm:grid-cols-2" aria-label="Bundled compodocx themes">
     {
-      bundled.map(([name, blurb]) => (
+      bundled.map((t) => (
         <li>
-          <span class="text-cdx-text font-semibold">{name}</span> — {blurb}
+          <article class="bg-cdx-bg-elevated flex h-full flex-col gap-3 rounded-xl p-5">
+            <div class="flex items-start justify-between gap-3">
+              <div class="min-w-0">
+                <h3 class="text-cdx-text text-base font-semibold tracking-tight">{t.name}</h3>
+                <code class="cdx-code mt-1.5 inline-block">--theme {t.flag}</code>
+              </div>
+              <div
+                class="flex shrink-0 gap-1.5"
+                aria-hidden="true"
+                title={`${t.name} palette preview`}
+              >
+                {SWATCH_TOKENS.map((token) => (
+                  <span
+                    class="size-5 rounded-full ring-1 ring-black/10 dark:ring-white/10"
+                    style={`background-color: ${t.swatches[token] ?? 'transparent'}`}
+                  />
+                ))}
+              </div>
+            </div>
+            <p class="text-cdx-text-secondary text-sm leading-relaxed">{t.blurb}</p>
+          </article>
         </li>
       ))
     }
