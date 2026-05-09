@@ -41,7 +41,7 @@ npm run format     # prettier --write .
 
 ## Deploy
 
-Every push to `develop` triggers `.github/workflows/deploy.yml`:
+Every pr to `develop` triggers `.github/workflows/deploy.yml`:
 
 1. `npm ci` → `npm run lint` → `npm run build`
 2. `peaceiris/actions-gh-pages@v4` publishes `./dist` to the `gh-pages` branch
