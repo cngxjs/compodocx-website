@@ -18,9 +18,9 @@ const features: Feature[] = [
   {
     id: 'standalone',
     category: 'Angular Support',
-    title: 'Standalone-First Components',
+    title: 'Standalone-first',
     blurb:
-      'Components, directives, and pipes documented as standalone artifacts — no NgModule wrapping required.',
+      'Components, directives, and pipes get first-class pages with imports, providers, and member tables. NgModule still works — we just treat it as the legacy path.',
     slug: 'features',
     cta: 'Standalone reference',
     iconColor: 'text-rose-500 dark:text-rose-400',
@@ -29,9 +29,9 @@ const features: Feature[] = [
   {
     id: 'signals',
     category: 'Angular Support',
-    title: 'Signals & Derived State',
+    title: 'Signals, properly rendered',
     blurb:
-      'Signals, computed, and linked-signal members rendered with their derived-state dependencies. Effects are opt-in.',
+      '<code class="cdx-code">signal()</code>, <code class="cdx-code">computed()</code>, and <code class="cdx-code">linkedSignal()</code> render as first-class members with their derived dependencies. Effects opt in via JSDoc tag.',
     slug: 'features',
     cta: 'Signals deep dive',
     iconColor: 'text-sky-500 dark:text-sky-400',
@@ -40,9 +40,9 @@ const features: Feature[] = [
   {
     id: 'themes',
     category: 'Theming',
-    title: '8 Bundled Themes',
+    title: 'Eight themes, or your own',
     blurb:
-      'Slate Noir, Ocean, Midnight, Nord, Rose Pine, Ember, Neon, Brutalist — or roll your own by overriding the --color-cdx-* tokens.',
+      'Slate Noir, Ocean, Midnight, Nord, Rose Pine, Ember, Neon, Brutalist. Override any subset of <code class="cdx-code">--color-cdx-*</code> tokens to ship your brand.',
     slug: 'themes',
     cta: 'Theming guide',
     iconColor: 'text-violet-500 dark:text-violet-400',
@@ -51,9 +51,9 @@ const features: Feature[] = [
   {
     id: 'versions',
     category: 'Build & CI',
-    title: 'Multi-Version Output',
+    title: 'Side-by-side versions',
     blurb:
-      'Side-by-side docs for every released version. Label auto-detected from package.json, manifest written automatically, switcher widget built in.',
+      'Docs for every release on one domain. Labels auto-detected from <code class="cdx-code">package.json</code>. The version-switcher widget ships built in.',
     slug: 'usage',
     cta: 'Multi-version setup',
     iconColor: 'text-emerald-500 dark:text-emerald-400',
@@ -62,9 +62,9 @@ const features: Feature[] = [
   {
     id: 'cli',
     category: 'Tooling',
-    title: 'Migrate & Diff Sub-CLIs',
+    title: 'Migrate & diff sub-CLIs',
     blurb:
-      'compodocx migrate ports Handlebars templates to JS partials. compodocx diff compares two JSON snapshots and exits non-zero on breaking changes.',
+      '<code class="cdx-code">compodocx migrate</code> rewrites your old Handlebars templates as JS partials. <code class="cdx-code">compodocx diff</code> fails CI when your public API changes.',
     slug: 'usage',
     cta: 'CLI reference',
     iconColor: 'text-amber-500 dark:text-amber-400',
@@ -73,9 +73,9 @@ const features: Feature[] = [
   {
     id: 'llm',
     category: 'Tooling',
-    title: 'LLM-Context Export',
+    title: 'LLM-ready export',
     blurb:
-      'Export the API surface as LLM-context markdown or a typed JSON snapshot — feed it to an agent, a code-review bot, or a downstream pipeline.',
+      'Export your API as flat markdown or typed JSON. Drop it into Claude, Copilot, your code-review bot — or any downstream pipeline.',
     slug: 'options',
     cta: 'Export options',
     iconColor: 'text-fuchsia-500 dark:text-fuchsia-400',
@@ -113,7 +113,11 @@ const features: Feature[] = [
             {feature.category}
           </p>
           <h3 class="text-cdx-text mt-2 text-lg font-semibold">{feature.title}</h3>
-          <p class="text-cdx-text-secondary mt-2 text-sm leading-relaxed">{feature.blurb}</p>
+          <p
+            class="text-cdx-text-secondary mt-2 text-sm leading-relaxed"
+            set:html={feature.blurb}
+          />
+
           <a
             href={`${base}guides/${feature.slug}/`}
             aria-label={`${feature.cta} — ${feature.title}`}

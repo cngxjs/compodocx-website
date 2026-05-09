@@ -6,7 +6,6 @@ import lqipMap from '../assets/screenshots/lqip.json';
 import multiVersionLight from '../assets/screenshots/multi-version-light.png';
 import multiVersionDark from '../assets/screenshots/multi-version-dark.png';
 
-const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono text-xs';
 const altText =
   'compodocx component page with the version-switcher dropdown open in the topbar, showing v1.1.0 active and v1.0.0 below';
 
@@ -78,34 +77,34 @@ const lqip = lqipMap as Record<string, string>;
         id="multi-version-heading"
         class="text-cdx-text mt-3 text-3xl font-semibold tracking-tight"
       >
-        Ship docs for every release on a single domain
+        Every release. One domain. Zero config.
       </h2>
-      <p class="text-cdx-text-secondary mt-4">
-        Multi-version output writes each release into its own folder under one root. A
-        <code class={inlineCode}>versions.json</code> manifest powers a runtime version-switcher in the
-        topbar — append-only, semver-sorted, no server-side config.
+      <p class="text-cdx-text-secondary mt-4 leading-relaxed">
+        Each release writes into its own folder under a shared root. A
+        <code class="cdx-code">versions.json</code> manifest drives the version-switcher in the topbar.
+        Append-only, semver-sorted, no server-side config.
       </p>
       <ul class="text-cdx-text-secondary mt-6 space-y-3 text-sm">
         <li class="flex gap-3">
           <span class="text-cdx-primary mt-0.5" aria-hidden="true">→</span>
           <span>
-            Version label auto-detected from the nearest <code class={inlineCode}>package.json</code
-            >
-            — overridable with <code class={inlineCode}>--versionLabel</code>.
+            Version label auto-detected from the nearest <code class="cdx-code">package.json</code>.
+            Override with <code class="cdx-code">--versionLabel</code>.
           </span>
         </li>
         <li class="flex gap-3">
           <span class="text-cdx-primary mt-0.5" aria-hidden="true">→</span>
           <span>
-            Manifest is append-only and deduplicated by label — past links never break when a new
+            Manifest is append-only and deduplicated by label. Past links never break when a new
             release ships.
           </span>
         </li>
         <li class="flex gap-3">
           <span class="text-cdx-primary mt-0.5" aria-hidden="true">→</span>
           <span>
-            Switcher reads the manifest at runtime — works on GitHub Pages, S3, intranets, even
-            <code class={inlineCode}>file://</code>.
+            Switcher reads the manifest at runtime. GitHub Pages, S3, intranets, even <code
+              class="cdx-code">file://</code
+            >.
           </span>
         </li>
       </ul>

@@ -5,48 +5,40 @@ const migrationGuideUrl = 'https://github.com/cngxjs/compodocx/blob/develop/MIGR
 ---
 
 <section class="mx-auto max-w-6xl px-4 py-24" aria-labelledby="migration-heading">
-  <SectionEyebrow text="Migration" />
+  <SectionEyebrow text="From compodoc" />
   <aside class="bg-cdx-bg-elevated border-cdx-primary mt-3 rounded-r-xl border-l-4 p-8 sm:p-10">
     <h2
       id="migration-heading"
       class="text-cdx-text text-2xl font-semibold tracking-tight sm:text-3xl"
     >
-      Coming from compodoc?
+      Already on compodoc? Stay calm.
     </h2>
-    <p class="text-cdx-text-secondary mt-3 max-w-2xl">
-      compodocx is a near-drop-in successor — same surface, modern internals. Most projects migrate
-      in a single PR.
+    <p class="text-cdx-text-secondary mt-3 max-w-2xl leading-relaxed">
+      If you have a working compodoc setup, you can keep most of it. The CLI surface is the same,
+      the internals are new. Most teams ship the migration in a single PR.
     </p>
 
     <ul class="mt-8 grid gap-6 md:grid-cols-3">
       <li class="text-sm">
-        <p class="text-cdx-text font-semibold">CLI alias compatible</p>
+        <p class="text-cdx-text font-semibold">CLI alias works</p>
         <p class="text-cdx-text-secondary mt-1.5 leading-relaxed">
-          Existing
-          <code class="text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono text-xs"
-            >compodoc</code
-          >
-          scripts run unchanged — the binary registers both names.
+          Your existing <code class="cdx-code">compodoc</code> scripts run unchanged. The binary registers
+          both names.
         </p>
       </li>
       <li class="text-sm">
         <p class="text-cdx-text font-semibold">JS template overrides</p>
         <p class="text-cdx-text-secondary mt-1.5 leading-relaxed">
-          Custom templates become JS partials returning HTML strings. No Handlebars helpers, no
-          partials registry — just <code
-            class="text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono text-xs"
-            >module.exports = (data, helpers) =&gt; '...'</code
-          >.
+          Custom templates are now JS partials returning HTML. No Handlebars, no helpers registry.
+          Just
+          <code class="cdx-code">module.exports = (data, h) =&gt; '...'</code>.
         </p>
       </li>
       <li class="text-sm">
-        <p class="text-cdx-text font-semibold">Migrate sub-CLI</p>
+        <p class="text-cdx-text font-semibold"><code class="cdx-code">migrate</code> sub-CLI</p>
         <p class="text-cdx-text-secondary mt-1.5 leading-relaxed">
-          <code class="text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono text-xs"
-            >compodocx migrate</code
-          >
-          ports Handlebars templates and CSS — subcommands for inspecting, single files, full template
-          folders, and stylesheets.
+          Ports Handlebars templates and CSS automatically. Inspect first, then convert files or
+          whole folders. You'll still want to review the diff.
         </p>
       </li>
     </ul>
@@ -57,7 +49,7 @@ const migrationGuideUrl = 'https://github.com/cngxjs/compodocx/blob/develop/MIGR
       target="_blank"
       class="text-cdx-primary hover:text-cdx-primary-hover mt-8 inline-flex items-center gap-1 text-sm font-medium"
     >
-      Read the migration guide
+      Open MIGRATION.md
       <span aria-hidden="true">→</span>
       <span class="sr-only">(opens in new tab)</span>
     </a>

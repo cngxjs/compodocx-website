@@ -6,7 +6,6 @@ import lqipMap from '../assets/screenshots/lqip.json';
 import coverageLight from '../assets/screenshots/coverage-report-light.png';
 import coverageDark from '../assets/screenshots/coverage-report-dark.png';
 
-const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono text-xs';
 const altText =
   'Documentation coverage page with a donut chart, totals, and a sortable list of components by coverage percentage';
 
@@ -20,32 +19,31 @@ const lqip = lqipMap as Record<string, string>;
 <section class="mx-auto max-w-6xl px-4 py-24" aria-labelledby="coverage-heading">
   <div class="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
     <div>
-      <SectionEyebrow text="CI" />
+      <SectionEyebrow text="Coverage" />
       <h2 id="coverage-heading" class="text-cdx-text mt-3 text-3xl font-semibold tracking-tight">
-        Catch undocumented surface before it ships
+        Catch the undocumented bits before merge
       </h2>
-      <p class="text-cdx-text-secondary mt-4">
-        Per-symbol coverage rolls up into a sortable report — what&rsquo;s documented, what
-        isn&rsquo;t, broken down by entity kind. Set
-        <code class={inlineCode}>--coverageMinimum</code> to fail your build below your threshold.
+      <p class="text-cdx-text-secondary mt-4 leading-relaxed">
+        Per-symbol coverage rolls up into a sortable report. Documented vs. not, broken down by
+        kind. Set <code class="cdx-code">--coverageMinimum</code> and your build fails below threshold.
       </p>
       <ul class="text-cdx-text-secondary mt-6 space-y-3 text-sm">
         <li class="flex gap-3">
           <span class="text-cdx-primary mt-0.5" aria-hidden="true">→</span>
-          <span> Sortable list of undocumented symbols with deep links straight into source. </span>
+          <span>Sortable list of undocumented symbols, deep-linked to source.</span>
         </li>
         <li class="flex gap-3">
           <span class="text-cdx-primary mt-0.5" aria-hidden="true">→</span>
           <span>
-            Breakdown by component, directive, pipe, class, and interface — see exactly where the
+            Breakdown by component, directive, pipe, class, and interface. You see exactly where the
             gaps are.
           </span>
         </li>
         <li class="flex gap-3">
           <span class="text-cdx-primary mt-0.5" aria-hidden="true">→</span>
           <span>
-            <code class={inlineCode}>--publicApiOnly</code> scopes the report to your allow-list so internal
-            helpers don&rsquo;t drag the percentage down.
+            <code class="cdx-code">--publicApiOnly</code> scopes to your allow-list so internal helpers
+            don&rsquo;t drag the percentage down.
           </span>
         </li>
       </ul>

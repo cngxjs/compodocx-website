@@ -71,14 +71,18 @@ const enrichedShots = await Promise.all(
 );
 ---
 
-<section class="mx-auto max-w-6xl px-4 py-24" aria-labelledby="screenshots-heading">
-  <SectionEyebrow text="Tour" />
+<section
+  id="screenshots"
+  class="mx-auto max-w-6xl px-4 py-24"
+  aria-labelledby="screenshots-heading"
+>
+  <SectionEyebrow text="Output" />
   <h2 id="screenshots-heading" class="text-cdx-text mt-3 text-3xl font-semibold tracking-tight">
-    From your Angular source to navigable API documentation
+    What your users actually see
   </h2>
-  <p class="text-cdx-text-secondary mt-3 max-w-2xl">
-    A static SPA where every standalone component, directive, and pipe gets a dedicated page — with
-    deep-link routing and full-text search.
+  <p class="text-cdx-text-secondary mt-3 max-w-2xl leading-relaxed">
+    A static site where every standalone component, directive, and pipe gets a dedicated page. Deep
+    links, full-text search, and a sticky source viewer included.
   </p>
 
   <div class="mt-12" data-tabs>
