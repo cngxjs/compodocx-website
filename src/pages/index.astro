@@ -9,6 +9,7 @@ import MultiVersionSection from '../components/MultiVersionSection.astro';
 import MigrationCallout from '../components/MigrationCallout.astro';
 import GettingStarted from '../components/GettingStarted.astro';
 import ThemesGrid from '../components/ThemesGrid.astro';
+import PlaygroundCallout from '../components/PlaygroundCallout.astro';
 import FAQSection, { faq } from '../components/FAQSection.astro';
 
 const buildDate = new Date().toISOString().slice(0, 10);
@@ -67,7 +68,21 @@ const faqJsonLd = {
 
 <Layout
   title="compodocx — Angular docs with Signals & multi-version output"
-  description="Static Angular documentation generator. Standalone, signals, multi-version output, theming, LLM export — all from one CLI. MIT, Node 22+."
+  description="Static Angular documentation generator. Standalone, signals, themable, multi-version output, runnable StackBlitz playgrounds, LLM export — all from one CLI."
+  keywords={[
+    'angular documentation',
+    'compodocx',
+    'compodoc fork',
+    'angular standalone',
+    'angular signals',
+    'jsdoc angular',
+    'typescript documentation',
+    'static documentation generator',
+    'angular cli docs',
+    'multi-version docs',
+    'stackblitz playground',
+    'runnable angular demos',
+  ]}
   jsonLd={[softwareJsonLd, faqJsonLd]}
 >
   <Hero />
@@ -76,6 +91,7 @@ const faqJsonLd = {
   <Screenshots />
   <CoverageSection />
   <MultiVersionSection />
+  <PlaygroundCallout />
   <MigrationCallout />
   <GettingStarted />
   <ThemesGrid />

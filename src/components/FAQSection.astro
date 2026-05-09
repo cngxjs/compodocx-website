@@ -46,6 +46,13 @@ export const faq: FaqItem[] = [
       '<strong class="text-cdx-text">Yes.</strong> Three CI hooks ship in the box:<ul class="mt-3 list-disc space-y-2 pl-5"><li><code class="cdx-code">compodocx diff</code> compares two JSON snapshots and exits non-zero on breaking changes.</li><li><code class="cdx-code">--exportFormat json</code> emits a typed schema with a stable <code class="cdx-code">schemaVersion</code>.</li><li><code class="cdx-code">--coverageMinimum</code> gates merges on documentation completeness.</li></ul>',
   },
   {
+    question: 'Can I ship runnable demos with my docs?',
+    answer:
+      'Yes. Add a @playground JSDoc block to a component and compodocx renders a Playground tab on its page with one launch button per block. Clicking opens a fresh StackBlitz project assembled at build time from your component sources. The SDK is lazy-loaded as a ~7 KB chunk on first click.',
+    answerHtml:
+      '<strong class="text-cdx-text">Yes.</strong> Add a <code class="cdx-code">@playground</code> JSDoc block to a component and compodocx renders a <em>Playground</em> tab with one launch button per block.<br /><br />Clicking opens a fresh StackBlitz project assembled at build time from your component sources. No library publication required. The SDK is lazy-loaded as a ~7 KB chunk on first click, so static doc pages stay light.',
+  },
+  {
     question: 'Is compodocx free?',
     answer:
       'Yes. compodocx is open source under the MIT license. The compodoc upstream attribution to Vincent Ogloblinsky is preserved.',

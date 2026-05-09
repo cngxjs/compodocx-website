@@ -75,6 +75,9 @@ main > section:nth-of-type(9) {
 main > section:nth-of-type(10) {
   animation-delay: 0.72s;
 }
+main > section:nth-of-type(11) {
+  animation-delay: 0.8s;
+}
 
 @keyframes section-reveal {
   from {

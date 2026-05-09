@@ -1,0 +1,158 @@
+---
+import { Image } from 'astro:assets';
+import SectionEyebrow from './SectionEyebrow.astro';
+import stackblitzLogoLight from '../assets/logos/stackblitz-logo-light.svg';
+import stackblitzLogoDark from '../assets/logos/stackblitz-logo-dark.svg';
+
+const base = import.meta.env.BASE_URL;
+---
+
+<section
+  id="playground"
+  class="bg-cdx-bg-alt/40 relative isolate overflow-hidden"
+  aria-labelledby="playground-heading"
+>
+  <span
+    aria-hidden="true"
+    class="bg-cdx-primary/10 absolute -right-32 -bottom-32 size-72 rounded-full blur-3xl"
+  >
+  </span>
+
+  <div class="relative mx-auto max-w-6xl px-4 py-24">
+    <div class="grid gap-10 lg:grid-cols-[1fr_auto] lg:items-end">
+      <div class="max-w-2xl">
+        <hgroup>
+          <SectionEyebrow text="Playground" />
+          <h2
+            id="playground-heading"
+            class="text-cdx-text mt-3 text-3xl font-semibold tracking-tight"
+          >
+            One-click runnable demos.
+            <br class="hidden sm:block" />
+            Powered by
+            <span class="sr-only">StackBlitz</span>
+            <span
+              aria-hidden="true"
+              class="inline-flex translate-y-1 items-baseline align-baseline"
+            >
+              <Image
+                src={stackblitzLogoLight}
+                alt=""
+                class="block h-7 w-auto sm:h-9 dark:hidden"
+                loading="lazy"
+              />
+              <Image
+                src={stackblitzLogoDark}
+                alt=""
+                class="hidden h-7 w-auto sm:h-9 dark:block"
+                loading="lazy"
+              />
+            </span>
+          </h2>
+        </hgroup>
+        <p class="text-cdx-text-secondary mt-5 leading-relaxed">
+          Add a <code class="cdx-code">@playground</code> JSDoc block to any component and compodocx ships
+          a <em>Playground</em> tab on the rendered page with one launch button per block. Clicking opens
+          a fresh
+          <a
+            href="https://stackblitz.com/"
+            rel="noopener"
+            target="_blank"
+            class="text-cdx-primary underline-offset-2 hover:underline"
+            >StackBlitz<span class="sr-only"> (opens in new tab)</span></a
+          > project, assembled at build time from your component sources. No iframe overlay, no library
+          publication required.
+        </p>
+        <p class="text-cdx-text-secondary mt-3 leading-relaxed">
+          The StackBlitz SDK is lazy-loaded on first click as a separate ~7 KB chunk, so static doc
+          pages stay light. <code class="cdx-code">@internal</code> exports never leak into the public
+          project.
+        </p>
+        <a
+          href={`${base}guides/playground/`}
+          class="bg-cdx-primary text-cdx-text-inverse hover:bg-cdx-primary-hover group mt-8 inline-flex h-11 items-center gap-2 rounded-lg px-5 text-sm font-medium transition-colors"
+        >
+          Read the playground guide
+          <span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">→</span>
+        </a>
+      </div>
+
+      <ul
+        class="grid gap-4 sm:grid-cols-2 lg:grid-cols-1 lg:gap-3"
+        aria-label="Playground feature highlights"
+      >
+        <li class="bg-cdx-bg-elevated flex items-start gap-3 rounded-xl p-4 lg:min-w-[18rem]">
+          <span
+            aria-hidden="true"
+            class="text-cdx-primary bg-cdx-primary/10 inline-flex size-8 shrink-0 items-center justify-center rounded-md"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="currentColor"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"></path></svg
+            >
+          </span>
+          <div class="text-sm leading-relaxed">
+            <p class="text-cdx-text font-semibold">Click-to-launch</p>
+            <p class="text-cdx-text-secondary">
+              StackBlitz opens in a fresh tab, not an embedded iframe.
+            </p>
+          </div>
+        </li>
+        <li class="bg-cdx-bg-elevated flex items-start gap-3 rounded-xl p-4 lg:min-w-[18rem]">
+          <span
+            aria-hidden="true"
+            class="text-cdx-primary bg-cdx-primary/10 inline-flex size-8 shrink-0 items-center justify-center rounded-md"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              ><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><path
+                d="M14 2v6h6"></path><path d="m9 13 2 2 4-4"></path></svg
+            >
+          </span>
+          <div class="text-sm leading-relaxed">
+            <p class="text-cdx-text font-semibold">Build-time assembled</p>
+            <p class="text-cdx-text-secondary">
+              Sources travel inline. No npm publish required to share a demo.
+            </p>
+          </div>
+        </li>
+        <li class="bg-cdx-bg-elevated flex items-start gap-3 rounded-xl p-4 lg:min-w-[18rem]">
+          <span
+            aria-hidden="true"
+            class="text-cdx-primary bg-cdx-primary/10 inline-flex size-8 shrink-0 items-center justify-center rounded-md"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              ><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg
+            >
+          </span>
+          <div class="text-sm leading-relaxed">
+            <p class="text-cdx-text font-semibold">Lazy SDK loading</p>
+            <p class="text-cdx-text-secondary">
+              ~7 KB chunk fetched on first click. Doc pages stay fast.
+            </p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+</section>

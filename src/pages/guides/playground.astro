@@ -1,19 +1,97 @@
 ---
+import { Image } from 'astro:assets';
 import FeaturesLayout from '../../layouts/FeaturesLayout.astro';
 import CodeBlock from '../../components/CodeBlock.astro';
+import stackblitzLogoLight from '../../assets/logos/stackblitz-logo-light.svg';
+import stackblitzLogoDark from '../../assets/logos/stackblitz-logo-dark.svg';
+
+const howToJsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'HowTo',
+  name: 'Add a runnable StackBlitz playground to a compodocx component',
+  description:
+    'Three steps to ship author-curated runnable demos with compodocx: add a @playground JSDoc block on a component, write a fenced demo snippet, and rebuild. compodocx assembles a StackBlitz project at build time.',
+  totalTime: 'PT5M',
+  tool: [
+    { '@type': 'HowToTool', name: '@cngxjs/compodocx' },
+    { '@type': 'HowToTool', name: 'StackBlitz' },
+  ],
+  step: [
+    {
+      '@type': 'HowToStep',
+      position: 1,
+      name: 'Add a @playground block to the component class',
+      text: 'In the JSDoc above the component class, write @playground <title>. The title is required and becomes the section heading on the Playground tab.',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 2,
+      name: 'Write a fenced demo snippet right below the title',
+      text: 'A fenced HTML, TS, or TypeScript code block becomes the snippet that boots inside the StackBlitz project. Multiple @playground blocks render as a vertical stack.',
+    },
+    {
+      '@type': 'HowToStep',
+      position: 3,
+      name: 'Rebuild and click Open in StackBlitz',
+      text: 'compodocx assembles a StackBlitz angular-cli project at build time. The SDK is lazy-loaded on first click, so static doc pages stay light. Clicking opens a fresh tab, no iframe overlay.',
+    },
+  ],
+};
 ---
 
 <FeaturesLayout
   currentSlug="playground"
-  title="Playground Blocks — Runnable @playground demos in compodocx"
-  description="Author-curated runnable demos via @playground JSDoc blocks. Click-to-launch StackBlitz projects assembled at build time. Opt-out with --disablePlaygroundTab."
+  title="Playground Blocks — Runnable StackBlitz demos in compodocx"
+  description="Author-curated runnable demos via @playground JSDoc blocks. Click-to-launch StackBlitz projects assembled at build time. Sources travel inline, no library publication required."
+  extraJsonLd={howToJsonLd}
 >
+  <div
+    class="bg-cdx-bg-elevated -mt-2 mb-8 flex flex-wrap items-center gap-x-4 gap-y-2 rounded-xl px-4 py-3 text-sm"
+  >
+    <span class="text-cdx-text-secondary inline-flex items-center gap-2">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="14"
+        height="14"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        aria-hidden="true"
+        class="text-cdx-primary"
+      >
+        <path d="M13 2 3 14h7l-1 8 10-12h-7l1-8z"></path>
+      </svg>
+      <span>Built on</span>
+    </span>
+    <a
+      href="https://stackblitz.com/"
+      rel="noopener"
+      target="_blank"
+      class="inline-flex items-center"
+      aria-label="StackBlitz (opens in new tab)"
+    >
+      <Image
+        src={stackblitzLogoLight}
+        alt="StackBlitz"
+        class="block h-5 w-auto dark:hidden"
+        loading="eager"
+      />
+      <Image
+        src={stackblitzLogoDark}
+        alt="StackBlitz"
+        class="hidden h-5 w-auto dark:block"
+        loading="eager"
+      />
+    </a>
+    <span class="text-cdx-text-muted hidden sm:inline">·</span>
+    <span class="text-cdx-text-muted text-xs">SDK lazy-loaded · ~7 KB chunk</span>
+  </div>
+
   <p class="text-cdx-text-secondary text-lg">
     Components can ship author-curated, runnable demos that open in a fresh StackBlitz tab. Add a
     <code class="cdx-code">@playground</code> JSDoc block, and compodocx renders a dedicated <em
       >Playground</em
     > tab on the component page with one launch button per block. The StackBlitz project is assembled
-    at build time; the SDK is lazy-loaded on first click, so static doc pages stay light.
+    at build time. The SDK is lazy-loaded on first click, so static doc pages stay light.
   </p>
 
   <h2>The tag</h2>
@@ -45,7 +123,7 @@ export class MyButton { /* ... */ }`}
   <p>
     Multiple <code class="cdx-code">@playground</code> blocks render as a vertical stack of sections in
     source order, each with its own &ldquo;Open in StackBlitz&rdquo; button. The tab is hidden automatically
-    when no block is parsed &mdash; zero-config when you don&rsquo;t need it.
+    when no block is parsed. Zero-config when you don&rsquo;t need it.
   </p>
 
   <h2>Authoring rules</h2>
@@ -61,8 +139,8 @@ export class MyButton { /* ... */ }`}
     <li>The Playground tab is component-only. Other entity types ignore the tag.</li>
     <li>
       Runs alongside <code class="cdx-code">@example</code> on the Info tab and
-      <code class="cdx-code">&lt;example-url&gt;</code> on the Example tab &mdash; all three can coexist
-      on the same component.
+      <code class="cdx-code">&lt;example-url&gt;</code> on the Example tab. All three can coexist on the
+      same component.
     </li>
   </ul>
 
@@ -74,15 +152,15 @@ export class MyButton { /* ... */ }`}
   <p>Three tags, three intents:</p>
   <ul>
     <li>
-      <code class="cdx-code">@example</code> &mdash; static, syntax-highlighted snippet on the Info tab.
+      <code class="cdx-code">@example</code>: static, syntax-highlighted snippet on the Info tab.
       Use for code readers should copy.
     </li>
     <li>
-      <code class="cdx-code">&lt;example-url&gt;</code> &mdash; iframe demo of an externally hosted page
-      on the Example tab. Use when you already host the demo.
+      <code class="cdx-code">&lt;example-url&gt;</code>: iframe demo of an externally hosted page on
+      the Example tab. Use when you already host the demo.
     </li>
     <li>
-      <code class="cdx-code">@playground</code> &mdash; runnable StackBlitz project assembled from your
+      <code class="cdx-code">@playground</code>: runnable StackBlitz project assembled from your
       component&rsquo;s source. Use when you want readers to fork and try.
     </li>
   </ul>
@@ -93,7 +171,7 @@ export class MyButton { /* ... */ }`}
     block: a minimal <code class="cdx-code">main.ts</code>, a host <code class="cdx-code"
       >demo.component.ts</code
     > that renders your snippet, the consumed component&rsquo;s source, and any transitive dependencies
-    it imports. Library publication is <em>not</em> required &mdash; sources travel inline.
+    it imports. Library publication is <em>not</em> required. Sources travel inline.
   </p>
   <p>
     The manifest&rsquo;s <code class="cdx-code">dependencies</code> map lists public Angular packages
@@ -103,22 +181,21 @@ export class MyButton { /* ... */ }`}
     <code class="cdx-code">@angular/animations</code>, and the platform-browser pair are always
     present.
     <code class="cdx-code">@angular/material</code> and <code class="cdx-code">@angular/cdk</code> are
-    forwarded only when your project&rsquo;s <code class="cdx-code">package.json</code> declares them
-    &mdash; pure cngx demos do not pull Material into StackBlitz.
+    forwarded only when your project&rsquo;s <code class="cdx-code">package.json</code> declares them.
+    Pure cngx demos do not pull Material into StackBlitz.
   </p>
   <p>
     Dependency walking is bounded: depth 3, 25 files maximum, 8000 characters per file. When the
     caps trip, the section renders a static fallback instead of a launcher and the build log
-    explains why.
-    <code class="cdx-code">@internal</code>-tagged exports are filtered out before serialisation, so
-    private code never leaks into a public StackBlitz.
+    explains why. <code class="cdx-code">@internal</code>-tagged exports are filtered out before
+    serialisation, so private code never leaks into a public StackBlitz.
   </p>
 
   <h2>Opt-out</h2>
   <p>
     Hide the tab globally with <code class="cdx-code">--disablePlaygroundTab</code> or
     <code class="cdx-code">disablePlaygroundTab: true</code> in your config file. Independent of
-    <code class="cdx-code">--disableDependenciesTab</code>; one suppresses the per-component
+    <code class="cdx-code">--disableDependenciesTab</code>: one suppresses the per-component
     standalone-import graph, the other suppresses the Playground tab. The flag has no effect on
     components that declare no
     <code class="cdx-code">@playground</code> blocks (the tab is already absent).
@@ -129,8 +206,8 @@ export class MyButton { /* ... */ }`}
     Each block emits an inert manifest into the static HTML as
     <code class="cdx-code"
       >&lt;script type=&quot;application/json&quot; data-cdx-stackblitz-manifest-data&gt;</code
-    >. On click, the launcher dynamic-imports <code class="cdx-code">@stackblitz/sdk</code> &mdash; the
-    SDK ships as a separate ~7&nbsp;KB gzipped chunk that is never loaded until needed. The SDK call is
+    >. On click, the launcher dynamic-imports <code class="cdx-code">@stackblitz/sdk</code>. The SDK
+    ships as a separate ~7&nbsp;KB gzipped chunk that is never loaded until needed. The SDK call is
     <code class="cdx-code">openProject(manifest, &#123; newWindow: true &#125;)</code>: a fresh tab
     opens, no iframe overlays the doc page.
   </p>
