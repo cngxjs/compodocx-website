@@ -18,6 +18,25 @@ const SWATCH_TOKENS = [
   '--color-cdx-text',
 ];
 
+/**
+ * Extract the contents of the `.dark { ... }` block via brace-balanced walk.
+ * Returns an empty string if the theme has no `.dark` override (rare).
+ */
+function extractDarkBlock(css: string): string {
+  const start = css.match(/(?:^|[^a-zA-Z0-9_-])\.dark\s*\{/);
+  if (!start || start.index === undefined) return '';
+  const open = css.indexOf('{', start.index);
+  if (open === -1) return '';
+  let depth = 1;
+  let i = open + 1;
+  while (i < css.length && depth > 0) {
+    if (css[i] === '{') depth++;
+    else if (css[i] === '}') depth--;
+    i++;
+  }
+  return css.slice(open + 1, i - 1);
+}
+
 function extractTokens(css: string): Record<string, string> {
   const out: Record<string, string> = {};
   for (const token of SWATCH_TOKENS) {
@@ -25,6 +44,20 @@ function extractTokens(css: string): Record<string, string> {
     if (match) out[token] = match[1].trim();
   }
   return out;
+}
+
+function extractLightAndDark(css: string): {
+  light: Record<string, string>;
+  dark: Record<string, string>;
+} {
+  const light = extractTokens(css);
+  const darkBlock = extractDarkBlock(css);
+  const dark = darkBlock ? extractTokens(darkBlock) : {};
+  // Fill missing dark tokens with their light value so the swatch has something to render.
+  for (const token of SWATCH_TOKENS) {
+    if (!dark[token]) dark[token] = light[token];
+  }
+  return { light, dark };
 }
 
 const howToJsonLd = {
@@ -61,7 +94,8 @@ interface Bundled {
   name: string;
   flag: string;
   blurb: string;
-  swatches: Record<string, string>;
+  light: Record<string, string>;
+  dark: Record<string, string>;
 }
 
 const bundled: Bundled[] = [
@@ -69,49 +103,49 @@ const bundled: Bundled[] = [
     name: 'Slate Noir',
     flag: 'default',
     blurb: 'Pure neutral greys. The opinion-free default.',
-    swatches: extractTokens(defaultCss),
+    ...extractLightAndDark(defaultCss),
   },
   {
     name: 'Ocean',
     flag: 'ocean',
     blurb: 'Deep teal, cool surfaces, soft tension borders.',
-    swatches: extractTokens(oceanCss),
+    ...extractLightAndDark(oceanCss),
   },
   {
     name: 'Midnight',
     flag: 'midnight',
     blurb: 'Indigo night, low contrast, focus-friendly.',
-    swatches: extractTokens(midnightCss),
+    ...extractLightAndDark(midnightCss),
   },
   {
     name: 'Nord',
     flag: 'nord',
     blurb: 'Arctic palette, frost blue, calm primary.',
-    swatches: extractTokens(nordCss),
+    ...extractLightAndDark(nordCss),
   },
   {
     name: 'Rose Pine',
     flag: 'rose-pine',
     blurb: 'Warm rose, muted greens, golden accents.',
-    swatches: extractTokens(rosePineCss),
+    ...extractLightAndDark(rosePineCss),
   },
   {
     name: 'Ember',
     flag: 'ember',
     blurb: 'Warm amber on ember-grey, low-glare reading.',
-    swatches: extractTokens(emberCss),
+    ...extractLightAndDark(emberCss),
   },
   {
     name: 'Neon',
     flag: 'neon',
     blurb: 'High-contrast electric primary on dark slate.',
-    swatches: extractTokens(neonCss),
+    ...extractLightAndDark(neonCss),
   },
   {
     name: 'Brutalist',
     flag: 'brutalist',
     blurb: 'Hard edges, raw concrete, maximum legibility.',
-    swatches: extractTokens(brutalistCss),
+    ...extractLightAndDark(brutalistCss),
   },
 ];
 
@@ -355,8 +389,8 @@ const totalTokens = tokenGroups.reduce(
               >
                 {SWATCH_TOKENS.map((token) => (
                   <span
-                    class="size-5 rounded-full ring-1 ring-black/10 dark:ring-white/10"
-                    style={`background-color: ${t.swatches[token] ?? 'transparent'}`}
+                    class="theme-swatch size-5 rounded-full ring-1 ring-black/10 dark:ring-white/10"
+                    style={`--swatch-light: ${t.light[token] ?? 'transparent'}; --swatch-dark: ${t.dark[token] ?? 'transparent'};`}
                   />
                 ))}
               </div>
@@ -525,5 +559,15 @@ const totalTokens = tokenGroups.reduce(
   /* Hide the default disclosure triangle in Safari/Chrome (same as FAQSection) */
   .faq-item summary::-webkit-details-marker {
     display: none;
+  }
+
+  /* Each bundled-theme swatch carries both palette values via inline CSS
+     custom properties. The class flips between them based on the global
+     .dark mode class so swatches reflect the theme's actual dark palette. */
+  .theme-swatch {
+    background-color: var(--swatch-light);
+  }
+  :where(.dark) .theme-swatch {
+    background-color: var(--swatch-dark);
   }
 </style>
