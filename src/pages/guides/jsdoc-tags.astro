@@ -3,60 +3,121 @@ import FeaturesLayout from '../../layouts/FeaturesLayout.astro';
 import CodeBlock from '../../components/CodeBlock.astro';
 
 interface TagGroup {
+  id: string;
   heading: string;
-  blurb?: string;
+  iconColor: string;
+  iconBody: string;
+  blurb: string;
   items: Array<[tag: string, desc: string]>;
 }
 
 const groups: TagGroup[] = [
   {
+    id: 'members',
     heading: 'Members',
+    iconColor: 'text-rose-500 dark:text-rose-400',
+    iconBody: `<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>`,
     blurb: 'Recognized on properties, methods, host listeners, accessors.',
     items: [
-      ['@param', 'paired with TypeScript type info; descriptions thread onto constructor args'],
-      ['@returns', 'return value description'],
-      ['@example', 'fenced code block, Shiki-highlighted'],
-      ['@see', 'appended as a See-also link block'],
-      ['@since', 'small version label next to the member name'],
-      ['@deprecated', 'strikethrough name + deprecation banner; takes an optional reason'],
-    ],
-  },
-  {
-    heading: 'Symbols',
-    blurb: 'Class, interface, enum, type alias, function, variable.',
-    items: [
-      ['@example', 'rendered as an Examples block on the Info tab; multiple allowed'],
-      ['@see', 'See-also section with link resolution'],
-      ['@since / @deprecated', 'same semantics as on members'],
-      ['@internal', 'hides the symbol from the public docs'],
-    ],
-  },
-  {
-    heading: 'Components — extras',
-    blurb: 'Recognized only when the symbol is decorated as @Component.',
-    items: [
-      ['@slot', 'documents an exposed content slot; rendered as a metadata card on the Info tab'],
+      ['@param', 'Paired with TypeScript type info. Descriptions thread onto constructor args.'],
+      ['@returns', 'Return-value description.'],
+      ['@example', 'Fenced code block, Shiki-highlighted.'],
+      ['@see', 'Appended as a See-also link block.'],
+      ['@since', 'Small version label next to the member name.'],
       [
-        '<example-url>',
-        'JSDoc marker pointing at a hosted demo URL; surfaces an Example tab with an iframe per URL',
+        '@deprecated',
+        'Strikethrough name plus a deprecation banner. Takes an optional reason string.',
       ],
     ],
   },
   {
-    heading: 'Theming tokens',
-    blurb: 'Parsed from JSDoc on CSS / SCSS files alongside @Component sources.',
+    id: 'symbols',
+    heading: 'Symbols',
+    iconColor: 'text-sky-500 dark:text-sky-400',
+    iconBody: `<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h.01"/><path d="M15 9h.01"/><path d="M9 15h6"/>`,
+    blurb: 'Class, interface, enum, type alias, function, variable.',
     items: [
-      ['@overview', 'description block at the top of the Theming tab'],
-      ['@type', 'token type (e.g. color, length, duration)'],
-      ['@default', 'default value, rendered next to the token name'],
-      ['@group', 'groups tokens under an H4 in the Theming tab'],
-      ['@example / @since / @see', 'same semantics as elsewhere'],
-      ['@deprecated', 'optional reason; empty marks deprecated without a message'],
+      ['@example', 'Rendered as an Examples block on the Info tab. Multiple allowed.'],
+      ['@see', 'See-also section with link resolution.'],
+      ['@since / @deprecated', 'Same semantics as on members.'],
+      ['@internal', 'Hides the symbol when --disableInternal is set.'],
+      ['@category', 'Groups the entity under this category when --groupBy category.'],
     ],
   },
   {
+    id: 'component-only',
+    heading: 'Component-only',
+    iconColor: 'text-violet-500 dark:text-violet-400',
+    iconBody: `<path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/><path d="M12 22V12"/><path d="m3.3 7 8.7 5 8.7-5"/>`,
+    blurb: 'Recognized only when the symbol is decorated as @Component.',
+    items: [
+      [
+        '@slot',
+        'Documents an exposed content slot. Renders as a metadata card on the Info tab.',
+      ],
+      [
+        '@playground',
+        'Author-curated runnable demo. Surfaces a Playground tab with one StackBlitz launcher per block.',
+      ],
+      [
+        '<example-url>',
+        'JSDoc marker pointing at a hosted demo URL. Surfaces an Example tab with an iframe per URL.',
+      ],
+    ],
+  },
+  {
+    id: 'status-badges',
+    heading: 'Status badges',
+    iconColor: 'text-amber-500 dark:text-amber-400',
+    iconBody: `<path d="m12 8-9.04 9.06a2.82 2.82 0 1 0 3.98 3.98L16 12"/><circle cx="17" cy="7" r="5"/>`,
+    blurb: 'Stamp the entity hero with status pills. Visible at the top of the rendered page.',
+    items: [
+      ['@beta', 'Adds a "Beta" badge.'],
+      ['@breaking <version>', 'Adds a "Breaking" badge that pins the version.'],
+      ['@since <version>', 'Adds a version badge to the entity hero.'],
+    ],
+  },
+  {
+    id: 'hero-links',
+    heading: 'Hero links',
+    iconColor: 'text-emerald-500 dark:text-emerald-400',
+    iconBody: `<path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>`,
+    blurb: 'External links pinned to the entity hero. One per tag, multiple per entity.',
+    items: [
+      ['@github <url>', 'GitHub source / repo link.'],
+      ['@figma <url>', 'Figma design file.'],
+      ['@storybook <url>', 'Hosted Storybook entry.'],
+      ['@stackblitz <url>', 'StackBlitz playground.'],
+      ['@docs <url>', 'External documentation page.'],
+    ],
+  },
+  {
+    id: 'theming-tokens',
+    heading: 'Theming tokens',
+    iconColor: 'text-fuchsia-500 dark:text-fuchsia-400',
+    iconBody: `<path d="M12 22a10 10 0 1 1 10-10 4 4 0 0 1-4 4h-1.8a2 2 0 0 0-1.4 3.4l.4.4a2 2 0 0 1-1.4 3.4z"/><circle cx="13.5" cy="6.5" r=".75" fill="currentColor" stroke="none"/><circle cx="17.5" cy="10.5" r=".75" fill="currentColor" stroke="none"/><circle cx="6.5" cy="12.5" r=".75" fill="currentColor" stroke="none"/><circle cx="8.5" cy="7.5" r=".75" fill="currentColor" stroke="none"/>`,
+    blurb: 'Parsed from JSDoc on CSS / SCSS files alongside @Component sources.',
+    items: [
+      ['@overview', 'Description block at the top of the Theming tab.'],
+      ['@type', 'Token type (e.g. color, length, duration).'],
+      ['@default', 'Default value rendered next to the token name.'],
+      ['@group', 'Groups tokens under an H4 in the Theming tab.'],
+      ['@example / @since / @see', 'Same semantics as elsewhere.'],
+      ['@deprecated', 'Optional reason. Empty marks deprecated without a message.'],
+    ],
+  },
+  {
+    id: 'inline',
     heading: 'Inline',
-    items: [['{@link Symbol}', 'project-wide cross-reference, resolved at build time']],
+    iconColor: 'text-cyan-500 dark:text-cyan-400',
+    iconBody: `<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>`,
+    blurb: 'Used inside descriptions. Resolved at build time.',
+    items: [
+      [
+        '{@link Symbol}',
+        'Project-wide cross-reference. Resolves to a deep link, including across additional pages.',
+      ],
+    ],
   },
 ];
 ---
@@ -64,33 +125,64 @@ const groups: TagGroup[] = [
 <FeaturesLayout
   currentSlug="jsdoc-tags"
   title="JSDoc Tags — Recognized tags & rendering in compodocx"
-  description="Recognized JSDoc tags in compodocx: @param, @returns, @example, @deprecated, @internal, @ignore, @see, @since, @link, @throws, @experimental, @public."
+  description="Every JSDoc tag compodocx recognizes — @param, @returns, @example, @deprecated, @internal, @category, @see, @since, @link, @beta, @breaking, @slot, @playground, hero-link tags."
 >
   <p class="text-cdx-text-secondary text-lg">
     Recognized tags grouped by where they apply. Unknown tags are not an error: theming token blocks
     fold them into the description, and member descriptions pass them through verbatim.
   </p>
 
-  {
-    groups.map((group) => (
-      <section class="mt-12 first:mt-0">
-        <h2 class="text-cdx-text text-xl font-semibold">{group.heading}</h2>
-        {group.blurb && <p class="text-cdx-text-secondary mt-2 text-sm">{group.blurb}</p>}
-        <dl class="mt-4 grid gap-3 text-sm md:grid-cols-[auto_1fr] md:gap-x-6">
-          {group.items.map(([tag, desc]) => (
-            <>
-              <dt class="text-cdx-text">
-                <code class="cdx-code">{tag}</code>
-              </dt>
-              <dd class="text-cdx-text-secondary">{desc}</dd>
-            </>
-          ))}
-        </dl>
-      </section>
-    ))
-  }
+  <div class="grid gap-5 lg:grid-cols-2">
+    {
+      groups.map((group) => (
+        <article
+          id={group.id}
+          class="bg-cdx-bg-elevated flex flex-col rounded-xl p-6 scroll-mt-24"
+        >
+          <header class="flex items-start gap-3">
+            <span
+              aria-hidden="true"
+              class={`${group.iconColor} bg-cdx-bg-alt inline-flex size-10 shrink-0 items-center justify-center rounded-lg`}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                set:html={group.iconBody}
+              />
+            </span>
+            <div class="min-w-0">
+              <h2 class="text-cdx-text text-lg font-semibold tracking-tight">{group.heading}</h2>
+              <p class="text-cdx-text-secondary mt-1 text-sm leading-relaxed">{group.blurb}</p>
+            </div>
+          </header>
+
+          <dl class="mt-5 space-y-2.5 text-sm">
+            {group.items.map(([tag, desc]) => (
+              <div class="grid gap-x-4 gap-y-1 sm:grid-cols-[auto_1fr]">
+                <dt class="min-w-0">
+                  <code class="cdx-code whitespace-nowrap">{tag}</code>
+                </dt>
+                <dd class="text-cdx-text-secondary leading-relaxed">{desc}</dd>
+              </div>
+            ))}
+          </dl>
+        </article>
+      ))
+    }
+  </div>
 
   <h2>Theming token example</h2>
+  <p>
+    The token block sits above the actual property declaration. <code class="cdx-code">@overview</code>
+    blocks at file-level open the Theming tab; per-token blocks fill the catalog.
+  </p>
   <CodeBlock
     lang="css"
     code={`/**
