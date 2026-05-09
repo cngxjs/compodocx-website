@@ -5,8 +5,6 @@ import CodeBlock from '../../components/CodeBlock.astro';
 interface TagGroup {
   id: string;
   heading: string;
-  iconColor: string;
-  iconBody: string;
   blurb: string;
   items: Array<[tag: string, desc: string]>;
 }
@@ -15,8 +13,6 @@ const groups: TagGroup[] = [
   {
     id: 'members',
     heading: 'Members',
-    iconColor: 'text-rose-500 dark:text-rose-400',
-    iconBody: `<polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/>`,
     blurb: 'Recognized on properties, methods, host listeners, accessors.',
     items: [
       ['@param', 'Paired with TypeScript type info. Descriptions thread onto constructor args.'],
@@ -33,8 +29,6 @@ const groups: TagGroup[] = [
   {
     id: 'symbols',
     heading: 'Symbols',
-    iconColor: 'text-sky-500 dark:text-sky-400',
-    iconBody: `<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h.01"/><path d="M15 9h.01"/><path d="M9 15h6"/>`,
     blurb: 'Class, interface, enum, type alias, function, variable.',
     items: [
       ['@example', 'Rendered as an Examples block on the Info tab. Multiple allowed.'],
@@ -47,14 +41,9 @@ const groups: TagGroup[] = [
   {
     id: 'component-only',
     heading: 'Component-only',
-    iconColor: 'text-violet-500 dark:text-violet-400',
-    iconBody: `<path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/><path d="M12 22V12"/><path d="m3.3 7 8.7 5 8.7-5"/>`,
     blurb: 'Recognized only when the symbol is decorated as @Component.',
     items: [
-      [
-        '@slot',
-        'Documents an exposed content slot. Renders as a metadata card on the Info tab.',
-      ],
+      ['@slot', 'Documents an exposed content slot. Renders as a metadata card on the Info tab.'],
       [
         '@playground',
         'Author-curated runnable demo. Surfaces a Playground tab with one StackBlitz launcher per block.',
@@ -68,8 +57,6 @@ const groups: TagGroup[] = [
   {
     id: 'status-badges',
     heading: 'Status badges',
-    iconColor: 'text-amber-500 dark:text-amber-400',
-    iconBody: `<path d="m12 8-9.04 9.06a2.82 2.82 0 1 0 3.98 3.98L16 12"/><circle cx="17" cy="7" r="5"/>`,
     blurb: 'Stamp the entity hero with status pills. Visible at the top of the rendered page.',
     items: [
       ['@beta', 'Adds a "Beta" badge.'],
@@ -80,8 +67,6 @@ const groups: TagGroup[] = [
   {
     id: 'hero-links',
     heading: 'Hero links',
-    iconColor: 'text-emerald-500 dark:text-emerald-400',
-    iconBody: `<path d="M15 3h6v6"/><path d="M10 14 21 3"/><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>`,
     blurb: 'External links pinned to the entity hero. One per tag, multiple per entity.',
     items: [
       ['@github <url>', 'GitHub source / repo link.'],
@@ -94,8 +79,6 @@ const groups: TagGroup[] = [
   {
     id: 'theming-tokens',
     heading: 'Theming tokens',
-    iconColor: 'text-fuchsia-500 dark:text-fuchsia-400',
-    iconBody: `<path d="M12 22a10 10 0 1 1 10-10 4 4 0 0 1-4 4h-1.8a2 2 0 0 0-1.4 3.4l.4.4a2 2 0 0 1-1.4 3.4z"/><circle cx="13.5" cy="6.5" r=".75" fill="currentColor" stroke="none"/><circle cx="17.5" cy="10.5" r=".75" fill="currentColor" stroke="none"/><circle cx="6.5" cy="12.5" r=".75" fill="currentColor" stroke="none"/><circle cx="8.5" cy="7.5" r=".75" fill="currentColor" stroke="none"/>`,
     blurb: 'Parsed from JSDoc on CSS / SCSS files alongside @Component sources.',
     items: [
       ['@overview', 'Description block at the top of the Theming tab.'],
@@ -109,8 +92,6 @@ const groups: TagGroup[] = [
   {
     id: 'inline',
     heading: 'Inline',
-    iconColor: 'text-cyan-500 dark:text-cyan-400',
-    iconBody: `<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>`,
     blurb: 'Used inside descriptions. Resolved at build time.',
     items: [
       [
@@ -120,6 +101,8 @@ const groups: TagGroup[] = [
     ],
   },
 ];
+
+const totalCount = groups.reduce((acc, g) => acc + g.items.length, 0);
 ---
 
 <FeaturesLayout
@@ -128,60 +111,70 @@ const groups: TagGroup[] = [
   description="Every JSDoc tag compodocx recognizes — @param, @returns, @example, @deprecated, @internal, @category, @see, @since, @link, @beta, @breaking, @slot, @playground, hero-link tags."
 >
   <p class="text-cdx-text-secondary text-lg">
-    Recognized tags grouped by where they apply. Unknown tags are not an error: theming token blocks
-    fold them into the description, and member descriptions pass them through verbatim.
+    {totalCount} recognized tags grouped by where they apply. Unknown tags are not an error: theming
+    token blocks fold them into the description, and member descriptions pass them through verbatim.
   </p>
 
-  <div class="grid gap-5 lg:grid-cols-2">
+  <ul class="space-y-3" aria-label="JSDoc tag groups">
     {
-      groups.map((group) => (
-        <article
-          id={group.id}
-          class="bg-cdx-bg-elevated flex flex-col rounded-xl p-6 scroll-mt-24"
-        >
-          <header class="flex items-start gap-3">
-            <span
-              aria-hidden="true"
-              class={`${group.iconColor} bg-cdx-bg-alt inline-flex size-10 shrink-0 items-center justify-center rounded-lg`}
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                set:html={group.iconBody}
-              />
-            </span>
-            <div class="min-w-0">
-              <h2 class="text-cdx-text text-lg font-semibold tracking-tight">{group.heading}</h2>
-              <p class="text-cdx-text-secondary mt-1 text-sm leading-relaxed">{group.blurb}</p>
+      groups.map((group, idx) => (
+        <li>
+          <details
+            id={group.id}
+            class="bg-cdx-bg-elevated faq-item group rounded-xl scroll-mt-24"
+            open={idx === 0 ? true : undefined}
+          >
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 rounded-xl p-5">
+              <span class="flex items-baseline gap-3">
+                <span class="text-cdx-text text-base font-semibold tracking-tight">
+                  {group.heading}
+                </span>
+                <span class="text-cdx-text-secondary font-mono text-xs">
+                  {group.items.length} {group.items.length === 1 ? 'tag' : 'tags'}
+                </span>
+              </span>
+              <span
+                aria-hidden="true"
+                class="text-cdx-text-secondary group-hover:text-cdx-primary inline-flex size-7 shrink-0 items-center justify-center rounded-md transition-transform group-open:rotate-180"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </span>
+            </summary>
+            <div class="px-5 pb-5">
+              <p class="text-cdx-text-secondary mb-4 text-sm leading-relaxed">{group.blurb}</p>
+              <dl class="grid gap-x-6 gap-y-2.5 text-sm sm:grid-cols-[auto_1fr]">
+                {group.items.map(([tag, desc]) => (
+                  <>
+                    <dt class="min-w-0">
+                      <code class="cdx-code whitespace-nowrap">{tag}</code>
+                    </dt>
+                    <dd class="text-cdx-text-secondary leading-relaxed">{desc}</dd>
+                  </>
+                ))}
+              </dl>
             </div>
-          </header>
-
-          <dl class="mt-5 space-y-2.5 text-sm">
-            {group.items.map(([tag, desc]) => (
-              <div class="grid gap-x-4 gap-y-1 sm:grid-cols-[auto_1fr]">
-                <dt class="min-w-0">
-                  <code class="cdx-code whitespace-nowrap">{tag}</code>
-                </dt>
-                <dd class="text-cdx-text-secondary leading-relaxed">{desc}</dd>
-              </div>
-            ))}
-          </dl>
-        </article>
+          </details>
+        </li>
       ))
     }
-  </div>
+  </ul>
 
   <h2>Theming token example</h2>
   <p>
     The token block sits above the actual property declaration. <code class="cdx-code">@overview</code>
-    blocks at file-level open the Theming tab; per-token blocks fill the catalog.
+    blocks at file-level open the Theming tab. Per-token blocks fill the catalog.
   </p>
   <CodeBlock
     lang="css"
@@ -202,3 +195,10 @@ const groups: TagGroup[] = [
 --color-app-card-bg: hsl(220 20% 98%);`}
   />
 </FeaturesLayout>
+
+<style>
+  /* Hide the default disclosure triangle in Safari/Chrome (same pattern as FAQ + themes) */
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+</style>
