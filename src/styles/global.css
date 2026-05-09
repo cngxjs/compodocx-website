@@ -110,3 +110,26 @@ main > section:nth-of-type(7) {
   white-space: nowrap;
   vertical-align: baseline;
 }
+
+/* Marketing accent — vibrant ember-glow orange. Static across all themes
+   (does NOT follow the active --color-cdx-primary). Same hue family as the
+   hero-headline shimmer so the brand identity is coherent. Used for the
+   brand "x" in the compodocx logo and for hero subhead highlights. */
+.text-ember {
+  color: hsl(25 95% 48%);
+}
+:where(.dark) .text-ember {
+  color: hsl(32 100% 62%);
+}
+
+/* Text-selection highlight — matches the ember marketing accent so the
+   default browser blue does not clash with the brand. Same hue both modes,
+   25-30% opacity gives a visible tint without bleaching the text. */
+::selection {
+  background-color: hsl(25 95% 48% / 0.28);
+  color: var(--color-cdx-text);
+}
+:where(.dark) ::selection {
+  background-color: hsl(32 100% 62% / 0.32);
+  color: var(--color-cdx-text);
+}

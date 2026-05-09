@@ -19,31 +19,97 @@ const lqip = lqipMap as Record<string, string>;
 <section class="mx-auto max-w-6xl px-4 py-24" aria-labelledby="coverage-heading">
   <div class="grid gap-10 lg:grid-cols-2 lg:items-center lg:gap-16">
     <div>
-      <SectionEyebrow text="Coverage" />
-      <h2 id="coverage-heading" class="text-cdx-text mt-3 text-3xl font-semibold tracking-tight">
-        Catch the undocumented bits before merge
-      </h2>
+      <hgroup>
+        <SectionEyebrow text="Coverage" />
+        <h2 id="coverage-heading" class="text-cdx-text mt-3 text-3xl font-semibold tracking-tight">
+          Catch the undocumented bits before merge
+        </h2>
+      </hgroup>
       <p class="text-cdx-text-secondary mt-4 leading-relaxed">
         Per-symbol coverage rolls up into a sortable report. Documented vs. not, broken down by
         kind. Set <code class="cdx-code">--coverageMinimum</code> and your build fails below threshold.
       </p>
-      <ul class="text-cdx-text-secondary mt-6 space-y-3 text-sm">
-        <li class="flex gap-3">
-          <span class="text-cdx-primary mt-0.5" aria-hidden="true">→</span>
-          <span>Sortable list of undocumented symbols, deep-linked to source.</span>
-        </li>
-        <li class="flex gap-3">
-          <span class="text-cdx-primary mt-0.5" aria-hidden="true">→</span>
-          <span>
-            Breakdown by component, directive, pipe, class, and interface. You see exactly where the
-            gaps are.
+      <ul class="text-cdx-text-secondary mt-8 space-y-5 text-sm">
+        <li class="flex gap-3.5">
+          <span
+            class="bg-cdx-primary/10 text-cdx-primary mt-0.5 inline-flex size-7 shrink-0 items-center justify-center rounded-md"
+            aria-hidden="true"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="m3 17 2 2 4-4"></path>
+              <path d="m3 7 2 2 4-4"></path>
+              <path d="M13 6h8"></path>
+              <path d="M13 12h8"></path>
+              <path d="M13 18h8"></path>
+            </svg>
+          </span>
+          <span class="leading-relaxed">
+            <span class="text-cdx-text font-semibold">Deep-linked symbol list.</span>
+            Click any undocumented item to jump straight into source.
           </span>
         </li>
-        <li class="flex gap-3">
-          <span class="text-cdx-primary mt-0.5" aria-hidden="true">→</span>
-          <span>
-            <code class="cdx-code">--publicApiOnly</code> scopes to your allow-list so internal helpers
-            don&rsquo;t drag the percentage down.
+        <li class="flex gap-3.5">
+          <span
+            class="bg-cdx-primary/10 text-cdx-primary mt-0.5 inline-flex size-7 shrink-0 items-center justify-center rounded-md"
+            aria-hidden="true"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="m12.83 2.18-9.55 4.78a2 2 0 0 0 0 3.58L12.83 15a2 2 0 0 0 1.66 0l9.55-4.46a2 2 0 0 0 0-3.58L14.49 2.18a2 2 0 0 0-1.66 0z"
+              ></path>
+              <path d="M2 12.5 12.83 17a2 2 0 0 0 1.66 0L22 12.5"></path>
+              <path d="M2 17.5 12.83 22a2 2 0 0 0 1.66 0L22 17.5"></path>
+            </svg>
+          </span>
+          <span class="leading-relaxed">
+            <span class="text-cdx-text font-semibold">Breakdown by kind.</span>
+            Components, directives, pipes, classes, interfaces — each tracked separately.
+          </span>
+        </li>
+        <li class="flex gap-3.5">
+          <span
+            class="bg-cdx-primary/10 text-cdx-primary mt-0.5 inline-flex size-7 shrink-0 items-center justify-center rounded-md"
+            aria-hidden="true"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon>
+            </svg>
+          </span>
+          <span class="leading-relaxed">
+            <span class="text-cdx-text font-semibold">
+              <code class="cdx-code">--publicApiOnly</code> filter.
+            </span>
+            Scope to your exported allow-list so internal helpers don&rsquo;t tank the percentage.
           </span>
         </li>
       </ul>

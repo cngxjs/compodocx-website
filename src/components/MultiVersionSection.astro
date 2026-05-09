@@ -72,39 +72,102 @@ const lqip = lqipMap as Record<string, string>;
     </figure>
 
     <div class="lg:order-2">
-      <SectionEyebrow text="Versioning" />
-      <h2
-        id="multi-version-heading"
-        class="text-cdx-text mt-3 text-3xl font-semibold tracking-tight"
-      >
-        Every release. One domain. Zero config.
-      </h2>
+      <hgroup>
+        <SectionEyebrow text="Versioning" />
+        <h2
+          id="multi-version-heading"
+          class="text-cdx-text mt-3 text-3xl font-semibold tracking-tight"
+        >
+          Every release. One domain. Zero config.
+        </h2>
+      </hgroup>
       <p class="text-cdx-text-secondary mt-4 leading-relaxed">
         Each release writes into its own folder under a shared root. A
         <code class="cdx-code">versions.json</code> manifest drives the version-switcher in the topbar.
         Append-only, semver-sorted, no server-side config.
       </p>
-      <ul class="text-cdx-text-secondary mt-6 space-y-3 text-sm">
-        <li class="flex gap-3">
-          <span class="text-cdx-primary mt-0.5" aria-hidden="true">→</span>
-          <span>
-            Version label auto-detected from the nearest <code class="cdx-code">package.json</code>.
-            Override with <code class="cdx-code">--versionLabel</code>.
+      <ul class="text-cdx-text-secondary mt-8 space-y-5 text-sm">
+        <li class="flex gap-3.5">
+          <span
+            class="bg-cdx-primary/10 text-cdx-primary mt-0.5 inline-flex size-7 shrink-0 items-center justify-center rounded-md"
+            aria-hidden="true"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path
+                d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"
+              ></path>
+            </svg>
+          </span>
+          <span class="leading-relaxed">
+            <span class="text-cdx-text font-semibold">Auto-detected label.</span>
+            Read from the nearest <code class="cdx-code">package.json</code>, or override with
+            <code class="cdx-code">--versionLabel</code>.
           </span>
         </li>
-        <li class="flex gap-3">
-          <span class="text-cdx-primary mt-0.5" aria-hidden="true">→</span>
-          <span>
-            Manifest is append-only and deduplicated by label. Past links never break when a new
-            release ships.
+        <li class="flex gap-3.5">
+          <span
+            class="bg-cdx-primary/10 text-cdx-primary mt-0.5 inline-flex size-7 shrink-0 items-center justify-center rounded-md"
+            aria-hidden="true"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M12 8v4l3 3"></path>
+              <path d="M3.05 11a9 9 0 1 1 .5 4"></path>
+              <polyline points="3 4 3 11 10 11"></polyline>
+            </svg>
+          </span>
+          <span class="leading-relaxed">
+            <span class="text-cdx-text font-semibold">Append-only manifest.</span>
+            Deduplicated by label — past links never break when a new release ships.
           </span>
         </li>
-        <li class="flex gap-3">
-          <span class="text-cdx-primary mt-0.5" aria-hidden="true">→</span>
-          <span>
-            Switcher reads the manifest at runtime. GitHub Pages, S3, intranets, even <code
-              class="cdx-code">file://</code
-            >.
+        <li class="flex gap-3.5">
+          <span
+            class="bg-cdx-primary/10 text-cdx-primary mt-0.5 inline-flex size-7 shrink-0 items-center justify-center rounded-md"
+            aria-hidden="true"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M16 3h5v5"></path>
+              <path d="M8 3H3v5"></path>
+              <path d="M21 16v5h-5"></path>
+              <path d="M3 16v5h5"></path>
+              <path d="m21 3-6 6"></path>
+              <path d="m3 21 6-6"></path>
+            </svg>
+          </span>
+          <span class="leading-relaxed">
+            <span class="text-cdx-text font-semibold">Runtime switcher.</span>
+            Reads the manifest in the browser — works on GitHub Pages, S3, intranets, even
+            <code class="cdx-code">file://</code>.
           </span>
         </li>
       </ul>

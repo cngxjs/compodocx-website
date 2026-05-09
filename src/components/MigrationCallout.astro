@@ -6,7 +6,7 @@ const migrationGuideUrl = 'https://github.com/cngxjs/compodocx/blob/develop/MIGR
 
 <section class="mx-auto max-w-6xl px-4 py-24" aria-labelledby="migration-heading">
   <SectionEyebrow text="From compodoc" />
-  <aside class="bg-cdx-bg-elevated border-cdx-primary mt-3 rounded-r-xl border-l-4 p-8 sm:p-10">
+  <div class="bg-cdx-bg-elevated border-cdx-primary mt-3 rounded-r-xl border-l-4 p-8 sm:p-10">
     <h2
       id="migration-heading"
       class="text-cdx-text text-2xl font-semibold tracking-tight sm:text-3xl"
@@ -20,14 +20,14 @@ const migrationGuideUrl = 'https://github.com/cngxjs/compodocx/blob/develop/MIGR
 
     <ul class="mt-8 grid gap-6 md:grid-cols-3">
       <li class="text-sm">
-        <p class="text-cdx-text font-semibold">CLI alias works</p>
+        <h3 class="text-cdx-text text-base font-semibold">CLI alias works</h3>
         <p class="text-cdx-text-secondary mt-1.5 leading-relaxed">
           Your existing <code class="cdx-code">compodoc</code> scripts run unchanged. The binary registers
           both names.
         </p>
       </li>
       <li class="text-sm">
-        <p class="text-cdx-text font-semibold">JS template overrides</p>
+        <h3 class="text-cdx-text text-base font-semibold">JS template overrides</h3>
         <p class="text-cdx-text-secondary mt-1.5 leading-relaxed">
           Custom templates are now JS partials returning HTML. No Handlebars, no helpers registry.
           Just
@@ -35,7 +35,9 @@ const migrationGuideUrl = 'https://github.com/cngxjs/compodocx/blob/develop/MIGR
         </p>
       </li>
       <li class="text-sm">
-        <p class="text-cdx-text font-semibold"><code class="cdx-code">migrate</code> sub-CLI</p>
+        <h3 class="text-cdx-text text-base font-semibold">
+          <code class="cdx-code">migrate</code> sub-CLI
+        </h3>
         <p class="text-cdx-text-secondary mt-1.5 leading-relaxed">
           Ports Handlebars templates and CSS automatically. Inspect first, then convert files or
           whole folders. You'll still want to review the diff.
@@ -53,5 +55,5 @@ const migrationGuideUrl = 'https://github.com/cngxjs/compodocx/blob/develop/MIGR
       <span aria-hidden="true">→</span>
       <span class="sr-only">(opens in new tab)</span>
     </a>
-  </aside>
+  </div>
 </section>

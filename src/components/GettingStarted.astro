@@ -41,10 +41,12 @@ const steps: Step[] = [
 ---
 
 <section id="install" class="mx-auto max-w-6xl px-4 py-24" aria-labelledby="install-heading">
-  <SectionEyebrow text="Setup" />
-  <h2 id="install-heading" class="text-cdx-text mt-3 text-3xl font-semibold tracking-tight">
-    From zero to docs in 60 seconds
-  </h2>
+  <hgroup>
+    <SectionEyebrow text="Setup" />
+    <h2 id="install-heading" class="text-cdx-text mt-3 text-3xl font-semibold tracking-tight">
+      From zero to docs in 60 seconds
+    </h2>
+  </hgroup>
   <p class="text-cdx-text-secondary mt-3 max-w-2xl leading-relaxed">
     One command to install. One to run. The third is optional but recommended once your team is
     onboard.
@@ -54,9 +56,9 @@ const steps: Step[] = [
     {
       steps.map((step, idx) => (
         <div class="bg-cdx-bg-elevated grid grid-rows-[auto_auto_1fr_auto] gap-3 rounded-xl p-5">
-          <p class="text-cdx-text-secondary font-mono text-xs tracking-wider uppercase">
+          <h3 class="text-cdx-text-secondary font-mono text-xs tracking-wider uppercase">
             {String(idx + 1).padStart(2, '0')} · {step.label}
-          </p>
+          </h3>
           <p class="text-cdx-text-secondary text-sm leading-relaxed">{step.caption}</p>
           <div class="relative">
             <span

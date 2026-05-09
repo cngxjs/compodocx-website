@@ -95,10 +95,12 @@ const themes: ThemeWithSwatches[] = themeMetas.map(({ source, ...rest }) => ({
 ---
 
 <section id="themes" class="mx-auto max-w-6xl px-4 py-24" aria-labelledby="themes-heading">
-  <SectionEyebrow text="Themes" />
-  <h2 id="themes-heading" class="text-cdx-text mt-3 text-3xl font-semibold tracking-tight">
-    Click a card. The whole site flips.
-  </h2>
+  <hgroup>
+    <SectionEyebrow text="Themes" />
+    <h2 id="themes-heading" class="text-cdx-text mt-3 text-3xl font-semibold tracking-tight">
+      Click a card. The whole site flips.
+    </h2>
+  </hgroup>
   <p class="text-cdx-text-secondary mt-3 max-w-2xl leading-relaxed">
     Eight themes ship with compodocx. Try them live: your pick persists across pages. Want your own?
     Override any subset of <code class="cdx-code">--color-cdx-*</code> tokens in a single CSS file.
