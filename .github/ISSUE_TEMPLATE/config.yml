@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: compodocx tool issues
+    url: https://github.com/cngxjs/compodocx/issues
+    about: Bugs, feature requests, or questions about the @cngxjs/compodocx package itself belong in the tool repo, not the website repo.
+  - name: Discussions
+    url: https://github.com/cngxjs/compodocx-website/discussions
+    about: Questions, ideas, and general discussion about the website.

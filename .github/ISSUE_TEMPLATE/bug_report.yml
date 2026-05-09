@@ -1,0 +1,44 @@
+name: Bug report
+description: Report a problem with the compodocx.dev website (broken layout, missing content, broken link, accessibility issue, etc.)
+title: '[bug] '
+labels: ['bug']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Bugs in the **website** belong here. Bugs in the underlying compodocx tool belong at
+        https://github.com/cngxjs/compodocx/issues.
+  - type: input
+    id: url
+    attributes:
+      label: Affected URL
+      description: Which page on compodocx.dev is affected?
+      placeholder: https://compodocx.dev/guides/...
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What did you see?
+      description: What was wrong, where, and how did you notice it?
+      placeholder: |
+        On the Themes guide, the "Custom logo" code block is cut off on the right at viewport widths below 600px.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect to see?
+      placeholder: |
+        Code block should scroll horizontally inside the card, like other code blocks on the page.
+  - type: input
+    id: browser
+    attributes:
+      label: Browser + OS
+      description: e.g. "Chrome 134 on macOS 15", "Firefox 138 on Windows 11", "Safari iOS 18"
+      placeholder: Chrome 134 on macOS 15
+  - type: textarea
+    id: screenshot
+    attributes:
+      label: Screenshot (optional)
+      description: Drag an image into this field — GitHub uploads it automatically.

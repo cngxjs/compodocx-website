@@ -350,13 +350,6 @@ const groups: OptGroup[] = [
         desc: 'Remove the per-component Dependencies tab (the standalone-import graph).',
       },
       {
-        key: 'disablePlaygroundTab',
-        cli: '--disablePlaygroundTab',
-        type: 'boolean',
-        default: 'false',
-        desc: 'Remove the per-component Playground tab even when @playground blocks are present.',
-      },
-      {
         key: 'disableRoutesGraph',
         cli: '--disableRoutesGraph',
         type: 'boolean',
@@ -535,22 +528,42 @@ const groups: OptGroup[] = [
     ],
   },
   {
+    id: 'playground',
+    heading: 'Playground (@playground)',
+    blurb: "Runnable StackBlitz demos via @playground JSDoc blocks. See the Playground guide for the full authoring story.",
+    items: [
+      {
+        key: 'disablePlaygroundTab',
+        cli: '--disablePlaygroundTab',
+        type: 'boolean',
+        default: 'false',
+        desc: "Hide the per-component Playground tab even when @playground blocks are parsed. Independent of --disableDependenciesTab. No effect on components without @playground blocks (the tab is already absent).",
+      },
+      {
+        key: 'playgroundDependencies',
+        type: 'object',
+        default: '{}',
+        desc: "Extra packages to inject into every StackBlitz manifest's dependencies, with the version YOU specify. Wins over the consumer-package.json auto-forward AND any auto-detected version (e.g. Material). Use for libraries the consumer ships but doesn't npm install directly (peer-only CSS themes), or to pin a per-build version. No CLI flag — config-file only.",
+      },
+    ],
+  },
+  {
     id: 'integrations',
     heading: 'Integrations',
-    blurb: 'StackBlitz live demos, Google Analytics 4.',
+    blurb: 'Legacy StackBlitz @stackblitz tag, Google Analytics 4. For runnable demos prefer the modern @playground tag (see Playground group above).',
     items: [
       {
         key: 'stackblitz',
         cli: '--stackblitz',
         type: 'boolean',
         default: 'false',
-        desc: 'Enable StackBlitz integration. Adds "Open in StackBlitz" buttons to @example code blocks.',
+        desc: 'Enable legacy StackBlitz integration. Adds "Open in StackBlitz" buttons to @example code blocks. Superseded by @playground for new projects.',
       },
       {
         key: 'stackblitzTemplate',
         cli: '--stackblitzTemplate',
         type: 'string',
-        desc: 'StackBlitz project template ID. Example code is injected into this template on click.',
+        desc: 'StackBlitz project template ID for the legacy @stackblitz tag. Example code is injected into this template on click.',
       },
       {
         key: 'gaID',

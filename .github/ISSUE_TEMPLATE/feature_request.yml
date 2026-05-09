@@ -1,0 +1,30 @@
+name: Content suggestion
+description: Suggest a missing topic, an addition to an existing guide, a new theme swatch, or another content improvement.
+title: '[content] '
+labels: ['content']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template for **website content** suggestions: missing guides, sections, examples,
+        accessibility improvements, performance ideas, or design tweaks. Tool features go to
+        https://github.com/cngxjs/compodocx/issues instead.
+  - type: textarea
+    id: idea
+    attributes:
+      label: What is missing or could be better?
+      placeholder: |
+        The Routing guide doesn't mention how compodocx handles route guards. A short paragraph plus
+        a code example would be useful.
+    validations:
+      required: true
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Why does this matter?
+      description: Who benefits, and what problem does it solve?
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives you considered (optional)
+      description: e.g. "Linking to the tool repo's routing docs would also work, but inline content is faster to skim."
