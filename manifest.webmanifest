@@ -1,0 +1,27 @@
+{
+  "name": "compodocx — modern Angular documentation",
+  "short_name": "compodocx",
+  "description": "Modern documentation generator for Angular applications. Standalone-first, Signals support, multi-version output, theming tokens, migration tools.",
+  "start_url": "/compodocx-website/",
+  "scope": "/compodocx-website/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f5f5f5",
+  "theme_color": "#1c1c1c",
+  "lang": "en",
+  "categories": ["developer", "productivity", "documentation"],
+  "icons": [
+    {
+      "src": "/compodocx-website/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/compodocx-website/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

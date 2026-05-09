@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cngxjs.github.io/compodocx-website/sitemap-index.xml
