@@ -187,10 +187,11 @@ main > section:nth-of-type(11) {
 }
 .cdx-prose a {
   color: var(--color-cdx-primary);
+  text-decoration: underline;
   text-underline-offset: 2px;
 }
 .cdx-prose a:hover {
-  text-decoration: underline;
+  text-decoration-thickness: 2px;
 }
 .cdx-prose ul:not([class]) {
   margin-top: 0.5rem;

@@ -605,7 +605,7 @@ const totalCount = groups.reduce((acc, g) => acc + g.items.length, 0);
       {
         groups.map((g) => (
           <li>
-            <a href={`#${g.id}`} class="text-cdx-primary underline-offset-2 hover:underline">
+            <a href={`#${g.id}`} class="text-cdx-primary underline underline-offset-2">
               {g.heading}
               <span class="text-cdx-text-muted text-xs">({g.items.length})</span>
             </a>
