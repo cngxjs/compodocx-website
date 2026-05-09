@@ -1,5 +1,72 @@
 ---
 import FeaturesLayout from '../../layouts/FeaturesLayout.astro';
+
+interface Tip {
+  id: string;
+  title: string;
+  iconBody: string;
+  iconColor: string;
+  body: string;
+}
+
+const tips: Tip[] = [
+  {
+    id: 'monorepos',
+    title: 'Monorepos',
+    iconColor: 'text-rose-500 dark:text-rose-400',
+    iconBody: `<path d="M3 7v11a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7l-2-2H5a2 2 0 0 0-2 2"/><path d="M3 11h18"/>`,
+    body: 'One compodocx run per project, each writing to its own version folder under a shared <code class="cdx-code">/documentation</code>. Each project keeps its own version-switcher and theme. A static index page at the root links to each project&rsquo;s latest label.',
+  },
+  {
+    id: 'watch-serve',
+    title: 'Watch + serve',
+    iconColor: 'text-sky-500 dark:text-sky-400',
+    iconBody: `<path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/>`,
+    body: '<code class="cdx-code">--watch --serve</code> gives instant feedback while authoring. The dev server reuses production routing, so what you see locally matches what ships.',
+  },
+  {
+    id: 'ci-diff',
+    title: 'Diff in CI on every PR',
+    iconColor: 'text-emerald-500 dark:text-emerald-400',
+    iconBody: `<circle cx="5" cy="6" r="3"/><path d="M12 6h5a2 2 0 0 1 2 2v7"/><circle cx="19" cy="18" r="3"/><path d="M12 18H7a2 2 0 0 1-2-2V9"/>`,
+    body: 'Generate a JSON snapshot per build (<code class="cdx-code">--exportFormat json</code>), commit it under <code class="cdx-code">snapshots/</code>, and run <code class="cdx-code">compodocx diff prev.json next.json</code> in CI. Exit code 2 fails the build on breaking changes. Pipe the JSON output to your bot for PR comments.',
+  },
+  {
+    id: 'llm-context',
+    title: 'LLM context for code review',
+    iconColor: 'text-violet-500 dark:text-violet-400',
+    iconBody: `<rect x="4" y="6" width="16" height="14" rx="2"/><path d="M9 6V4a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v2"/><circle cx="9" cy="13" r="1"/><circle cx="15" cy="13" r="1"/><path d="M9 17h6"/>`,
+    body: '<code class="cdx-code">--exportFormat llm-md</code> emits an LLM-context markdown bundle. Pipe it into <code class="cdx-code">llm</code>, <code class="cdx-code">claude</code>, or any tool that accepts a markdown corpus. Sized and structured for direct consumption, with signatures capped to keep the prompt small.',
+  },
+  {
+    id: 'migrate',
+    title: 'Migrating from compodoc',
+    iconColor: 'text-amber-500 dark:text-amber-400',
+    iconBody: `<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>`,
+    body: '<code class="cdx-code">compodocx migrate templates</code> ports a folder of Handlebars overrides to JS partials in one shot. Run <code class="cdx-code">compodocx migrate inspect</code> first to see what will change.',
+  },
+  {
+    id: 'narrow-tsconfig',
+    title: 'Keep your doc tsconfig narrow',
+    iconColor: 'text-fuchsia-500 dark:text-fuchsia-400',
+    iconBody: `<polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>`,
+    body: 'Exclude test files, storybook entries, dev-only fixtures. Heavy generic types render slower. A smaller surface keeps cold builds fast and keeps the rendered docs focused on what consumers actually use.',
+  },
+  {
+    id: 'public-api',
+    title: 'Public API filtering',
+    iconColor: 'text-cyan-500 dark:text-cyan-400',
+    iconBody: `<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/>`,
+    body: '<code class="cdx-code">--publicApiOnly</code> restricts output to the symbols matching your public API allow-list. Useful when you ship internal helpers in the same package and don&rsquo;t want them on the docs page.',
+  },
+  {
+    id: 'preserve-comments',
+    title: 'Preserve comments through the build',
+    iconColor: 'text-orange-500 dark:text-orange-400',
+    iconBody: `<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6"/><path d="M9 17h4"/>`,
+    body: 'Some bundlers strip JSDoc by default. Set <code class="cdx-code">"removeComments": false</code> in your doc tsconfig if you see empty descriptions in the rendered output.',
+  },
+];
 ---
 
 <FeaturesLayout
@@ -8,58 +75,46 @@ import FeaturesLayout from '../../layouts/FeaturesLayout.astro';
   description="compodocx tips: monorepo layout, watch + serve dev loop, CI API diffs, narrow doc tsconfigs, multi-version setup, LLM-context exports, JSDoc preservation."
 >
   <p class="text-cdx-text-secondary text-lg">
-    Patterns that pay off in real projects. None of these are required. They&rsquo;re what we reach
-    for once the basics are in place.
+    Patterns that pay off in real projects. None are required. They&rsquo;re what we reach for once
+    the basics are in place.
   </p>
 
-  <ul class="text-cdx-text-secondary space-y-4 text-sm">
-    <li>
-      <strong class="text-cdx-text">Monorepos.</strong>
-      One compodocx run per project, each writing to its own version folder under a shared
-      <code class="cdx-code">/documentation</code>. Each project keeps its own version-switcher and
-      theme. A static index page at the root links to each project&rsquo;s latest label.
-    </li>
-    <li>
-      <strong class="text-cdx-text">Watch + serve.</strong>
-      <code class="cdx-code">--watch --serve</code> gives instant feedback while authoring. The dev server
-      reuses production routing, so what you see locally matches what ships.
-    </li>
-    <li>
-      <strong class="text-cdx-text">Diff in CI on every PR.</strong>
-      Generate a JSON snapshot per build (<code class="cdx-code">--exportFormat json</code>), commit
-      it under <code class="cdx-code">snapshots/</code>, and run
-      <code class="cdx-code">compodocx diff prev.json next.json</code> in CI. Exit code 2 fails the build
-      on breaking changes. Pipe the JSON output to your bot of choice for PR comments.
-    </li>
-    <li>
-      <strong class="text-cdx-text">LLM context for code review.</strong>
-      <code class="cdx-code">--exportFormat llm-md</code> emits an LLM-context markdown bundle. Pipe it
-      into <code class="cdx-code">llm</code>, <code class="cdx-code">claude</code>, or any tool that
-      accepts a markdown corpus. The bundle is sized and structured for direct consumption, with
-      signatures capped to keep the prompt small.
-    </li>
-    <li>
-      <strong class="text-cdx-text">Migrating from compodoc.</strong>
-      <code class="cdx-code">compodocx migrate templates</code> ports a folder of Handlebars overrides
-      to JS partials in one shot. Run
-      <code class="cdx-code">compodocx migrate inspect</code> first to see what will change.
-    </li>
-    <li>
-      <strong class="text-cdx-text">Keep your doc tsconfig narrow.</strong>
-      Exclude test files, storybook entries, dev-only fixtures. Heavy generic types render slower. A smaller
-      surface keeps cold builds fast and keeps the rendered docs focused on what consumers actually use.
-    </li>
-    <li>
-      <strong class="text-cdx-text">Public API filtering.</strong>
-      <code class="cdx-code">--publicApiOnly</code> restricts output to the symbols matching your public
-      API allow-list. Useful when you ship internal helpers in the same package and don&rsquo;t want them
-      on the docs page.
-    </li>
-    <li>
-      <strong class="text-cdx-text">Preserve comments through the build.</strong>
-      Some bundlers strip JSDoc by default. Set
-      <code class="cdx-code">"removeComments": false</code> in your doc tsconfig if you see empty descriptions
-      in the rendered output.
-    </li>
+  <ul class="grid gap-5 lg:grid-cols-2" aria-label="Tips and patterns">
+    {
+      tips.map((tip) => (
+        <li>
+          <article
+            id={tip.id}
+            class="bg-cdx-bg-elevated flex h-full flex-col rounded-xl p-6 scroll-mt-24"
+          >
+            <header class="flex items-start gap-3">
+              <span
+                aria-hidden="true"
+                class={`${tip.iconColor} bg-cdx-bg-alt inline-flex size-10 shrink-0 items-center justify-center rounded-lg`}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  set:html={tip.iconBody}
+                />
+              </span>
+              <h2 class="text-cdx-text mt-1 text-lg font-semibold tracking-tight">{tip.title}</h2>
+            </header>
+
+            <p
+              class="text-cdx-text-secondary mt-4 text-sm leading-relaxed"
+              set:html={tip.body}
+            />
+          </article>
+        </li>
+      ))
+    }
   </ul>
 </FeaturesLayout>
