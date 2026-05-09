@@ -9,11 +9,7 @@
   "background_color": "#f5f5f5",
   "theme_color": "#1c1c1c",
   "lang": "en",
-  "categories": [
-    "developer",
-    "productivity",
-    "documentation"
-  ],
+  "categories": ["developer", "productivity", "documentation"],
   "icons": [
     {
       "src": "/favicon.svg",
