@@ -6,6 +6,7 @@ interface Step {
   label: string;
   caption: string;
   code: string;
+  lang: 'bash' | 'json';
 }
 
 const steps: Step[] = [
@@ -14,6 +15,7 @@ const steps: Step[] = [
     label: 'Install',
     caption: 'Add it to your dev dependencies. Works in any Angular library or app on Node 22+.',
     code: 'npm install --save-dev @cngxjs/compodocx',
+    lang: 'bash',
   },
   {
     id: 'run',
@@ -21,6 +23,7 @@ const steps: Step[] = [
     caption:
       'Point at your tsconfig. Static docs land in ./documentation/<versionLabel>/. The label comes from package.json automatically.',
     code: 'npx compodocx -p tsconfig.doc.json',
+    lang: 'bash',
   },
   {
     id: 'configure',
@@ -32,6 +35,7 @@ const steps: Step[] = [
   "theme": "ocean",
   "exportFormat": "html"
 }`,
+    lang: 'json',
   },
 ];
 ---
@@ -54,8 +58,16 @@ const steps: Step[] = [
             {String(idx + 1).padStart(2, '0')} · {step.label}
           </p>
           <p class="text-cdx-text-secondary text-sm leading-relaxed">{step.caption}</p>
-          {/* prettier-ignore */}
-          <pre class="bg-cdx-bg-alt/60 text-cdx-text overflow-x-auto rounded-lg p-3 font-mono text-xs leading-relaxed"><code id={`gs-${step.id}-code`}>{step.code}</code></pre>
+          <div class="relative">
+            <span
+              aria-hidden="true"
+              class="bg-cdx-bg-elevated text-cdx-text-muted absolute right-2 top-2 z-10 rounded px-1.5 py-0.5 font-mono text-[10px] tracking-wider uppercase"
+            >
+              {step.lang}
+            </span>
+            {/* prettier-ignore */}
+            <pre class="bg-cdx-bg-alt/60 text-cdx-text overflow-x-auto rounded-lg p-3 pr-14 font-mono text-xs leading-relaxed"><code id={`gs-${step.id}-code`}>{step.code}</code></pre>
+          </div>
           <button
             type="button"
             data-copy-target={`gs-${step.id}-code`}
