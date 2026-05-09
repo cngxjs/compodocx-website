@@ -1,0 +1,85 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { guides } from '../components/FeaturesSidebar.astro';
+
+const base = import.meta.env.BASE_URL;
+
+// Surface a small set of "where you probably wanted to go" links.
+const popularSlugs = ['getting-started', 'features', 'options', 'themes'];
+const popular = popularSlugs
+  .map((slug) => guides.find((g) => g.slug === slug))
+  .filter((g): g is (typeof guides)[number] => Boolean(g));
+---
+
+<Layout
+  title="Page not found — compodocx"
+  description="The page you were looking for does not exist on compodocx.dev. Try the home page or the guides hub."
+>
+  <section class="mx-auto flex max-w-3xl flex-col items-center px-4 py-24 text-center sm:py-32">
+    <p
+      aria-hidden="true"
+      class="text-ember font-mono text-7xl font-semibold tracking-tight sm:text-8xl"
+    >
+      404
+    </p>
+    <h1
+      class="text-cdx-text mt-6 text-3xl font-semibold tracking-tight sm:text-4xl"
+    >
+      That page does not exist
+    </h1>
+    <p class="text-cdx-text-secondary mt-4 max-w-xl leading-relaxed">
+      The URL you followed is no longer here, or it was never here. The site is split between a
+      single landing page and thirteen reference guides — chances are one of them is what you
+      wanted.
+    </p>
+
+    <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
+      <a
+        href={base}
+        class="bg-cdx-primary text-cdx-text-inverse hover:bg-cdx-primary-hover inline-flex h-11 items-center rounded-lg px-5 text-sm font-semibold transition-colors"
+      >
+        Go to home
+      </a>
+      <a
+        href={`${base}guides/`}
+        class="bg-cdx-bg-elevated text-cdx-text hover:bg-cdx-bg-alt inline-flex h-11 items-center rounded-lg px-5 text-sm font-semibold transition-colors"
+      >
+        Browse guides
+      </a>
+    </div>
+
+    {
+      popular.length > 0 && (
+        <div class="mt-16 w-full">
+          <p class="text-cdx-text-secondary text-xs font-semibold tracking-[0.2em] uppercase">
+            Popular guides
+          </p>
+          <ul class="mt-5 grid gap-3 text-left sm:grid-cols-2">
+            {popular.map((g) => (
+              <li>
+                <a
+                  href={`${base}guides/${g.slug}/`}
+                  class="bg-cdx-bg-elevated hover:bg-cdx-bg-alt focus-visible:ring-cdx-primary group flex h-full items-center gap-3 rounded-xl p-4 transition-colors focus-visible:ring-2 focus-visible:outline-none"
+                >
+                  <span
+                    aria-hidden="true"
+                    class="bg-cdx-primary text-cdx-text-inverse inline-flex size-8 items-center justify-center rounded-md font-mono text-xs font-bold"
+                  >
+                    {String(g.number).padStart(2, '0')}
+                  </span>
+                  <span class="text-cdx-text text-sm font-semibold tracking-tight">{g.title}</span>
+                  <span
+                    aria-hidden="true"
+                    class="text-cdx-text-secondary group-hover:text-cdx-primary ml-auto transition-all group-hover:translate-x-0.5"
+                  >
+                    →
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )
+    }
+  </section>
+</Layout>
