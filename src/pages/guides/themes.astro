@@ -42,6 +42,215 @@ const bundled = [
   ['Neon', 'High-contrast electric primary on dark slate.'],
   ['Brutalist', 'Hard edges, raw concrete, maximum legibility.'],
 ];
+
+interface TokenGroup {
+  id: string;
+  name: string;
+  count: string;
+  blurb: string;
+  css: string;
+}
+
+const tokenGroups: TokenGroup[] = [
+  {
+    id: 'surface',
+    name: 'Surface hierarchy',
+    count: '5',
+    blurb:
+      'Page, sidebar, cards, inline-code, fenced-code-block. The full vertical stack of background layers.',
+    css: `--color-cdx-bg:            hsl(220 16% 98%);
+--color-cdx-bg-alt:        hsl(220 16% 96%);
+--color-cdx-bg-elevated:   hsl(0 0% 100%);
+--color-cdx-bg-code:       hsl(220 16% 95%);
+--color-cdx-bg-code-block: hsl(225 16% 16%);`,
+  },
+  {
+    id: 'text',
+    name: 'Text hierarchy',
+    count: '4',
+    blurb: 'Body, secondary, muted, and inverse. Match contrast carefully against the surfaces.',
+    css: `--color-cdx-text:           hsl(220 20% 14%);
+--color-cdx-text-secondary: hsl(220 12% 44%);
+--color-cdx-text-muted:     hsl(220 10% 45%);
+--color-cdx-text-inverse:   hsl(220 16% 96%);`,
+  },
+  {
+    id: 'primary',
+    name: 'Primary accent',
+    count: '3',
+    blurb: 'Brand color, hover variant, and a subtle tint for backgrounds and rings.',
+    css: `--color-cdx-primary:        hsl(222 68% 52%);
+--color-cdx-primary-hover:  hsl(222 68% 44%);
+--color-cdx-primary-subtle: hsl(222 68% 96%);`,
+  },
+  {
+    id: 'entity',
+    name: 'Entity-type accents',
+    count: '13',
+    blurb:
+      'One color per entity kind. Used for sidebar dots, type chips, and dependency-graph nodes.',
+    css: `--color-cdx-entity-component:   #0e8578;
+--color-cdx-entity-service:     #a56a07;
+--color-cdx-entity-directive:   #7c3aed;
+--color-cdx-entity-pipe:        #e2177b;
+--color-cdx-entity-module:      #1e6ff5;
+--color-cdx-entity-class:       #05875f;
+--color-cdx-entity-interface:   #475569;
+--color-cdx-entity-guard:       #eb1515;
+--color-cdx-entity-interceptor: #ba25cd;
+--color-cdx-entity-function:    #52840b;
+--color-cdx-entity-variable:    #617087;
+--color-cdx-entity-typealias:   #6164f1;
+--color-cdx-entity-enum:        #c2410c;`,
+  },
+  {
+    id: 'badges',
+    name: 'Badge base colors',
+    count: '21',
+    blurb:
+      'Each badge derives text, border, and background from one base color via color-mix(). Override the base only.',
+    css: `--color-cdx-badge-standalone:          hsl(170 55% 38%);
+--color-cdx-badge-token:               hsl(260 50% 48%);
+--color-cdx-badge-beta:                hsl(35 75% 42%);
+--color-cdx-badge-factory:             hsl(200 50% 42%);
+--color-cdx-badge-zoneless:            hsl(280 45% 48%);
+--color-cdx-badge-breaking:            hsl(0 65% 45%);
+--color-cdx-badge-signal:              hsl(210 60% 42%);
+--color-cdx-badge-computed:            hsl(270 50% 45%);
+--color-cdx-badge-effect:              hsl(45 70% 40%);
+--color-cdx-badge-resource:            hsl(190 55% 38%);
+--color-cdx-badge-model:               hsl(240 45% 45%);
+--color-cdx-badge-after-render:        hsl(25 65% 40%);
+--color-cdx-badge-after-next-render:   hsl(15 65% 42%);
+--color-cdx-badge-after-every-render:  hsl(5 60% 42%);
+--color-cdx-badge-after-render-effect: hsl(340 55% 42%);
+--color-cdx-badge-input:               hsl(145 50% 35%);
+--color-cdx-badge-output:              hsl(350 50% 42%);
+--color-cdx-badge-view-child:          hsl(165 50% 35%);
+--color-cdx-badge-content-child:       hsl(55 60% 35%);
+--color-cdx-badge-inject:              hsl(320 45% 45%);
+--color-cdx-badge-host:                hsl(180 50% 35%);`,
+  },
+  {
+    id: 'modifiers',
+    name: 'Modifier base colors',
+    count: '5',
+    blurb: 'Visibility and lifecycle modifiers. Same color-mix() derivation as badges.',
+    css: `--color-cdx-mod-private:   hsl(0 50% 40%);
+--color-cdx-mod-protected: hsl(35 60% 35%);
+--color-cdx-mod-readonly:  hsl(210 50% 40%);
+--color-cdx-mod-static:    hsl(270 40% 42%);
+--color-cdx-mod-async:     hsl(170 45% 32%);`,
+  },
+  {
+    id: 'status',
+    name: 'Status, overlay, feedback',
+    count: '6',
+    blurb:
+      'Coverage report, deprecation banners, modal backdrops, and the danger color for destructive UI.',
+    css: `--color-cdx-status-pass:    #16a34a;
+--color-cdx-status-fail:    #ef4444;
+--color-cdx-status-warning: #ca8a04;
+--color-cdx-overlay:        hsl(220 20% 14% / 0.4);
+--color-cdx-deprecated:     hsl(38 92% 32.5%);
+--color-cdx-danger:         hsl(0 72% 51%);`,
+  },
+  {
+    id: 'borders',
+    name: 'Borders & shadows',
+    count: '6',
+    blurb:
+      'Three border weights (default, strong, focus) plus the standard shadow ramp for elevated surfaces.',
+    css: `--color-cdx-border:        hsl(220 14% 90%);
+--color-cdx-border-strong: hsl(220 14% 59%);
+--color-cdx-border-focus:  hsl(222 68% 52%);
+--shadow-cdx-sm: 0 1px 2px hsl(220 20% 14% / 0.06);
+--shadow-cdx-md: 0 4px 12px hsl(220 20% 14% / 0.08);
+--shadow-cdx-lg: 0 12px 32px hsl(220 20% 14% / 0.12);`,
+  },
+  {
+    id: 'typography',
+    name: 'Typography',
+    count: '5',
+    blurb:
+      'Heading, body, and code stacks. Tokens marked [TW] are Tailwind aliases needed when you @apply utility classes.',
+    css: `--font-heading: "Instrument Sans", system-ui, sans-serif;
+--font-body:    "Source Sans 3", system-ui, sans-serif;
+--font-code:    ui-monospace, "Cascadia Code", "SF Mono", Menlo, Consolas, monospace;
+--font-sans:    "Source Sans 3", system-ui, sans-serif;    /* [TW] */
+--font-mono:    ui-monospace, "SF Mono", Menlo, monospace; /* [TW] */`,
+  },
+  {
+    id: 'radii',
+    name: 'Radii',
+    count: '7',
+    blurb:
+      'Three semantic radii plus four Tailwind aliases. Override the [TW] tokens too if you @apply rounded utilities.',
+    css: `--radius-cdx-sm: 4px;
+--radius-cdx-md: 8px;
+--radius-cdx-lg: 12px;
+--radius-sm: 4px;   /* [TW] */
+--radius-md: 8px;   /* [TW] */
+--radius-lg: 12px;  /* [TW] */
+--radius-2xl: 12px; /* [TW] */`,
+  },
+  {
+    id: 'spacing',
+    name: 'Spacing',
+    count: '7',
+    blurb: 'Six general spacing steps plus the sidebar width. Component spacing also uses these.',
+    css: `--spacing-cdx-xs:  4px;
+--spacing-cdx-sm:  8px;
+--spacing-cdx-md:  12px;
+--spacing-cdx-lg:  16px;
+--spacing-cdx-xl:  20px;
+--spacing-cdx-2xl: 24px;
+--spacing-cdx-sidebar: 320px;`,
+  },
+  {
+    id: 'code-blocks',
+    name: 'Code blocks',
+    count: '13',
+    blurb:
+      'Fenced code, the source viewer, line numbers, line highlights, copy button, and the language chip in code-snippet headers.',
+    css: `--color-cdx-snippet-bg:           hsl(220 14% 96%);
+--color-cdx-snippet-border:       transparent;
+--color-cdx-snippet-radius:       var(--radius-cdx-md);
+--color-cdx-code-inline:          #c2185b;
+--color-cdx-code-dark-surface:    hsl(225 16% 14%);
+--color-cdx-scrollbar:            hsl(220 10% 50% / 0.4);
+--color-cdx-line-number:          hsl(220 10% 50% / 0.5);
+--color-cdx-line-hover:           hsl(220 20% 14% / 0.06);
+--color-cdx-line-highlight:       hsl(48 96% 53% / 0.25);
+--color-cdx-line-highlight-flash: hsl(48 96% 53% / 0.3);
+--color-cdx-copy-success:         hsl(142 50% 40%);
+--color-cdx-lang-chip:            hsl(220 10% 60%);
+--color-cdx-lang-chip-bg:         hsl(220 10% 50% / 0.1);`,
+  },
+  {
+    id: 'graphs',
+    name: 'Graphs',
+    count: '4',
+    blurb: 'Dependency-graph and DOM-tree chrome. Default to bg-alt + transparent border.',
+    css: `--color-cdx-graph-bg:           var(--color-cdx-bg-alt);
+--color-cdx-graph-border:       transparent;
+--color-cdx-graph-border-width: 0;
+--color-cdx-graph-radius:       var(--radius-cdx-md);`,
+  },
+  {
+    id: 'transitions',
+    name: 'Transitions',
+    count: '2',
+    blurb: 'Two timing tokens used across hovers, focus rings, and disclosure widgets.',
+    css: `--cdx-transition-fast: 120ms ease;
+--cdx-transition-base: 200ms ease;`,
+  },
+];
+
+const totalTokens = tokenGroups.reduce(
+  (acc, g) => acc + Number.parseInt(g.count.replace(/\D/g, ''), 10),
+  0,
+);
 ---
 
 <FeaturesLayout
@@ -51,9 +260,9 @@ const bundled = [
   extraJsonLd={howToJsonLd}
 >
   <p class="text-cdx-text-secondary text-lg">
-    Eight themes ship in the box. A theme is a CSS file that overrides the
-    <code class="cdx-code">--color-cdx-*</code> tokens. Semantic variables for backgrounds, text, primary,
-    surface elevation, badges, code blocks, scrollbars, and graph chrome.
+    Eight themes ship in the box. A theme is a CSS file that overrides any subset of the
+    <code class="cdx-code">--color-cdx-*</code> design tokens. About {totalTokens} tokens total, grouped
+    by purpose. Unspecified tokens fall back to the default theme.
   </p>
 
   <h2>Bundled themes</h2>
@@ -77,35 +286,136 @@ const bundled = [
   <h2>Switching themes</h2>
   <CodeBlock
     lang="bash"
-    code={`--theme ocean
+    code={`# A bundled theme
+--theme ocean
+
+# Or your own CSS file
 --theme ./my-brand.css`}
   />
 
-  <h2>Custom themes</h2>
+  <h2>Custom logo &amp; favicon</h2>
   <p>
-    A custom theme is one CSS file overriding any subset of the
-    <code class="cdx-code">--color-cdx-*</code> tokens. Unspecified tokens fall back to the default. Override
-    prefixes include <code class="cdx-code">--color-cdx-*</code>,
-    <code class="cdx-code">--spacing-cdx-*</code>, <code class="cdx-code">--radius-cdx-*</code>,
-    <code class="cdx-code">--shadow-cdx-*</code>, <code class="cdx-code">--cdx-badge-*</code>, and
-    <code class="cdx-code">--cdx-mod-*</code>.
+    Branding the docs goes beyond colors. Pass a logo and a favicon via CLI flags or the JSON
+    config. SVG works for the logo (it scales crisply in the topbar); a multi-size ICO or 32×32 PNG
+    works for the favicon.
+  </p>
+  <CodeBlock
+    lang="bash"
+    code={`compodocx -p tsconfig.doc.json \\
+  --theme ./my-brand.css \\
+  --customLogo ./brand/logo.svg \\
+  --customFavicon ./brand/favicon.ico`}
+  />
+  <p>Or pin all three in the JSON config so the team runs the same brand on every build:</p>
+  <CodeBlock
+    lang="json"
+    filename="compodocx.json"
+    code={`{
+  "tsconfig": "tsconfig.doc.json",
+  "theme": "./my-brand.css",
+  "customLogo": "./brand/logo.svg",
+  "customFavicon": "./brand/favicon.ico"
+}`}
+  />
+  <p>
+    Paths are resolved relative to the project root (the directory containing the
+    <code class="cdx-code">package.json</code>). Drop the asset under
+    <code class="cdx-code">./brand/</code> or wherever your assets live; compodocx copies it into the
+    static output.
   </p>
 
+  <h2>Author a custom theme</h2>
+  <p>
+    Start from the
+    <a
+      href="https://github.com/cngxjs/compodocx/blob/develop/src/themes/theme-template.css"
+      rel="noopener"
+      target="_blank"
+      class="text-cdx-primary underline-offset-2 hover:underline"
+      >theme template<span class="sr-only"> (opens in new tab)</span></a
+    >. Every token below is commented out so you uncomment exactly what you want to override. Both
+    <code class="cdx-code">:root</code> (light) and <code class="cdx-code">.dark</code> blocks are supported.
+    Omit <code class="cdx-code">.dark</code> to use the same values in both modes.
+  </p>
   <CodeBlock
     lang="css"
     filename="my-brand.css"
     code={`:root {
-  --color-cdx-bg: hsl(220 20% 96%);
-  --color-cdx-text: hsl(220 30% 12%);
+  --color-cdx-bg:      hsl(220 20% 96%);
+  --color-cdx-text:    hsl(220 30% 12%);
   --color-cdx-primary: hsl(220 70% 40%);
 }
 
 .dark {
-  --color-cdx-bg: hsl(220 25% 8%);
-  --color-cdx-text: hsl(220 15% 92%);
+  --color-cdx-bg:      hsl(220 25% 8%);
+  --color-cdx-text:    hsl(220 15% 92%);
   --color-cdx-primary: hsl(220 80% 65%);
 }`}
   />
+  <p class="text-cdx-text-muted text-sm">
+    Note for radii, fonts, and transitions: override the Tailwind alias tokens marked
+    <code class="cdx-code">/* [TW] */</code> too. Otherwise <code class="cdx-code">@apply</code
+    >-generated utility classes don't pick up your values. Color tokens don't need aliases.
+  </p>
+
+  <h2>All available tokens</h2>
+  <p>
+    Every token compodocx exposes, grouped by purpose. Click a section to expand. Defaults shown are
+    the light-mode values from the
+    <a
+      href="https://github.com/cngxjs/compodocx/blob/develop/src/themes/theme-template.css"
+      rel="noopener"
+      target="_blank"
+      class="text-cdx-primary underline-offset-2 hover:underline"
+      >upstream template<span class="sr-only"> (opens in new tab)</span></a
+    >.
+  </p>
+
+  <ul class="space-y-3" aria-label="Available token groups">
+    {
+      tokenGroups.map((group, idx) => (
+        <li>
+          <details
+            class="bg-cdx-bg-elevated faq-item group rounded-xl"
+            open={idx === 0 ? true : undefined}
+          >
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 rounded-xl p-5">
+              <span class="flex items-baseline gap-3">
+                <span class="text-cdx-text text-base font-semibold tracking-tight">
+                  {group.name}
+                </span>
+                <span class="text-cdx-text-secondary font-mono text-xs">
+                  {group.count} {Number.parseInt(group.count, 10) === 1 ? 'token' : 'tokens'}
+                </span>
+              </span>
+              <span
+                aria-hidden="true"
+                class="text-cdx-text-secondary group-hover:text-cdx-primary inline-flex size-7 shrink-0 items-center justify-center rounded-md transition-transform group-open:rotate-180"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </span>
+            </summary>
+            <div class="px-5 pb-5">
+              <p class="text-cdx-text-secondary mb-3 text-sm leading-relaxed">{group.blurb}</p>
+              <CodeBlock lang="css" id={`tokens-${group.id}`} code={group.css} />
+            </div>
+          </details>
+        </li>
+      ))
+    }
+  </ul>
 
   <h2>Per-component theming tokens</h2>
   <p>
@@ -118,3 +428,10 @@ const bundled = [
     a grouped catalog and an optional source preview.
   </p>
 </FeaturesLayout>
+
+<style>
+  /* Hide the default disclosure triangle in Safari/Chrome (same as FAQSection) */
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+</style>
