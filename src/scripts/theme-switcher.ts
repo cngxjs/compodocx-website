@@ -39,7 +39,8 @@ function applyTheme(id: string): void {
 function syncCardStates(active: string): void {
   document.querySelectorAll<HTMLButtonElement>('button[data-theme-id]').forEach((btn) => {
     const isActive = btn.dataset.themeId === active;
-    btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    // ThemesGrid uses role="radio" + aria-checked; NavBar menu items use role="menuitemradio" + aria-checked.
+    // Both contracts use aria-checked, so a single attribute covers both.
     btn.setAttribute('aria-checked', isActive ? 'true' : 'false');
   });
 }
