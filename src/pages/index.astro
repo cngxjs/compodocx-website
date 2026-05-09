@@ -9,6 +9,7 @@ import MultiVersionSection from '../components/MultiVersionSection.astro';
 import MigrationCallout from '../components/MigrationCallout.astro';
 import GettingStarted from '../components/GettingStarted.astro';
 import ThemesGrid from '../components/ThemesGrid.astro';
+import FAQSection, { faq } from '../components/FAQSection.astro';
 
 const buildDate = new Date().toISOString().slice(0, 10);
 
@@ -53,56 +54,14 @@ const softwareJsonLd = {
 const faqJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'FAQPage',
-  mainEntity: [
-    {
-      '@type': 'Question',
-      name: 'Is compodocx compatible with compodoc?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'Yes. compodocx is a drop-in fork. The compodoc CLI alias still works, and a compodocx migrate command ports Handlebars overrides to JS partials automatically.',
-      },
+  mainEntity: faq.map((item) => ({
+    '@type': 'Question',
+    name: item.question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: item.answer,
     },
-    {
-      '@type': 'Question',
-      name: 'Does compodocx support Angular Signals and standalone components?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'Yes. signal, computed, and linked-signal members render as first-class fields with derived-state dependencies. Standalone components, directives, and pipes are documented without NgModule scaffolding.',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'Can I generate docs for multiple library versions?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'Yes. Multi-version output is the default. compodocx detects the version from package.json, writes a versions.json manifest, and ships a runtime version-switcher widget — no server-side config needed.',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'How do I theme compodocx output?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'Eight themes ship in the box (Slate Noir, Ocean, Midnight, Nord, Rose Pine, Ember, Neon, Brutalist). Roll your own by overriding any subset of the --color-cdx-* CSS custom properties in a single CSS file passed via --theme.',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'Does compodocx integrate with CI?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'Yes. compodocx diff compares two JSON snapshots and exits non-zero on breaking changes. --exportFormat json emits a typed schema with schemaVersion. --coverageMinimum gates merges on documentation completeness.',
-      },
-    },
-    {
-      '@type': 'Question',
-      name: 'Is compodocx free?',
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: 'Yes. compodocx is open source under the MIT license. The compodoc upstream attribution to Vincent Ogloblinsky is preserved.',
-      },
-    },
-  ],
+  })),
 };
 ---
 
@@ -120,4 +79,5 @@ const faqJsonLd = {
   <MigrationCallout />
   <GettingStarted />
   <ThemesGrid />
+  <FAQSection />
 </Layout>

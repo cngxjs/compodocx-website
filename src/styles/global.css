@@ -66,6 +66,15 @@ main > section:nth-of-type(6) {
 main > section:nth-of-type(7) {
   animation-delay: 0.48s;
 }
+main > section:nth-of-type(8) {
+  animation-delay: 0.56s;
+}
+main > section:nth-of-type(9) {
+  animation-delay: 0.64s;
+}
+main > section:nth-of-type(10) {
+  animation-delay: 0.72s;
+}
 
 @keyframes section-reveal {
   from {

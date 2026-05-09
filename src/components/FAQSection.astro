@@ -1,0 +1,97 @@
+---
+import SectionEyebrow from './SectionEyebrow.astro';
+
+export interface FaqItem {
+  question: string;
+  answer: string;
+}
+
+export const faq: FaqItem[] = [
+  {
+    question: 'Is compodocx compatible with compodoc?',
+    answer:
+      'Yes. compodocx is a drop-in fork. The compodoc CLI alias still works, and a compodocx migrate command ports Handlebars overrides to JS partials automatically.',
+  },
+  {
+    question: 'Does compodocx support Angular Signals and standalone components?',
+    answer:
+      'Yes. signal, computed, and linked-signal members render as first-class fields with derived-state dependencies. Standalone components, directives, and pipes are documented without NgModule scaffolding.',
+  },
+  {
+    question: 'Can I generate docs for multiple library versions?',
+    answer:
+      'Yes. Multi-version output is the default. compodocx detects the version from package.json, writes a versions.json manifest, and ships a runtime version-switcher widget — no server-side config needed.',
+  },
+  {
+    question: 'How do I theme compodocx output?',
+    answer:
+      'Eight themes ship in the box (Slate Noir, Ocean, Midnight, Nord, Rose Pine, Ember, Neon, Brutalist). Roll your own by overriding any subset of the --color-cdx-* CSS custom properties in a single CSS file passed via --theme.',
+  },
+  {
+    question: 'Does compodocx integrate with CI?',
+    answer:
+      'Yes. compodocx diff compares two JSON snapshots and exits non-zero on breaking changes. --exportFormat json emits a typed schema with schemaVersion. --coverageMinimum gates merges on documentation completeness.',
+  },
+  {
+    question: 'Is compodocx free?',
+    answer:
+      'Yes. compodocx is open source under the MIT license. The compodoc upstream attribution to Vincent Ogloblinsky is preserved.',
+  },
+];
+---
+
+<section class="mx-auto max-w-3xl px-4 py-24" aria-labelledby="faq-heading">
+  <hgroup>
+    <SectionEyebrow text="FAQ" />
+    <h2 id="faq-heading" class="text-cdx-text mt-3 text-3xl font-semibold tracking-tight">
+      Common questions
+    </h2>
+  </hgroup>
+  <p class="text-cdx-text-secondary mt-3 leading-relaxed">
+    Quick answers to the questions that come up before adoption. Still stuck? Open an issue on
+    GitHub.
+  </p>
+
+  <ul class="mt-10 space-y-3">
+    {
+      faq.map((item, idx) => (
+        <li>
+          <details
+            class="bg-cdx-bg-elevated faq-item group rounded-xl"
+            open={idx === 0 ? true : undefined}
+          >
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-4 rounded-xl p-5">
+              <h3 class="text-cdx-text text-base font-semibold tracking-tight">{item.question}</h3>
+              <span
+                aria-hidden="true"
+                class="text-cdx-text-secondary group-hover:text-cdx-primary inline-flex size-8 shrink-0 items-center justify-center rounded-md transition-transform group-open:rotate-180"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <polyline points="6 9 12 15 18 9" />
+                </svg>
+              </span>
+            </summary>
+            <p class="text-cdx-text-secondary px-5 pb-5 leading-relaxed">{item.answer}</p>
+          </details>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  /* Hide the default disclosure triangle in Safari/Chrome */
+  .faq-item summary::-webkit-details-marker {
+    display: none;
+  }
+</style>
