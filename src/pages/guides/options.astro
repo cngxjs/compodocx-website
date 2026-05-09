@@ -1,6 +1,5 @@
 ---
 import FeaturesLayout from '../../layouts/FeaturesLayout.astro';
-const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono text-[0.85em]';
 
 interface OptionGroup {
   heading: string;
@@ -74,8 +73,8 @@ const groups: OptionGroup[] = [
   description="compodocx CLI flag reference: --tsconfig, --output, --theme, --watch, --serve, --coverageMinimum, --basePath, --routingMode, --exportFormat."
 >
   <p class="text-cdx-text-secondary text-lg">
-    compodocx accepts CLI flags or a JSON config (passed via <code class={inlineCode}>-c</code>).
-    The two compose: flags override config values. Use the config for team consistency, flags for
+    compodocx accepts CLI flags or a JSON config (passed via <code class="cdx-code">-c</code>). The
+    two compose: flags override config values. Use the config for team consistency, flags for
     one-off runs.
   </p>
 
@@ -87,7 +86,7 @@ const groups: OptionGroup[] = [
           {group.items.map(([flag, desc]) => (
             <>
               <dt class="text-cdx-text">
-                <code class={inlineCode}>{flag}</code>
+                <code class="cdx-code">{flag}</code>
               </dt>
               <dd class="text-cdx-text-secondary">{desc}</dd>
             </>
@@ -98,8 +97,7 @@ const groups: OptionGroup[] = [
   }
 
   <p class="text-cdx-text-secondary pt-8">
-    Run <code class={inlineCode}>compodocx --help</code> for the full surface, including project-level
-    options that don&rsquo;t fit a flag (e.g. <code class={inlineCode}>themingTabSections</code> for tab
-    composition).
+    Run <code class="cdx-code">compodocx --help</code> for the full surface, including project-level options
+    that don&rsquo;t fit a flag (e.g. <code class="cdx-code">themingTabSections</code> for tab composition).
   </p>
 </FeaturesLayout>

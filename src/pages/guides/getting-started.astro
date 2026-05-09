@@ -1,8 +1,6 @@
 ---
 import FeaturesLayout from '../../layouts/FeaturesLayout.astro';
-const codeBlock =
-  'bg-cdx-bg-alt/60 text-cdx-text overflow-x-auto rounded-lg p-3 font-mono text-xs leading-relaxed';
-const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono text-[0.85em]';
+import CodeBlock from '../../components/CodeBlock.astro';
 
 const howToJsonLd = {
   '@context': 'https://schema.org',
@@ -45,48 +43,51 @@ const howToJsonLd = {
   description="Install compodocx, point it at a tsconfig, run the CLI. Three steps to a static documentation site for your Angular project. Requires Node 22+."
   extraJsonLd={howToJsonLd}
 >
-  <p class="text-cdx-text-secondary text-lg">
+  <p class="text-lg">
     A working compodocx setup is three things: the package, a tsconfig that points at your source,
     and an output location. Defaults handle the rest. Requires Node 22 or newer.
   </p>
 
-  {/* prettier-ignore */}
-  <pre
-    class:list={codeBlock}><code>npm install --save-dev @cngxjs/compodocx
-npx compodocx -p tsconfig.doc.json</code></pre>
+  <CodeBlock
+    lang="bash"
+    code={`npm install --save-dev @cngxjs/compodocx
+npx compodocx -p tsconfig.doc.json`}
+  />
 
-  <p class="text-cdx-text-secondary">
-    The default output goes to <code class={inlineCode}>./documentation/&lt;versionLabel&gt;/</code> —
-    multi-version layout is on by default. <code class={inlineCode}>versionLabel</code> is auto-detected
-    from the nearest <code class={inlineCode}>package.json</code>. Pass
-    <code class={inlineCode}>--no-multiVersion</code> for the flat single-version layout.
+  <p>
+    The default output goes to <code class="cdx-code">./documentation/&lt;versionLabel&gt;/</code>.
+    Multi-version layout is on by default. <code class="cdx-code">versionLabel</code> is auto-detected
+    from the nearest <code class="cdx-code">package.json</code>. Pass
+    <code class="cdx-code">--no-multiVersion</code> for the flat single-version layout.
   </p>
 
-  <p class="text-cdx-text-secondary">
-    Add <code class={inlineCode}>--watch --serve</code> while authoring to get a local dev server with
-    live reload.
+  <p>
+    Add <code class="cdx-code">--watch --serve</code> while authoring to get a local dev server with live
+    reload.
   </p>
 
-  <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">A minimal tsconfig</h2>
-  <p class="text-cdx-text-secondary">
+  <h2>A minimal tsconfig</h2>
+  <p>
     compodocx uses TypeScript&rsquo;s own resolver. A doc-specific tsconfig keeps test files,
     storybook, and dev-only entries out of the rendered API surface.
   </p>
 
-  {/* prettier-ignore */}
-  <pre
-    class:list={codeBlock}><code>{`{
+  <CodeBlock
+    lang="json"
+    filename="tsconfig.doc.json"
+    code={`{
   "extends": "./tsconfig.json",
   "include": ["src/**/*.ts"],
   "exclude": ["**/*.spec.ts", "**/*.stories.ts"]
-}`}</code></pre>
+}`}
+  />
 
-  <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">Coming from compodoc</h2>
-  <p class="text-cdx-text-secondary">
+  <h2>Coming from compodoc</h2>
+  <p>
     Most flags carry over. Two breaking changes worth knowing up front: the package is now
-    <code class={inlineCode}>@cngxjs/compodocx</code>, and the output is multi-version by default —
-    pin a label or pass <code class={inlineCode}>--no-multiVersion</code> if your CI publishes to a flat
-    folder. Custom Handlebars templates need a one-time port via
-    <code class={inlineCode}>compodocx migrate templates</code>.
+    <code class="cdx-code">@cngxjs/compodocx</code>, and the output is multi-version by default. Pin
+    a label or pass <code class="cdx-code">--no-multiVersion</code> if your CI publishes to a flat folder.
+    Custom Handlebars templates need a one-time port via
+    <code class="cdx-code">compodocx migrate templates</code>.
   </p>
 </FeaturesLayout>

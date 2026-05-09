@@ -1,8 +1,6 @@
 ---
 import FeaturesLayout from '../../layouts/FeaturesLayout.astro';
-const codeBlock =
-  'bg-cdx-bg-alt/60 text-cdx-text overflow-x-auto rounded-lg p-3 font-mono text-xs leading-relaxed';
-const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono text-[0.85em]';
+import CodeBlock from '../../components/CodeBlock.astro';
 
 interface TagGroup {
   heading: string;
@@ -40,7 +38,7 @@ const groups: TagGroup[] = [
       ['@slot', 'documents an exposed content slot; rendered as a metadata card on the Info tab'],
       [
         '<example-url>',
-        'JSDoc marker pointing at a hosted demo URL — surfaces an Example tab with an iframe per URL',
+        'JSDoc marker pointing at a hosted demo URL; surfaces an Example tab with an iframe per URL',
       ],
     ],
   },
@@ -69,8 +67,8 @@ const groups: TagGroup[] = [
   description="Recognized JSDoc tags in compodocx: @param, @returns, @example, @deprecated, @internal, @ignore, @see, @since, @link, @throws, @experimental, @public."
 >
   <p class="text-cdx-text-secondary text-lg">
-    Recognized tags grouped by where they apply. Unknown tags are not an error — theming token
-    blocks fold them into the description, and member descriptions pass them through verbatim.
+    Recognized tags grouped by where they apply. Unknown tags are not an error: theming token blocks
+    fold them into the description, and member descriptions pass them through verbatim.
   </p>
 
   {
@@ -82,7 +80,7 @@ const groups: TagGroup[] = [
           {group.items.map(([tag, desc]) => (
             <>
               <dt class="text-cdx-text">
-                <code class={inlineCode}>{tag}</code>
+                <code class="cdx-code">{tag}</code>
               </dt>
               <dd class="text-cdx-text-secondary">{desc}</dd>
             </>
@@ -92,10 +90,10 @@ const groups: TagGroup[] = [
     ))
   }
 
-  <h2 class="text-cdx-text text-xl font-semibold mt-12">Theming token example</h2>
-  {/* prettier-ignore */}
-  <pre
-    class:list={codeBlock}><code>{`/**
+  <h2>Theming token example</h2>
+  <CodeBlock
+    lang="css"
+    code={`/**
  * @overview Card surface tokens.
  */
 
@@ -109,5 +107,6 @@ const groups: TagGroup[] = [
  * @example
  *   --color-app-card-bg: var(--color-cdx-bg-elevated);
  */
---color-app-card-bg: hsl(220 20% 98%);`}</code></pre>
+--color-app-card-bg: hsl(220 20% 98%);`}
+  />
 </FeaturesLayout>

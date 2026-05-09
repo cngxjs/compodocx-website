@@ -1,8 +1,6 @@
 ---
 import FeaturesLayout from '../../layouts/FeaturesLayout.astro';
-const codeBlock =
-  'bg-cdx-bg-alt/60 text-cdx-text overflow-x-auto rounded-lg p-3 font-mono text-xs leading-relaxed';
-const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono text-[0.85em]';
+import CodeBlock from '../../components/CodeBlock.astro';
 ---
 
 <FeaturesLayout
@@ -12,61 +10,62 @@ const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono te
 >
   <p class="text-cdx-text-secondary text-lg">
     Each entity page renders one or more tabs: <em>Info</em>, <em>API</em>, <em>Source</em>, plus
-    <em>Theming Tokens</em> and <em>Example</em> when a component opts into them. Tab visibility is data-driven
-    — sections only render when there&rsquo;s something to show.
+    <em>Theming Tokens</em> and <em>Example</em> when a component opts into them. Tab visibility is data-driven.
+    Sections only render when there&rsquo;s something to show.
   </p>
 
-  <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">Auto-visibility</h2>
+  <h2>Auto-visibility</h2>
   <ul class="text-cdx-text-secondary mt-3 space-y-2 text-sm">
     <li>
-      <strong class="text-cdx-text">Theming Tokens</strong> — appears on component pages when the component
+      <strong class="text-cdx-text">Theming Tokens</strong> appears on component pages when the component
       declares any theming tokens or an
-      <code class={inlineCode}>@overview</code> in its associated CSS / SCSS file.
+      <code class="cdx-code">@overview</code> in its associated CSS / SCSS file.
     </li>
     <li>
-      <strong class="text-cdx-text">Example</strong> — appears on component pages when at least one
-      <code class={inlineCode}>&lt;example-url&gt;</code> marker is present in the class JSDoc.
+      <strong class="text-cdx-text">Example</strong> appears on component pages when at least one
+      <code class="cdx-code">&lt;example-url&gt;</code> marker is present in the class JSDoc.
     </li>
     <li>
       <strong class="text-cdx-text">Info</strong>, <strong class="text-cdx-text">API</strong>,
-      <strong class="text-cdx-text">Source</strong> — always present where applicable.
+      <strong class="text-cdx-text">Source</strong> are always present where applicable.
     </li>
   </ul>
 
-  <h2 class="text-cdx-text text-xl font-semibold mt-12">Section composition</h2>
-  <p class="text-cdx-text-secondary">
+  <h2>Section composition</h2>
+  <p>
     Within each tab, sections render in a fixed order driven by constants such as
-    <code class={inlineCode}>DEFAULT_INFO_SECTIONS</code>,
-    <code class={inlineCode}>DEFAULT_API_SECTIONS</code>, and
-    <code class={inlineCode}>DEFAULT_THEMING_SECTIONS</code>. Sections without data are skipped — a
+    <code class="cdx-code">DEFAULT_INFO_SECTIONS</code>,
+    <code class="cdx-code">DEFAULT_API_SECTIONS</code>, and
+    <code class="cdx-code">DEFAULT_THEMING_SECTIONS</code>. Sections without data are skipped: a
     component without inputs simply omits the inputs row, no empty heading.
   </p>
 
-  <h2 class="text-cdx-text text-xl font-semibold mt-12">Theming tab sections</h2>
-  <p class="text-cdx-text-secondary">
+  <h2>Theming tab sections</h2>
+  <p>
     The Theming tab&rsquo;s composition is configurable per project via the JSON config file (no CLI
-    flag). Pass a subset of <code class={inlineCode}>['overview', 'index', 'tokens', 'source']</code
-    > in the order you want them to appear:
+    flag). Pass a subset of <code class="cdx-code">['overview', 'index', 'tokens', 'source']</code>
+    in the order you want them to appear:
   </p>
 
-  {/* prettier-ignore */}
-  <pre
-    class:list={codeBlock}><code>{`{
+  <CodeBlock
+    lang="json"
+    code={`{
   "themingTabSections": ["overview", "tokens"]
-}`}</code></pre>
+}`}
+  />
 
-  <p class="text-cdx-text-secondary">
+  <p>
     The example above hides the per-tab token index and the source preview. Tab visibility itself is
-    not affected — the Theming tab still shows whenever theming data exists.
+    not affected. The Theming tab still shows whenever theming data exists.
   </p>
 
-  <h2 class="text-cdx-text text-xl font-semibold mt-12">Deeper customization</h2>
-  <p class="text-cdx-text-secondary">
-    For changes beyond reordering or hiding sections — custom rendering, additional members,
-    project-specific layouts — use the JS-based template override system via
-    <code class={inlineCode}>--templates &lt;path&gt;</code>. Each overridable surface (page-level
-    and block-level) is a JS partial exporting
-    <code class={inlineCode}>function(data, helpers) {'...'}</code>. Migrating a folder of legacy
-    Handlebars overrides? Run <code class={inlineCode}>compodocx migrate templates</code>.
+  <h2>Deeper customization</h2>
+  <p>
+    For changes beyond reordering or hiding sections (custom rendering, additional members,
+    project-specific layouts) use the JS-based template override system via
+    <code class="cdx-code">--templates &lt;path&gt;</code>. Each overridable surface (page-level and
+    block-level) is a JS partial exporting
+    <code class="cdx-code">function(data, helpers) {'...'}</code>. Migrating a folder of legacy
+    Handlebars overrides? Run <code class="cdx-code">compodocx migrate templates</code>.
   </p>
 </FeaturesLayout>

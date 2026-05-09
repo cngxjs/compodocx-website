@@ -1,6 +1,5 @@
 ---
 import FeaturesLayout from '../../layouts/FeaturesLayout.astro';
-const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono text-[0.85em]';
 ---
 
 <FeaturesLayout
@@ -18,24 +17,24 @@ const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono te
       <ul class="text-cdx-text-secondary mt-3 space-y-2 text-sm">
         <li>Standalone components, directives, pipes — no NgModule scaffolding required.</li>
         <li>
-          Signals, <code class={inlineCode}>computed</code>, and <code class={inlineCode}
+          Signals, <code class="cdx-code">computed</code>, and <code class="cdx-code"
             >linked-signal</code
           >
           members rendered as first-class fields with their derived-state dependencies.
         </li>
         <li>
-          <code class={inlineCode}>inject()</code> DI alongside constructor DI — both surfaced in a unified
+          <code class="cdx-code">inject()</code> DI alongside constructor DI — both surfaced in a unified
           dependencies block.
         </li>
         <li>
           Host bindings, host listeners, host structured attributes, providers / view providers.
         </li>
         <li>
-          Effects rendered opt-in via <code class={inlineCode}>--showEffects</code>.
+          Effects rendered opt-in via <code class="cdx-code">--showEffects</code>.
         </li>
         <li>
           Component theming tokens parsed from CSS custom properties, SCSS variables, and
-          <code class={inlineCode}>@property</code> rules.
+          <code class="cdx-code">@property</code> rules.
         </li>
       </ul>
     </div>
@@ -43,20 +42,20 @@ const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono te
       <h2 class="text-cdx-text font-semibold">Multi-version output</h2>
       <ul class="text-cdx-text-secondary mt-3 space-y-2 text-sm">
         <li>
-          Default layout writes <code class={inlineCode}>&lt;output&gt;/&lt;versionLabel&gt;/</code> with
-          a shared <code class={inlineCode}>versions.json</code> manifest.
+          Default layout writes <code class="cdx-code">&lt;output&gt;/&lt;versionLabel&gt;/</code> with
+          a shared <code class="cdx-code">versions.json</code> manifest.
         </li>
         <li>
-          Version label auto-detected from the nearest <code class={inlineCode}>package.json</code>;
-          override with <code class={inlineCode}>--versionLabel</code>.
+          Version label auto-detected from the nearest <code class="cdx-code">package.json</code>;
+          override with <code class="cdx-code">--versionLabel</code>.
         </li>
         <li>
           A version-switcher widget reads the manifest at runtime — append-only, semver-sorted, no
           server config needed.
         </li>
         <li>
-          Cap visible entries with <code class={inlineCode}>--maxVersionsShown</code>;
-          <code class={inlineCode}>0</code> shows all.
+          Cap visible entries with <code class="cdx-code">--maxVersionsShown</code>;
+          <code class="cdx-code">0</code> shows all.
         </li>
       </ul>
     </div>
@@ -64,21 +63,21 @@ const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono te
       <h2 class="text-cdx-text font-semibold">Tooling</h2>
       <ul class="text-cdx-text-secondary mt-3 space-y-2 text-sm">
         <li>
-          <code class={inlineCode}>compodocx migrate</code> ports compodoc Handlebars overrides to JS
-          partials — subcommands for inspecting, single-template, full-template-folder, and CSS migration.
+          <code class="cdx-code">compodocx migrate</code> ports compodoc Handlebars overrides to JS partials
+          — subcommands for inspecting, single-template, full-template-folder, and CSS migration.
         </li>
         <li>
-          <code class={inlineCode}>compodocx diff</code> compares two
-          <code class={inlineCode}>--exportFormat json</code> snapshots; exits 0 on clean, 1 on additive,
+          <code class="cdx-code">compodocx diff</code> compares two
+          <code class="cdx-code">--exportFormat json</code> snapshots; exits 0 on clean, 1 on additive,
           2 on breaking changes.
         </li>
         <li>
-          <code class={inlineCode}>--exportFormat llm-md</code> emits an LLM-context markdown bundle for
+          <code class="cdx-code">--exportFormat llm-md</code> emits an LLM-context markdown bundle for
           AI assistants and code-review bots.
         </li>
         <li>
-          <code class={inlineCode}>--exportFormat json</code> emits a typed API snapshot with
-          <code class={inlineCode}>schemaVersion</code>, suitable for diffing or downstream tooling.
+          <code class="cdx-code">--exportFormat json</code> emits a typed API snapshot with
+          <code class="cdx-code">schemaVersion</code>, suitable for diffing or downstream tooling.
         </li>
       </ul>
     </div>
@@ -87,15 +86,15 @@ const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono te
       <ul class="text-cdx-text-secondary mt-3 space-y-2 text-sm">
         <li>SPA hash-router with deep-link scroll restoration and tab activation by URL hash.</li>
         <li>
-          Keyboard navigation: <code class={inlineCode}>j</code> / <code class={inlineCode}>k</code> through
-          member cards, <code class={inlineCode}>[</code> / <code class={inlineCode}>]</code> through
-          the sidebar entity list, <code class={inlineCode}>?</code> opens a shortcut overlay.
+          Keyboard navigation: <code class="cdx-code">j</code> / <code class="cdx-code">k</code> through
+          member cards, <code class="cdx-code">[</code> / <code class="cdx-code">]</code> through the
+          sidebar entity list, <code class="cdx-code">?</code> opens a shortcut overlay.
         </li>
         <li>Shiki syntax highlighting with per-theme light/dark pairs.</li>
         <li>Flicker-free dark mode and theme switching — applied before paint, no FOUC.</li>
         <li>
           Optional Pagefind search index for production builds (opt-in via
-          <code class={inlineCode}>--search</code>).
+          <code class="cdx-code">--search</code>).
         </li>
       </ul>
     </div>
@@ -108,12 +107,12 @@ const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono te
         </li>
         <li>
           Custom themes are a single CSS file overriding any subset of the
-          <code class={inlineCode}>--color-cdx-*</code> tokens.
+          <code class="cdx-code">--color-cdx-*</code> tokens.
         </li>
         <li>Per-theme Shiki light/dark pairs picked to match each palette.</li>
         <li>
           Component pages surface a <em>Theming Tokens</em> tab with grouped CSS custom properties, SCSS
-          variables, and <code class={inlineCode}>@property</code> rules.
+          variables, and <code class="cdx-code">@property</code> rules.
         </li>
       </ul>
     </div>
@@ -122,12 +121,12 @@ const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono te
       <ul class="text-cdx-text-secondary mt-3 space-y-2 text-sm">
         <li>Skip-to-content link on every page.</li>
         <li>
-          <code class={inlineCode}>:focus-visible</code> rings on every interactive element; ARIA patterns
+          <code class="cdx-code">:focus-visible</code> rings on every interactive element; ARIA patterns
           on tabs, sidebar, and version switcher.
         </li>
         <li>
-          Respects <code class={inlineCode}>prefers-reduced-motion</code> and
-          <code class={inlineCode}>prefers-color-scheme</code>.
+          Respects <code class="cdx-code">prefers-reduced-motion</code> and
+          <code class="cdx-code">prefers-color-scheme</code>.
         </li>
         <li>WCAG AA contrast on default tokens; per-theme palettes audited individually.</li>
       </ul>

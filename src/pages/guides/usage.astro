@@ -1,8 +1,6 @@
 ---
 import FeaturesLayout from '../../layouts/FeaturesLayout.astro';
-const codeBlock =
-  'bg-cdx-bg-alt/60 text-cdx-text overflow-x-auto rounded-lg p-3 font-mono text-xs leading-relaxed';
-const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono text-[0.85em]';
+import CodeBlock from '../../components/CodeBlock.astro';
 ---
 
 <FeaturesLayout
@@ -14,64 +12,58 @@ const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono te
     A few patterns we lean on. Every flag has a JSON-config equivalent.
   </p>
 
-  <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">Build once for CI</h2>
-  {/* prettier-ignore */}
-  <pre class:list={codeBlock}><code>npx compodocx -p tsconfig.doc.json</code></pre>
-  <p class="text-cdx-text-secondary">
-    Writes to <code class={inlineCode}>./documentation/&lt;versionLabel&gt;/</code> by default. The label
-    is read from the nearest <code class={inlineCode}>package.json</code>. Pass
-    <code class={inlineCode}>--no-multiVersion</code> for a flat output.
+  <h2>Build once for CI</h2>
+  <CodeBlock lang="bash" code="npx compodocx -p tsconfig.doc.json" />
+  <p>
+    Writes to <code class="cdx-code">./documentation/&lt;versionLabel&gt;/</code> by default. The label
+    is read from the nearest <code class="cdx-code">package.json</code>. Pass
+    <code class="cdx-code">--no-multiVersion</code> for a flat output.
   </p>
 
-  <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">Watch during authoring</h2>
-  {/* prettier-ignore */}
-  <pre class:list={codeBlock}><code>npx compodocx -p tsconfig.doc.json --watch --serve</code></pre>
-  <p class="text-cdx-text-secondary">
-    The dev server reuses the same routing and theming as production — what you see locally matches
+  <h2>Watch during authoring</h2>
+  <CodeBlock lang="bash" code="npx compodocx -p tsconfig.doc.json --watch --serve" />
+  <p>
+    The dev server reuses the same routing and theming as production. What you see locally matches
     what ships.
   </p>
 
-  <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">
-    Multi-version with a custom label
-  </h2>
-  {/* prettier-ignore */}
-  <pre
-    class:list={codeBlock}><code>npx compodocx -p tsconfig.doc.json --versionLabel v1.4.0</code></pre>
-  <p class="text-cdx-text-secondary">
-    Writes <code class={inlineCode}>./documentation/v1.4.0/</code> and updates
-    <code class={inlineCode}>./documentation/versions.json</code>. The manifest is append-only,
+  <h2>Multi-version with a custom label</h2>
+  <CodeBlock lang="bash" code="npx compodocx -p tsconfig.doc.json --versionLabel v1.4.0" />
+  <p>
+    Writes <code class="cdx-code">./documentation/v1.4.0/</code> and updates
+    <code class="cdx-code">./documentation/versions.json</code>. The manifest is append-only,
     deduplicated by label, and semver-sorted descending. The version-switcher in the navbar reads it
-    at runtime — no extra wiring.
+    at runtime, no extra wiring.
   </p>
 
-  <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">Wire into npm scripts</h2>
-  {/* prettier-ignore */}
-  <pre
-    class:list={codeBlock}><code>"docs": "compodocx -p tsconfig.doc.json",
+  <h2>Wire into npm scripts</h2>
+  <CodeBlock
+    lang="json"
+    filename="package.json"
+    code={`"docs": "compodocx -p tsconfig.doc.json",
 "docs:watch": "compodocx -p tsconfig.doc.json --watch --serve",
 "docs:json": "compodocx -p tsconfig.doc.json --exportFormat json -d snapshots/",
-"docs:llm": "compodocx -p tsconfig.doc.json --exportFormat llm-md"</code></pre>
+"docs:llm": "compodocx -p tsconfig.doc.json --exportFormat llm-md"`}
+  />
 
-  <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">API diff between snapshots</h2>
-  {/* prettier-ignore */}
-  <pre
-    class:list={codeBlock}><code>npx compodocx -p tsconfig.doc.json --exportFormat json -d snapshots/next/
-npx compodocx diff snapshots/prev/&lt;label&gt;/api.json snapshots/next/&lt;label&gt;/api.json</code></pre>
-  <p class="text-cdx-text-secondary">
-    Exits <code class={inlineCode}>0</code> on no public-API change, <code class={inlineCode}
-      >1</code
-    > on additive changes, <code class={inlineCode}>2</code> on breaking changes (or fatal errors). Pipe
-    the JSON output to your bot of choice for PR comments.
+  <h2>API diff between snapshots</h2>
+  <CodeBlock
+    lang="bash"
+    code={`npx compodocx -p tsconfig.doc.json --exportFormat json -d snapshots/next/
+npx compodocx diff snapshots/prev/<label>/api.json snapshots/next/<label>/api.json`}
+  />
+  <p>
+    Exits <code class="cdx-code">0</code> on no public-API change,
+    <code class="cdx-code">1</code> on additive changes, <code class="cdx-code">2</code> on breaking changes
+    (or fatal errors). Pipe the JSON output to your bot of choice for PR comments.
   </p>
 
-  <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">LLM context for code review</h2>
-  {/* prettier-ignore */}
-  <pre
-    class:list={codeBlock}><code>npx compodocx -p tsconfig.doc.json --exportFormat llm-md</code></pre>
-  <p class="text-cdx-text-secondary">
-    Without <code class={inlineCode}>-d</code>, writes to stdout — pipe straight into
-    <code class={inlineCode}>llm</code>, <code class={inlineCode}>claude</code>, or any tool that
-    reads markdown. With <code class={inlineCode}>-d</code>, writes
-    <code class={inlineCode}>&lt;output&gt;/llm-context.md</code>.
+  <h2>LLM context for code review</h2>
+  <CodeBlock lang="bash" code="npx compodocx -p tsconfig.doc.json --exportFormat llm-md" />
+  <p>
+    Without <code class="cdx-code">-d</code>, writes to stdout. Pipe straight into
+    <code class="cdx-code">llm</code>, <code class="cdx-code">claude</code>, or any tool that reads
+    markdown. With <code class="cdx-code">-d</code>, writes
+    <code class="cdx-code">&lt;output&gt;/llm-context.md</code>.
   </p>
 </FeaturesLayout>

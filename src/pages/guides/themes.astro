@@ -1,8 +1,6 @@
 ---
 import FeaturesLayout from '../../layouts/FeaturesLayout.astro';
-const codeBlock =
-  'bg-cdx-bg-alt/60 text-cdx-text overflow-x-auto rounded-lg p-3 font-mono text-xs leading-relaxed';
-const inlineCode = 'text-cdx-text bg-cdx-bg-alt rounded px-1 py-0.5 font-mono text-[0.85em]';
+import CodeBlock from '../../components/CodeBlock.astro';
 
 const bundled = [
   ['Slate Noir', 'Pure neutral greys. The opinion-free default.'],
@@ -23,11 +21,11 @@ const bundled = [
 >
   <p class="text-cdx-text-secondary text-lg">
     Eight themes ship in the box. A theme is a CSS file that overrides the
-    <code class={inlineCode}>--color-cdx-*</code> tokens — semantic variables for backgrounds, text, primary,
+    <code class="cdx-code">--color-cdx-*</code> tokens. Semantic variables for backgrounds, text, primary,
     surface elevation, badges, code blocks, scrollbars, and graph chrome.
   </p>
 
-  <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">Bundled themes</h2>
+  <h2>Bundled themes</h2>
   <ul class="text-cdx-text-secondary grid gap-2 text-sm md:grid-cols-2">
     {
       bundled.map(([name, blurb]) => (
@@ -37,33 +35,35 @@ const bundled = [
       ))
     }
   </ul>
-  <p class="text-cdx-text-secondary pt-4">
-    Each theme picks a Shiki light/dark pair to match — Ocean uses
-    <code class={inlineCode}>github-light</code> / <code class={inlineCode}>github-dark</code>,
-    Midnight uses <code class={inlineCode}>tokyo-night</code>, Neon uses <code class={inlineCode}
+  <p class="pt-4">
+    Each theme picks a Shiki light/dark pair to match. Ocean uses
+    <code class="cdx-code">github-light</code> / <code class="cdx-code">github-dark</code>, Midnight
+    uses <code class="cdx-code">tokyo-night</code>, Neon uses <code class="cdx-code"
       >synthwave-84</code
     >, and so on.
   </p>
 
-  <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">Switching themes</h2>
-  {/* prettier-ignore */}
-  <pre class:list={codeBlock}><code>--theme ocean
---theme ./my-brand.css</code></pre>
+  <h2>Switching themes</h2>
+  <CodeBlock
+    lang="bash"
+    code={`--theme ocean
+--theme ./my-brand.css`}
+  />
 
-  <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">Custom themes</h2>
-  <p class="text-cdx-text-secondary">
+  <h2>Custom themes</h2>
+  <p>
     A custom theme is one CSS file overriding any subset of the
-    <code class={inlineCode}>--color-cdx-*</code> tokens. Unspecified tokens fall back to the default.
-    Override prefixes include <code class={inlineCode}>--color-cdx-*</code>,
-    <code class={inlineCode}>--spacing-cdx-*</code>, <code class={inlineCode}>--radius-cdx-*</code>,
-    <code class={inlineCode}>--shadow-cdx-*</code>, <code class={inlineCode}>--cdx-badge-*</code>,
-    and
-    <code class={inlineCode}>--cdx-mod-*</code>.
+    <code class="cdx-code">--color-cdx-*</code> tokens. Unspecified tokens fall back to the default. Override
+    prefixes include <code class="cdx-code">--color-cdx-*</code>,
+    <code class="cdx-code">--spacing-cdx-*</code>, <code class="cdx-code">--radius-cdx-*</code>,
+    <code class="cdx-code">--shadow-cdx-*</code>, <code class="cdx-code">--cdx-badge-*</code>, and
+    <code class="cdx-code">--cdx-mod-*</code>.
   </p>
 
-  {/* prettier-ignore */}
-  <pre
-    class:list={codeBlock}><code>{`:root {
+  <CodeBlock
+    lang="css"
+    filename="my-brand.css"
+    code={`:root {
   --color-cdx-bg: hsl(220 20% 96%);
   --color-cdx-text: hsl(220 30% 12%);
   --color-cdx-primary: hsl(220 70% 40%);
@@ -73,16 +73,17 @@ const bundled = [
   --color-cdx-bg: hsl(220 25% 8%);
   --color-cdx-text: hsl(220 15% 92%);
   --color-cdx-primary: hsl(220 80% 65%);
-}`}</code></pre>
+}`}
+  />
 
-  <h2 class="text-cdx-text text-xl font-semibold mt-12 first:mt-0">Per-component theming tokens</h2>
-  <p class="text-cdx-text-secondary">
+  <h2>Per-component theming tokens</h2>
+  <p>
     Components can document their own theming surface via JSDoc on the component&rsquo;s associated
-    SCSS / CSS file: <code class={inlineCode}>@overview</code> for a description,
-    <code class={inlineCode}>@type</code> / <code class={inlineCode}>@default</code> /
-    <code class={inlineCode}>@group</code> per token, plus <code class={inlineCode}>@example</code>,
-    <code class={inlineCode}>@since</code>, <code class={inlineCode}>@deprecated</code>, and
-    <code class={inlineCode}>@see</code>. Each component page surfaces a <em>Theming Tokens</em> tab with
+    SCSS / CSS file: <code class="cdx-code">@overview</code> for a description,
+    <code class="cdx-code">@type</code> / <code class="cdx-code">@default</code> /
+    <code class="cdx-code">@group</code> per token, plus <code class="cdx-code">@example</code>,
+    <code class="cdx-code">@since</code>, <code class="cdx-code">@deprecated</code>, and
+    <code class="cdx-code">@see</code>. Each component page surfaces a <em>Theming Tokens</em> tab with
     a grouped catalog and an optional source preview.
   </p>
 </FeaturesLayout>

@@ -154,3 +154,47 @@ main > section:nth-of-type(10) {
   outline-offset: 2px;
   border-radius: 0.25rem;
 }
+
+/* Guide article prose styling — applied via .cdx-prose on the FeaturesLayout
+   slot wrapper. Single source of truth for h2/h3/p/inline-link defaults
+   inside guide content; replaces 12× duplicated Tailwind-soup. */
+.cdx-prose {
+  color: var(--color-cdx-text-secondary);
+}
+.cdx-prose > h2 {
+  margin-top: 3rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--color-cdx-text);
+  letter-spacing: -0.01em;
+}
+.cdx-prose > h2:first-child,
+.cdx-prose > h2:first-of-type {
+  margin-top: 0;
+}
+.cdx-prose > h3 {
+  margin-top: 2rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--color-cdx-text);
+}
+.cdx-prose > p {
+  line-height: 1.7;
+}
+.cdx-prose a {
+  color: var(--color-cdx-primary);
+  text-underline-offset: 2px;
+}
+.cdx-prose a:hover {
+  text-decoration: underline;
+}
+.cdx-prose ul:not([class]) {
+  margin-top: 0.5rem;
+  padding-left: 1.25rem;
+  list-style: disc;
+}
+.cdx-prose ul:not([class]) > li {
+  margin-top: 0.4rem;
+  line-height: 1.6;
+}
