@@ -20,7 +20,7 @@ const columns: FooterColumn[] = [
     heading: 'Product',
     links: [
       { label: 'Guides', href: `${base}guides/` },
-      { label: 'Themes', href: `${base}#themes` },
+      { label: 'Themes', href: `${base}guides/themes` },
       {
         label: 'Migration guide',
         href: `${repoUrl}/blob/develop/MIGRATION.md`,
@@ -34,13 +34,12 @@ const columns: FooterColumn[] = [
       { label: 'npm package', href: pkgUrl, external: true },
       { label: 'GitHub', href: repoUrl, external: true },
       { label: 'Issues', href: `${repoUrl}/issues`, external: true },
-      { label: 'Discussions', href: `${repoUrl}/discussions`, external: true },
     ],
   },
   {
     heading: 'Project',
     links: [
-      { label: 'Changelog', href: `${repoUrl}/releases`, external: true },
+      { label: 'Changelog', href: `${repoUrl}/blob/develop/CHANGELOG.md`, external: true },
       { label: 'MIT License', href: `${repoUrl}/blob/develop/LICENSE`, external: true },
       {
         label: 'Contributing',
@@ -62,7 +61,7 @@ const columns: FooterColumn[] = [
           compodoc<span class="text-ember font-bold">x</span>
         </p>
         <p class="mt-3 max-w-xs text-xs leading-relaxed">
-          Static Angular docs, every release. Open source under MIT, runs on Node 22+.
+          Static Angular docs, every release. <br />Open source under MIT.
         </p>
         <p class="text-cdx-text-secondary mt-4 text-xs leading-relaxed">
           Fork of
@@ -125,7 +124,21 @@ const columns: FooterColumn[] = [
     <div
       class="border-cdx-border mt-10 flex flex-col gap-2 border-t pt-6 text-xs sm:flex-row sm:justify-between"
     >
-      <p>© {year} cngxjs</p>
+      <p class="flex flex-wrap items-center gap-x-3 gap-y-1">
+        <span>© {year} cngxjs</span>
+        <span aria-hidden="true" class="text-cdx-text-muted">·</span>
+        <a href={`${base}impressum/`} class="hover:text-cdx-text transition-colors">Impressum</a>
+        <span aria-hidden="true" class="text-cdx-text-muted">·</span>
+        <a
+          href="https://creativecommons.org/licenses/by/4.0/"
+          rel="noopener license"
+          target="_blank"
+          class="hover:text-cdx-text transition-colors"
+        >
+          Documentation CC BY 4.0
+          <span class="sr-only">(opens in new tab)</span>
+        </a>
+      </p>
       <p class="text-cdx-text-secondary">Built with Astro · Deployed on GitHub Pages</p>
     </div>
   </div>
