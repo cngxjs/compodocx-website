@@ -3,6 +3,7 @@ import { ClientRouter } from 'astro:transitions';
 import '../styles/global.css';
 import NavBar from '../components/NavBar.astro';
 import Footer from '../components/Footer.astro';
+import BackToTop from '../components/BackToTop.astro';
 import oceanCss from '../styles/vendor/compodocx/themes/ocean.css?raw';
 import midnightCss from '../styles/vendor/compodocx/themes/midnight.css?raw';
 import nordCss from '../styles/vendor/compodocx/themes/nord.css?raw';
@@ -244,6 +245,7 @@ const themeBundle = minifyCss(
       <slot />
     </main>
     <Footer />
+    <BackToTop />
 
     <dialog
       id="screenshot-lightbox"

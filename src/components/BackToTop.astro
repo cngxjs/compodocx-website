@@ -1,0 +1,44 @@
+<button
+  type="button"
+  id="back-to-top"
+  class="back-to-top bg-cdx-bg-elevated text-cdx-text-secondary hover:text-cdx-text hover:bg-cdx-bg-alt fixed right-6 bottom-6 z-30 inline-flex size-11 items-center justify-center rounded-full opacity-0 shadow-lg transition-all duration-300"
+  aria-label="Back to top"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="18"
+    height="18"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    aria-hidden="true"
+  >
+    <path d="m18 15-6-6-6 6"></path>
+  </svg>
+</button>
+
+<style>
+  .back-to-top {
+    pointer-events: none;
+    transform: translateY(8px);
+  }
+  .back-to-top.is-visible {
+    opacity: 1;
+    pointer-events: auto;
+    transform: translateY(0);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .back-to-top {
+      transition: opacity 0.15s linear !important;
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  import { initBackToTop } from '../scripts/back-to-top';
+  document.addEventListener('astro:page-load', () => initBackToTop());
+</script>
