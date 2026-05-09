@@ -1,0 +1,137 @@
+---
+import FeaturesLayout from '../../layouts/FeaturesLayout.astro';
+import CodeBlock from '../../components/CodeBlock.astro';
+---
+
+<FeaturesLayout
+  currentSlug="playground"
+  title="Playground Blocks — Runnable @playground demos in compodocx"
+  description="Author-curated runnable demos via @playground JSDoc blocks. Click-to-launch StackBlitz projects assembled at build time. Opt-out with --disablePlaygroundTab."
+>
+  <p class="text-cdx-text-secondary text-lg">
+    Components can ship author-curated, runnable demos that open in a fresh StackBlitz tab. Add a
+    <code class="cdx-code">@playground</code> JSDoc block, and compodocx renders a dedicated <em
+      >Playground</em
+    > tab on the component page with one launch button per block. The StackBlitz project is assembled
+    at build time; the SDK is lazy-loaded on first click, so static doc pages stay light.
+  </p>
+
+  <h2>The tag</h2>
+  <p>
+    Use a <code class="cdx-code">@playground &lt;title&gt;</code> JSDoc block on the component class.
+    The title is required and becomes the section heading on the Playground tab. The fenced code block
+    right below the title becomes the snippet that boots inside the runnable project.
+  </p>
+
+  <CodeBlock
+    lang="ts"
+    code={`/**
+ * Reusable button.
+ *
+ * @playground Default state
+ * \`\`\`html
+ * <my-button label="Click me" />
+ * \`\`\`
+ *
+ * @playground Disabled state
+ * \`\`\`html
+ * <my-button label="Click me" [disabled]="true" />
+ * \`\`\`
+ */
+@Component({ /* ... */ })
+export class MyButton { /* ... */ }`}
+  />
+
+  <p>
+    Multiple <code class="cdx-code">@playground</code> blocks render as a vertical stack of sections in
+    source order, each with its own &ldquo;Open in StackBlitz&rdquo; button. The tab is hidden automatically
+    when no block is parsed &mdash; zero-config when you don&rsquo;t need it.
+  </p>
+
+  <h2>Authoring rules</h2>
+  <ul>
+    <li>
+      The title (everything after <code class="cdx-code">@playground</code>) is required. Blocks
+      without a title or without a fenced body are dropped with a build-time warning.
+    </li>
+    <li>
+      Fence language (<code class="cdx-code">html</code>, <code class="cdx-code">ts</code>,
+      <code class="cdx-code">typescript</code>, &hellip;) is preserved into the demo template.
+    </li>
+    <li>The Playground tab is component-only. Other entity types ignore the tag.</li>
+    <li>
+      Runs alongside <code class="cdx-code">@example</code> on the Info tab and
+      <code class="cdx-code">&lt;example-url&gt;</code> on the Example tab &mdash; all three can coexist
+      on the same component.
+    </li>
+  </ul>
+
+  <h2>
+    <code class="cdx-code">@playground</code> vs. <code class="cdx-code">@example</code> vs. <code
+      class="cdx-code">&lt;example-url&gt;</code
+    >
+  </h2>
+  <p>Three tags, three intents:</p>
+  <ul>
+    <li>
+      <code class="cdx-code">@example</code> &mdash; static, syntax-highlighted snippet on the Info tab.
+      Use for code readers should copy.
+    </li>
+    <li>
+      <code class="cdx-code">&lt;example-url&gt;</code> &mdash; iframe demo of an externally hosted page
+      on the Example tab. Use when you already host the demo.
+    </li>
+    <li>
+      <code class="cdx-code">@playground</code> &mdash; runnable StackBlitz project assembled from your
+      component&rsquo;s source. Use when you want readers to fork and try.
+    </li>
+  </ul>
+
+  <h2>How the manifest is built</h2>
+  <p>
+    At build time compodocx assembles a StackBlitz <code class="cdx-code">angular-cli</code> project per
+    block: a minimal <code class="cdx-code">main.ts</code>, a host <code class="cdx-code"
+      >demo.component.ts</code
+    > that renders your snippet, the consumed component&rsquo;s source, and any transitive dependencies
+    it imports. Library publication is <em>not</em> required &mdash; sources travel inline.
+  </p>
+  <p>
+    The manifest&rsquo;s <code class="cdx-code">dependencies</code> map lists public Angular packages
+    only.
+    <code class="cdx-code">@angular/core</code>, <code class="cdx-code">@angular/common</code>,
+    <code class="cdx-code">@angular/forms</code>, <code class="cdx-code">@angular/router</code>,
+    <code class="cdx-code">@angular/animations</code>, and the platform-browser pair are always
+    present.
+    <code class="cdx-code">@angular/material</code> and <code class="cdx-code">@angular/cdk</code> are
+    forwarded only when your project&rsquo;s <code class="cdx-code">package.json</code> declares them
+    &mdash; pure cngx demos do not pull Material into StackBlitz.
+  </p>
+  <p>
+    Dependency walking is bounded: depth 3, 25 files maximum, 8000 characters per file. When the
+    caps trip, the section renders a static fallback instead of a launcher and the build log
+    explains why.
+    <code class="cdx-code">@internal</code>-tagged exports are filtered out before serialisation, so
+    private code never leaks into a public StackBlitz.
+  </p>
+
+  <h2>Opt-out</h2>
+  <p>
+    Hide the tab globally with <code class="cdx-code">--disablePlaygroundTab</code> or
+    <code class="cdx-code">disablePlaygroundTab: true</code> in your config file. Independent of
+    <code class="cdx-code">--disableDependenciesTab</code>; one suppresses the per-component
+    standalone-import graph, the other suppresses the Playground tab. The flag has no effect on
+    components that declare no
+    <code class="cdx-code">@playground</code> blocks (the tab is already absent).
+  </p>
+
+  <h2>Browser path</h2>
+  <p>
+    Each block emits an inert manifest into the static HTML as
+    <code class="cdx-code"
+      >&lt;script type=&quot;application/json&quot; data-cdx-stackblitz-manifest-data&gt;</code
+    >. On click, the launcher dynamic-imports <code class="cdx-code">@stackblitz/sdk</code> &mdash; the
+    SDK ships as a separate ~7&nbsp;KB gzipped chunk that is never loaded until needed. The SDK call is
+    <code class="cdx-code">openProject(manifest, &#123; newWindow: true &#125;)</code>: a fresh tab
+    opens, no iframe overlays the doc page.
+  </p>
+</FeaturesLayout>
