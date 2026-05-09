@@ -16,55 +16,82 @@ interface Guide {
   related?: string[];
 }
 
+// Sidebar order follows the user journey:
+// Overview → Setup → Daily use → Reference → Authoring →
+// Advanced authoring → Customization → Hosting → CI → Tips.
+// Numbers are contiguous 1..13 — renumber here and the byline,
+// guides hub, and JSON-LD all pick it up automatically.
 export const guides: Guide[] = [
   {
-    slug: 'getting-started',
-    number: 1,
-    title: 'Getting Started',
-    blurb: 'Install, configure, and ship your first build in under a minute.',
-    related: ['usage', 'options'],
-  },
-  {
     slug: 'features',
-    number: 2,
+    number: 1,
     title: 'Features',
     blurb: 'Standalone components, signals, multi-version, theming — the full output surface.',
-    related: ['themes', 'usage'],
+    related: ['playground', 'themes', 'getting-started'],
+  },
+  {
+    slug: 'getting-started',
+    number: 2,
+    title: 'Getting Started',
+    blurb: 'Install, configure, and ship your first build in under a minute.',
+    related: ['usage', 'options', 'themes'],
+  },
+  {
+    slug: 'usage',
+    number: 3,
+    title: 'Usage',
+    blurb: 'tsconfig pointing, watch mode, npm scripts, monorepo flows.',
+    related: ['options', 'tips', 'coverage'],
   },
   {
     slug: 'options',
-    number: 6,
+    number: 4,
     title: 'Options',
     blurb: 'Every CLI flag and JSON config key, with defaults and gotchas.',
     related: ['usage', 'getting-started', 'routing'],
   },
   {
-    slug: 'usage',
-    number: 7,
-    title: 'Usage',
-    blurb: 'tsconfig pointing, watch mode, custom paths, monorepo flows.',
-    related: ['options', 'tips', 'coverage'],
-  },
-  {
-    slug: 'themes',
-    number: 8,
-    title: 'Themes',
-    blurb: 'Eight bundled themes plus rolling your own via --color-cdx-* tokens.',
-    related: ['options', 'features'],
-  },
-  {
     slug: 'comments',
-    number: 9,
+    number: 5,
     title: 'Comments',
     blurb: 'Markdown-flavored JSDoc that compodocx actually reads.',
-    related: ['jsdoc-tags', 'live-example'],
+    related: ['jsdoc-tags', 'playground', 'live-example'],
   },
   {
     slug: 'jsdoc-tags',
-    number: 10,
+    number: 6,
     title: 'JSDoc Tags',
-    blurb: '@param, @returns, @example — supported tags and how each renders.',
-    related: ['comments', 'features'],
+    blurb: '@param, @returns, @playground, @internal — supported tags and how each renders.',
+    related: ['comments', 'playground', 'features'],
+  },
+  {
+    slug: 'playground',
+    number: 7,
+    title: 'Playground Blocks',
+    blurb:
+      'Author-curated runnable demos via @playground — click-to-launch StackBlitz projects per component.',
+    related: ['live-example', 'jsdoc-tags', 'comments'],
+  },
+  {
+    slug: 'live-example',
+    number: 8,
+    title: 'Live Example Tab',
+    blurb: 'Sandboxed component demos rendered alongside API docs.',
+    related: ['playground', 'comments', 'features'],
+  },
+  {
+    slug: 'themes',
+    number: 9,
+    title: 'Themes',
+    blurb: 'Eight bundled themes plus rolling your own via --color-cdx-* tokens.',
+    related: ['options', 'features', 'tab-configuration'],
+  },
+  {
+    slug: 'tab-configuration',
+    number: 10,
+    title: 'Tab Configuration',
+    blurb: 'Reorder, hide, or extend per-entity tabs (API, examples, source).',
+    related: ['features', 'options', 'themes'],
   },
   {
     slug: 'routing',
@@ -78,7 +105,7 @@ export const guides: Guide[] = [
     number: 12,
     title: 'Documentation Coverage',
     blurb: 'Per-symbol coverage, --coverageMinimum CI gating, --publicApiOnly scoping.',
-    related: ['usage', 'options'],
+    related: ['usage', 'options', 'tips'],
   },
   {
     slug: 'tips',
@@ -86,28 +113,6 @@ export const guides: Guide[] = [
     title: 'Tips and Tricks',
     blurb: 'Real-world patterns for monorepos, design systems, libraries.',
     related: ['usage', 'themes', 'options'],
-  },
-  {
-    slug: 'live-example',
-    number: 16,
-    title: 'Live Example Tab',
-    blurb: 'Sandboxed component demos rendered alongside API docs.',
-    related: ['comments', 'features', 'playground'],
-  },
-  {
-    slug: 'tab-configuration',
-    number: 17,
-    title: 'Tab Configuration',
-    blurb: 'Reorder, hide, or extend per-entity tabs (API, examples, source).',
-    related: ['features', 'options'],
-  },
-  {
-    slug: 'playground',
-    number: 18,
-    title: 'Playground Blocks',
-    blurb:
-      'Author-curated runnable demos via @playground — click-to-launch StackBlitz projects per component.',
-    related: ['live-example', 'jsdoc-tags', 'features'],
   },
 ];
 ---

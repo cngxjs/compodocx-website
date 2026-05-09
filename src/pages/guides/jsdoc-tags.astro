@@ -111,8 +111,8 @@ const totalCount = groups.reduce((acc, g) => acc + g.items.length, 0);
   description="Every JSDoc tag compodocx recognizes — @param, @returns, @example, @deprecated, @internal, @category, @see, @since, @link, @beta, @breaking, @slot, @playground, hero-link tags."
 >
   <p class="text-cdx-text-secondary text-lg">
-    {totalCount} recognized tags grouped by where they apply. Unknown tags are not an error: theming
-    token blocks fold them into the description, and member descriptions pass them through verbatim.
+    {totalCount} recognized tags grouped by where they apply. Unknown tags are not an error: theming token
+    blocks fold them into the description, and member descriptions pass them through verbatim.
   </p>
 
   <ul class="space-y-3" aria-label="JSDoc tag groups">
@@ -173,7 +173,9 @@ const totalCount = groups.reduce((acc, g) => acc + g.items.length, 0);
 
   <h2>Theming token example</h2>
   <p>
-    The token block sits above the actual property declaration. <code class="cdx-code">@overview</code>
+    The token block sits above the actual property declaration. <code class="cdx-code"
+      >@overview</code
+    >
     blocks at file-level open the Theming tab. Per-token blocks fill the catalog.
   </p>
   <CodeBlock
