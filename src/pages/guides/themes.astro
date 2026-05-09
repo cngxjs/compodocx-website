@@ -555,7 +555,7 @@ const totalTokens = tokenGroups.reduce(
   </p>
 </FeaturesLayout>
 
-<style>
+<style is:global>
   /* Hide the default disclosure triangle in Safari/Chrome (same as FAQSection) */
   .faq-item summary::-webkit-details-marker {
     display: none;
@@ -563,11 +563,13 @@ const totalTokens = tokenGroups.reduce(
 
   /* Each bundled-theme swatch carries both palette values via inline CSS
      custom properties. The class flips between them based on the global
-     .dark mode class so swatches reflect the theme's actual dark palette. */
+     .dark mode class so swatches reflect the theme's actual dark palette.
+     is:global so the rule isn't scoped behind a data-astro-cid attribute
+     that boosts specificity equal to a sibling rule and breaks the toggle. */
   .theme-swatch {
     background-color: var(--swatch-light);
   }
-  :where(.dark) .theme-swatch {
+  .dark .theme-swatch {
     background-color: var(--swatch-dark);
   }
 </style>
