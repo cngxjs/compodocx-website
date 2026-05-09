@@ -103,7 +103,11 @@ const themes: ThemeWithSwatches[] = themeMetas.map(({ source, ...rest }) => ({
   </hgroup>
   <p class="text-cdx-text-secondary mt-3 max-w-2xl leading-relaxed">
     Eight themes ship with compodocx. Try them live: your pick persists across pages. Want your own?
-    Override any subset of <code class="cdx-code">--color-cdx-*</code> tokens in a single CSS file.
+    Override any subset of <code class="cdx-code">--color-cdx-*</code>
+    <a
+      href={`${import.meta.env.BASE_URL}guides/themes/`}
+      class="text-cdx-primary underline-offset-2 hover:underline">tokens in a single CSS file</a
+    >.
   </p>
 
   <div

@@ -10,6 +10,8 @@ import MigrationCallout from '../components/MigrationCallout.astro';
 import GettingStarted from '../components/GettingStarted.astro';
 import ThemesGrid from '../components/ThemesGrid.astro';
 
+const buildDate = new Date().toISOString().slice(0, 10);
+
 const softwareJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'SoftwareApplication',
@@ -25,6 +27,8 @@ const softwareJsonLd = {
   installUrl: 'https://www.npmjs.com/package/@cngxjs/compodocx',
   softwareVersion: '0.3.0',
   softwareRequirements: 'Node.js >= 22',
+  datePublished: '2026-04-01',
+  dateModified: buildDate,
   license: 'https://opensource.org/license/MIT',
   offers: {
     '@type': 'Offer',

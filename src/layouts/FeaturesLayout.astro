@@ -28,6 +28,10 @@ const relatedGuides = (guide.related ?? [])
   .map((slug) => guides.find((g) => g.slug === slug))
   .filter((g): g is (typeof guides)[number] => Boolean(g));
 
+const buildDate = new Date().toISOString().slice(0, 10);
+// Initial publication date for the guide cluster — kept stable across rebuilds.
+const guidesPublishedDate = '2026-05-01';
+
 const articleJsonLd = {
   '@context': 'https://schema.org',
   '@type': 'TechArticle',
@@ -38,6 +42,13 @@ const articleJsonLd = {
   inLanguage: 'en',
   proficiencyLevel: 'Intermediate',
   dependencies: '@cngxjs/compodocx, Node.js >= 22, TypeScript',
+  datePublished: guidesPublishedDate,
+  dateModified: buildDate,
+  author: {
+    '@type': 'Organization',
+    name: 'cngxjs',
+    url: 'https://github.com/cngxjs',
+  },
   isPartOf: { '@id': `${new URL(base, siteUrl).href}#website` },
   publisher: { '@id': `${new URL(base, siteUrl).href}#organization` },
   speakable: {
@@ -89,10 +100,35 @@ const breadcrumbJsonLd = {
 
     <article class="mx-auto max-w-3xl">
       <header>
-        <SectionEyebrow text={`Guide ${String(guide.number).padStart(2, '0')}`} />
-        <h1 class="text-cdx-text mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">
-          {guide.title}
-        </h1>
+        <hgroup>
+          <SectionEyebrow text={`Guide ${String(guide.number).padStart(2, '0')}`} />
+          <h1 class="text-cdx-text mt-3 text-4xl font-semibold tracking-tight sm:text-5xl">
+            {guide.title}
+          </h1>
+        </hgroup>
+        <p class="text-cdx-text-secondary mt-5 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs">
+          <span class="inline-flex items-center gap-1.5">
+            <span aria-hidden="true">By</span>
+            <a
+              href="https://github.com/cngxjs"
+              rel="noopener author"
+              target="_blank"
+              class="text-cdx-text hover:text-cdx-primary font-medium transition-colors"
+            >
+              cngxjs<span class="sr-only"> (opens in new tab)</span>
+            </a>
+          </span>
+          <span aria-hidden="true" class="text-cdx-text-muted">·</span>
+          <span>
+            Updated <time datetime={buildDate}>{buildDate}</time>
+          </span>
+          <span aria-hidden="true" class="text-cdx-text-muted">·</span>
+          <span>
+            Guide
+            <span class="font-mono">{String(guide.number).padStart(2, '0')}</span>
+            of <span class="font-mono">{guides.length}</span>
+          </span>
+        </p>
       </header>
 
       <div class="mt-10 space-y-6">
