@@ -96,9 +96,16 @@ const breadcrumbJsonLd = {
   nextUrl={next ? new URL(`${base}guides/${next.slug}/`, siteUrl).href : undefined}
 >
   <div class="mx-auto max-w-6xl px-4 py-16 lg:grid lg:grid-cols-[14rem_1fr] lg:gap-10">
+    <a
+      href={`#article-${currentSlug}`}
+      class="bg-cdx-bg-elevated text-cdx-text border-cdx-border sr-only rounded border px-3 py-2 focus:not-sr-only focus:fixed focus:top-4 focus:left-44 focus:z-50"
+    >
+      Skip to article content
+    </a>
+
     <FeaturesSidebar currentSlug={currentSlug} />
 
-    <article class="mx-auto max-w-3xl">
+    <article id={`article-${currentSlug}`} tabindex="-1" class="mx-auto max-w-3xl scroll-mt-24">
       <header>
         <hgroup>
           <SectionEyebrow text={`Guide ${String(guide.number).padStart(2, '0')}`} />
