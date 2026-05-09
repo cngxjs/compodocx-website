@@ -54,14 +54,14 @@ const steps: Step[] = [
     {
       steps.map((step, idx) => (
         <div class="bg-cdx-bg-elevated grid grid-rows-[auto_auto_1fr_auto] gap-3 rounded-xl p-5">
-          <p class="text-cdx-text-muted font-mono text-xs tracking-wider uppercase">
+          <p class="text-cdx-text-secondary font-mono text-xs tracking-wider uppercase">
             {String(idx + 1).padStart(2, '0')} · {step.label}
           </p>
           <p class="text-cdx-text-secondary text-sm leading-relaxed">{step.caption}</p>
           <div class="relative">
             <span
               aria-hidden="true"
-              class="bg-cdx-bg-elevated text-cdx-text-muted absolute right-2 top-2 z-10 rounded px-1.5 py-0.5 font-mono text-[10px] tracking-wider uppercase"
+              class="bg-cdx-bg-elevated text-cdx-text-secondary absolute right-2 top-2 z-10 rounded px-1.5 py-0.5 font-mono text-[10px] tracking-wider uppercase"
             >
               {step.lang}
             </span>
