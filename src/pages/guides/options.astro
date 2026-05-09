@@ -1,103 +1,652 @@
 ---
 import FeaturesLayout from '../../layouts/FeaturesLayout.astro';
 
-interface OptionGroup {
-  heading: string;
-  items: Array<[flag: string, desc: string]>;
+interface Opt {
+  /** Config-file key + primary visible name. */
+  key: string;
+  /** CLI flag string ("-n, --name"). Empty = config-only option. */
+  cli?: string;
+  /** Type signature: 'string', 'number', 'boolean', 'string[]', 'object[]'. */
+  type: string;
+  /** Default value as written. Missing = required or no default. */
+  default?: string;
+  /** Description (plain text). */
+  desc: string;
 }
 
-const groups: OptionGroup[] = [
+interface OptGroup {
+  id: string;
+  heading: string;
+  blurb?: string;
+  items: Opt[];
+}
+
+const groups: OptGroup[] = [
   {
-    heading: 'Entry & output',
+    id: 'general',
+    heading: 'General',
+    blurb: 'Identity, language, and the entry point to your project.',
     items: [
-      ['-p, --tsconfig', 'entry tsconfig (defaults to ./tsconfig.json)'],
-      ['-d, --output', 'output directory (defaults to ./documentation)'],
-      ['--exportFormat', 'html (default), json, or llm-md'],
-      ['--jsonIndent', 'indent for json export (0–8, default 0)'],
-      ['--publicApiOnly', 'restrict output to symbols matching the public API allow-list'],
+      {
+        key: 'tsconfig',
+        cli: '-p, --tsconfig',
+        type: 'string',
+        desc: "Path to the project's tsconfig.json. Required — compodocx uses TypeScript's compiler to analyze the source.",
+      },
+      {
+        key: 'name',
+        cli: '-n, --name',
+        type: 'string',
+        default: "'Application documentation'",
+        desc: 'Title shown in the sidebar header, browser tab, and <title> of every generated page.',
+      },
+      {
+        key: 'language',
+        cli: '--language',
+        type: 'string',
+        default: "'en-US'",
+        desc: 'UI language. bg-BG, de-DE, en-US, es-ES, fr-FR, hu-HU, it-IT, ja-JP, ka-GE, ko-KR, nl-NL, pl-PL, pt-BR, ru-RU, sk-SK, zh-CN, zh-TW.',
+      },
+      {
+        key: 'config',
+        cli: '-c, --config',
+        type: 'string',
+        desc: 'Explicit config-file path. Otherwise compodocx auto-discovers .compodocxrc, .compodocxrc.json, .compodocxrc.yaml, or a compodocx/compodoc key in package.json.',
+      },
     ],
   },
   {
-    heading: 'Multi-version output',
+    id: 'output',
+    heading: 'Output',
+    blurb: 'Where the static site lands and which export format it uses.',
     items: [
-      ['--multiVersion / --no-multiVersion', 'multi-version layout on by default'],
-      ['--versionLabel', 'pin the label (auto-detected from package.json)'],
-      [
-        '--versionsRoot',
-        'directory holding versions.json and per-version folders (defaults to -d)',
-      ],
-      ['--maxVersionsShown', 'cap entries in the switcher (0–1000, 0 = unlimited, default 10)'],
+      {
+        key: 'output',
+        cli: '-d, --output',
+        type: 'string',
+        default: "'./documentation/'",
+        desc: 'Directory for the generated static site. Created if missing. Contents are overwritten on each run.',
+      },
+      {
+        key: 'exportFormat',
+        cli: '-e, --exportFormat',
+        type: 'string',
+        default: "'html'",
+        desc: "Output format. 'html' = full static site. 'json' = parsed data model as JSON files. 'llm-md' = LLM-context markdown bundle.",
+      },
+      {
+        key: 'base',
+        type: 'string',
+        default: "'/'",
+        desc: 'Base URL prepended to all generated links. Set when hosting docs in a subdirectory (e.g. /my-project/).',
+      },
+      {
+        key: 'multiVersion',
+        cli: '--multiVersion / --no-multiVersion',
+        type: 'boolean',
+        default: 'true',
+        desc: 'Multi-version layout on by default — writes <output>/<versionLabel>/ and maintains versions.json. Disable for a flat single-version layout. Non-HTML exports ignore this flag.',
+      },
+      {
+        key: 'versionLabel',
+        cli: '--versionLabel',
+        type: 'string',
+        default: 'auto',
+        desc: 'Override the version-subfolder name. Default: nearest package.json version, prefixed with v (1.2.3 → v1.2.3). Use main, next, unreleased for non-package builds.',
+      },
+      {
+        key: 'versionsRoot',
+        cli: '--versionsRoot',
+        type: 'string',
+        default: 'the -d folder',
+        desc: 'Where versions.json is read/written. Override when CI builds each version separately and stitches deploys later.',
+      },
+      {
+        key: 'maxVersionsShown',
+        cli: '--maxVersionsShown',
+        type: 'number',
+        default: '10',
+        desc: 'Cap on switcher dropdown entries. 0 = unlimited. Manifest is always written in full — this is presentation-only. Range 0–1000.',
+      },
+      {
+        key: 'jsonIndent',
+        cli: '--jsonIndent',
+        type: 'number',
+        default: '0',
+        desc: 'Indent for JSON export. Range 0–8.',
+      },
     ],
   },
   {
-    heading: 'Content & tabs',
+    id: 'serving',
+    heading: 'Dev server',
+    blurb: 'Built-in HTTP server for previewing locally.',
     items: [
-      ['--showEffects', 'render Angular effect() members in component output'],
-      ['--disableDependenciesTab', 'hide the Dependencies tab on entity pages'],
-      ['--disableGraph', 'skip the overview dependency graph'],
-      ['--toggleMenuItems', 'comma-separated list of menu sections to start expanded'],
+      {
+        key: 'serve',
+        cli: '-s, --serve',
+        type: 'boolean',
+        default: 'false',
+        desc: 'Start a local HTTP server after generation. Serves the output directory.',
+      },
+      {
+        key: 'port',
+        cli: '-r, --port',
+        type: 'number',
+        default: '8080',
+        desc: 'Port for the dev server.',
+      },
+      {
+        key: 'host',
+        cli: '--host',
+        type: 'string',
+        default: "'127.0.0.1'",
+        desc: 'Host address. Set to 0.0.0.0 to expose on the network.',
+      },
+      {
+        key: 'watch',
+        cli: '-w, --watch',
+        type: 'boolean',
+        default: 'false',
+        desc: "Watch the documented project's source and rebuild on changes. Requires --serve. Watches the target project, not compodocx itself.",
+      },
+      {
+        key: 'open',
+        cli: '-o, --open',
+        type: 'boolean',
+        default: 'false',
+        desc: 'Open the documentation in the default browser after serving.',
+      },
     ],
   },
   {
-    heading: 'Customization',
+    id: 'theming',
+    heading: 'Theming & branding',
+    blurb: 'Built-in palettes, custom CSS, logo, favicon.',
     items: [
-      [
-        '--theme',
-        'built-in name (ocean, midnight, nord, rose-pine, ember, neon, brutalist) or path to a CSS file',
-      ],
-      ['--templates', 'directory with JS partials overriding built-in templates'],
-      ['--gaID', 'GA4 measurement ID — emits gtag.js + SPA pageview events'],
+      {
+        key: 'theme',
+        cli: '--theme',
+        type: 'string',
+        default: "'default'",
+        desc: 'Built-in theme name or path to a custom CSS file. Built-in: default, ocean, ember, midnight, neon, brutalist, nord, rose-pine. Custom CSS replaces the built-in.',
+      },
+      {
+        key: 'shikiTheme',
+        cli: '--shikiTheme',
+        type: 'string',
+        default: "'github-light:github-dark'",
+        desc: "Shiki syntax highlighting pair for code blocks. Format 'light:dark' or single name for both modes. Uses Shiki's bundled themes.",
+      },
+      {
+        key: 'customLogo',
+        cli: '--customLogo',
+        type: 'string',
+        desc: 'Path to a custom logo image displayed in the sidebar header.',
+      },
+      {
+        key: 'customFavicon',
+        cli: '--customFavicon',
+        type: 'string',
+        desc: 'Path to a custom favicon. Copied into output and referenced in HTML <head>.',
+      },
+      {
+        key: 'hideGenerator',
+        cli: '--hideGenerator',
+        type: 'boolean',
+        default: 'false',
+        desc: 'Remove the "Built with compodocx" link in the page footer.',
+      },
+      {
+        key: 'hideDarkModeToggle',
+        cli: '--hideDarkModeToggle',
+        type: 'boolean',
+        default: 'false',
+        desc: 'Remove the light/dark toggle from the top-right header.',
+      },
+      {
+        key: 'extTheme',
+        cli: '-y, --extTheme',
+        type: 'string',
+        desc: 'DEPRECATED. Use --theme. When set without --theme, treated as a custom theme path.',
+      },
     ],
   },
   {
-    heading: 'Coverage & search',
+    id: 'visibility',
+    heading: 'Visibility filters',
+    blurb: 'Hide individual member groups (the entity page still exists).',
     items: [
-      ['--coverageMinimum', 'CI gate threshold (0–100); non-zero exit when below'],
-      ['--search', 'enable Pagefind index generation'],
-      ['--disableSearch', 'skip search index generation entirely'],
+      {
+        key: 'disablePrivate',
+        cli: '--disablePrivate',
+        type: 'boolean',
+        default: 'false',
+        desc: 'Hide private members from all entity pages. Affects properties, methods, accessors marked private.',
+      },
+      {
+        key: 'disableProtected',
+        cli: '--disableProtected',
+        type: 'boolean',
+        default: 'false',
+        desc: 'Hide protected members from all entity pages.',
+      },
+      {
+        key: 'disableInternal',
+        cli: '--disableInternal',
+        type: 'boolean',
+        default: 'false',
+        desc: 'Hide members marked with @internal JSDoc tag.',
+      },
+      {
+        key: 'disableLifeCycleHooks',
+        cli: '--disableLifeCycleHooks',
+        type: 'boolean',
+        default: 'false',
+        desc: 'Hide Angular lifecycle hooks (ngOnInit, ngOnDestroy, etc.) from method listings.',
+      },
+      {
+        key: 'disableConstructors',
+        cli: '--disableConstructors',
+        type: 'boolean',
+        default: 'false',
+        desc: 'Hide the constructor section from entity pages.',
+      },
+      {
+        key: 'disableProperties',
+        cli: '--disableProperties',
+        type: 'boolean',
+        default: 'false',
+        desc: 'Hide the entire properties section (inputs, outputs, regular properties).',
+      },
+      {
+        key: 'disableDependencies',
+        cli: '--disableDependencies',
+        type: 'boolean',
+        default: 'false',
+        desc: 'Hide the dependencies section on the Info tab (inject() calls + constructor-injected services).',
+      },
+      {
+        key: 'disableFilePath',
+        cli: '--disableFilePath',
+        type: 'boolean',
+        default: 'false',
+        desc: 'Hide the source file path shown in the entity hero.',
+      },
+      {
+        key: 'showEffects',
+        cli: '--showEffects',
+        type: 'boolean',
+        default: 'false',
+        desc: 'Show Angular effect() entries in a dedicated Effects block on the API tab. Off by default since effects are usually implementation details.',
+      },
+      {
+        key: 'publicApiOnly',
+        cli: '--publicApiOnly',
+        type: 'string',
+        desc: 'Restrict to symbols exported from index.d.ts in the given dist folder. Only these symbols (and their dependencies) are documented. Useful for library authors.',
+      },
     ],
   },
   {
-    heading: 'Authoring',
+    id: 'features',
+    heading: 'Feature toggles',
+    blurb: 'Disable entire features, tabs, or pages.',
     items: [
-      ['--watch', 'rebuild on file changes'],
-      ['--serve', 'dev server with live reload'],
+      {
+        key: 'minimal',
+        cli: '--minimal',
+        type: 'boolean',
+        default: 'false',
+        desc: 'Shorthand: disables search, all graphs, and coverage in one flag. Equivalent to --disableSearch --disableGraph --disableCoverage.',
+      },
+      {
+        key: 'disableSourceCode',
+        cli: '--disableSourceCode',
+        type: 'boolean',
+        default: 'false',
+        desc: 'Remove the Source tab and all "Defined in" source links. No source code in output.',
+      },
+      {
+        key: 'disableDomTree',
+        cli: '--disableDomTree',
+        type: 'boolean',
+        default: 'false',
+        desc: 'Remove the DOM Tree tab from component pages.',
+      },
+      {
+        key: 'disableTemplateTab',
+        cli: '--disableTemplateTab',
+        type: 'boolean',
+        default: 'false',
+        desc: 'Remove the Template tab from component pages.',
+      },
+      {
+        key: 'disableStyleTab',
+        cli: '--disableStyleTab',
+        type: 'boolean',
+        default: 'false',
+        desc: 'Remove the Style tab from component pages.',
+      },
+      {
+        key: 'disableGraph',
+        cli: '--disableGraph',
+        type: 'boolean',
+        default: 'false',
+        desc: 'Remove all dependency graphs (overview + per-component tabs).',
+      },
+      {
+        key: 'disableMainGraph',
+        cli: '--disableMainGraph',
+        type: 'boolean',
+        default: 'false',
+        desc: 'Remove only the main overview dependency graph. Per-component tabs remain.',
+      },
+      {
+        key: 'disableDependenciesTab',
+        cli: '--disableDependenciesTab',
+        type: 'boolean',
+        default: 'false',
+        desc: 'Remove the per-component Dependencies tab (the standalone-import graph).',
+      },
+      {
+        key: 'disablePlaygroundTab',
+        cli: '--disablePlaygroundTab',
+        type: 'boolean',
+        default: 'false',
+        desc: 'Remove the per-component Playground tab even when @playground blocks are present.',
+      },
+      {
+        key: 'disableRoutesGraph',
+        cli: '--disableRoutesGraph',
+        type: 'boolean',
+        default: 'false',
+        desc: 'Remove the routes graph page (Angular router visualised as a tree).',
+      },
+      {
+        key: 'disableSearch',
+        cli: '--disableSearch',
+        type: 'boolean',
+        default: 'false',
+        desc: 'Remove Pagefind search. Disables the Ctrl+K palette and skips index generation at build.',
+      },
+      {
+        key: 'disableCoverage',
+        cli: '--disableCoverage',
+        type: 'boolean',
+        default: 'false',
+        desc: 'Remove the documentation coverage report page.',
+      },
+      {
+        key: 'disableOverview',
+        cli: '--disableOverview',
+        type: 'boolean',
+        default: 'false',
+        desc: 'Remove the overview/dashboard page (project-level statistics + main graph).',
+      },
+    ],
+  },
+  {
+    id: 'navigation',
+    heading: 'Navigation',
+    blurb: 'Sidebar collapse + entity page tab order.',
+    items: [
+      {
+        key: 'toggleMenuItems',
+        cli: '--toggleMenuItems',
+        type: 'string[]',
+        default: "['all']",
+        desc: "Sidebar sections that start collapsed. 'all' = collapse everything. Comma-separated subset: modules, components, directives, entities, classes, injectables, guards, interfaces, interceptors, pipes, miscellaneous, additionalPages.",
+      },
+      {
+        key: 'navTabConfig',
+        cli: '--navTabConfig',
+        type: 'object[]',
+        default: '[]',
+        desc: 'Customize entity-page tab order/labels. Array of { id, label }. Tab IDs: info, readme, source, templateData, styleData, tree, example. Tabs not listed are hidden. Empty (default) shows all in default order.',
+      },
+    ],
+  },
+  {
+    id: 'tab-sections',
+    heading: 'Tab sections (config-only)',
+    blurb:
+      'Compose the section list inside Info / API / Theming tabs. No CLI flag — set in the config file.',
+    items: [
+      {
+        key: 'infoTabSections',
+        type: 'string[]',
+        default: '[]',
+        desc: 'Override the section list for the Info tab. Empty = all defaults render. IDs: import, deprecated, description, examples, metadata, extends, host, dependencies, providers, viewProviders, relationships.',
+      },
+      {
+        key: 'apiTabSections',
+        type: 'string[]',
+        default: '[]',
+        desc: 'Override the section list for the API tab. IDs: index, inputs, outputs, derivedState, effects, properties, methods, accessors, indexSignatures, hostBindings, hostListeners.',
+      },
+      {
+        key: 'themingTabSections',
+        type: 'string[]',
+        default: '[]',
+        desc: 'Override the section list for the Theming tab. IDs: overview, index, tokens, source.',
+      },
+    ],
+  },
+  {
+    id: 'coverage',
+    heading: 'Coverage',
+    blurb: 'Documentation-coverage thresholds and reporting.',
+    items: [
+      {
+        key: 'coverageTest',
+        cli: '--coverageTest',
+        type: 'number',
+        default: '70',
+        desc: 'Global documentation-coverage threshold as a percentage. Used in CI to enforce minimum documentation.',
+      },
+      {
+        key: 'coverageMinimumPerFile',
+        cli: '--coverageMinimumPerFile',
+        type: 'number',
+        default: '0',
+        desc: 'Per-file minimum coverage percentage. Each file must individually meet the threshold.',
+      },
+      {
+        key: 'coverageTestThresholdFail',
+        cli: '--coverageTestThresholdFail',
+        type: 'boolean',
+        default: 'true',
+        desc: 'When true, a coverage breach exits non-zero (fails CI). When false, only a warning is printed.',
+      },
+      {
+        key: 'coverageTestShowOnlyFailed',
+        cli: '--coverageTestShowOnlyFailed',
+        type: 'boolean',
+        default: 'false',
+        desc: 'Show only files below the threshold in coverage output.',
+      },
+      {
+        key: 'unitTestCoverage',
+        cli: '--unitTestCoverage',
+        type: 'string',
+        desc: 'Path to an Istanbul JSON coverage summary (coverage-summary.json). Integrates unit-test coverage data into the documentation coverage report.',
+      },
+    ],
+  },
+  {
+    id: 'sidebar-grouping',
+    heading: 'Sidebar grouping',
+    blurb: 'How entities are organized in the sidebar. Auto-detected by default.',
+    items: [
+      {
+        key: 'groupBy',
+        cli: '--groupBy',
+        type: 'string',
+        default: 'auto',
+        desc: "'folder' = directory path. 'category' = @category JSDoc tag. 'none' = flat alphabetical. Auto-default: NgModule projects → 'none', standalone projects → 'folder'.",
+      },
+      {
+        key: 'groupDepth',
+        cli: '--groupDepth',
+        type: 'string',
+        default: "'2'",
+        desc: 'Max folder depth for group names when using folder grouping. Depth 2 turns src/app/users/components/x.ts into the group users/components.',
+      },
+    ],
+  },
+  {
+    id: 'additional-content',
+    heading: 'Additional content',
+    blurb: 'External markdown, static assets, template playground.',
+    items: [
+      {
+        key: 'includes',
+        cli: '--includes',
+        type: 'string',
+        desc: 'Folder of external markdown files. Each .md becomes a page. Supports nested folders for sub-navigation.',
+      },
+      {
+        key: 'includesName',
+        cli: '--includesName',
+        type: 'string',
+        default: "'Additional documentation'",
+        desc: 'Sidebar label for the external markdown pages section.',
+      },
+      {
+        key: 'assetsFolder',
+        cli: '-a, --assetsFolder',
+        type: 'string',
+        desc: 'Folder of static assets (images, files) copied into output. Reference from markdown or templates via relative paths.',
+      },
+      {
+        key: 'templates',
+        cli: '--templates',
+        type: 'string',
+        desc: 'Directory of JS template overrides. Each file exports (data, helpers) => string. Replaces the corresponding built-in template.',
+      },
+      {
+        key: 'templatePlayground',
+        cli: '--templatePlayground',
+        type: 'boolean',
+        default: 'false',
+        desc: 'Generate an interactive Template Playground page with code editor and live preview.',
+      },
+    ],
+  },
+  {
+    id: 'integrations',
+    heading: 'Integrations',
+    blurb: 'StackBlitz live demos, Google Analytics 4.',
+    items: [
+      {
+        key: 'stackblitz',
+        cli: '--stackblitz',
+        type: 'boolean',
+        default: 'false',
+        desc: 'Enable StackBlitz integration. Adds "Open in StackBlitz" buttons to @example code blocks.',
+      },
+      {
+        key: 'stackblitzTemplate',
+        cli: '--stackblitzTemplate',
+        type: 'string',
+        desc: 'StackBlitz project template ID. Example code is injected into this template on click.',
+      },
+      {
+        key: 'gaID',
+        cli: '--gaID',
+        type: 'string',
+        desc: 'Google Analytics 4 measurement ID (G-XXXXXXXXXX). When set, gtag.js is injected into every page.',
+      },
+    ],
+  },
+  {
+    id: 'search-misc',
+    heading: 'Search & logging',
+    blurb: 'Pagefind result cap and CLI verbosity.',
+    items: [
+      {
+        key: 'maxSearchResults',
+        cli: '--maxSearchResults',
+        type: 'number',
+        default: '15',
+        desc: 'Maximum results in the Ctrl+K search palette. 0 = all (may be slow for large projects).',
+      },
+      {
+        key: 'silent',
+        cli: '-t, --silent',
+        type: 'boolean',
+        default: 'false',
+        desc: 'Suppress all console output during generation. Useful in CI where only the exit code matters.',
+      },
     ],
   },
 ];
+
+const totalCount = groups.reduce((acc, g) => acc + g.items.length, 0);
 ---
 
 <FeaturesLayout
   currentSlug="options"
   title="Options — compodocx CLI flags and config reference"
-  description="compodocx CLI flag reference: --tsconfig, --output, --theme, --watch, --serve, --coverageMinimum, --basePath, --routingMode, --exportFormat."
+  description="Complete compodocx options reference. CLI flags + JSON config keys for entry, output, theming, visibility, feature toggles, navigation, coverage, and integrations."
 >
   <p class="text-cdx-text-secondary text-lg">
-    compodocx accepts CLI flags or a JSON config (passed via <code class="cdx-code">-c</code>). The
-    two compose: flags override config values. Use the config for team consistency, flags for
-    one-off runs.
+    compodocx accepts CLI flags or a config file (<code class="cdx-code">.compodocxrc</code>,
+    <code class="cdx-code">.compodocxrc.json</code>, <code class="cdx-code">.compodocxrc.yaml</code
+    >, or a <code class="cdx-code">compodocx</code> property in <code class="cdx-code"
+      >package.json</code
+    >). Flags override config values. {totalCount} options total, grouped below.
   </p>
+
+  <nav aria-label="Options categories" class="bg-cdx-bg-elevated mt-6 rounded-xl p-4">
+    <p class="text-cdx-text-secondary text-xs font-semibold uppercase tracking-[0.2em]">Jump to</p>
+    <ul class="mt-3 flex flex-wrap gap-x-4 gap-y-2 text-sm">
+      {
+        groups.map((g) => (
+          <li>
+            <a href={`#${g.id}`} class="text-cdx-primary underline-offset-2 hover:underline">
+              {g.heading}
+              <span class="text-cdx-text-muted text-xs">({g.items.length})</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
 
   {
     groups.map((group) => (
-      <section class="mt-12 first:mt-0">
-        <h2 class="text-cdx-text text-xl font-semibold">{group.heading}</h2>
-        <dl class="mt-4 grid gap-3 text-sm md:grid-cols-[auto_1fr] md:gap-x-6">
-          {group.items.map(([flag, desc]) => (
-            <>
-              <dt class="text-cdx-text">
-                <code class="cdx-code">{flag}</code>
+      <section id={group.id} class="scroll-mt-24">
+        <h2>{group.heading}</h2>
+        {group.blurb && <p>{group.blurb}</p>}
+        <dl class="mt-4 grid gap-3">
+          {group.items.map((opt) => (
+            <div class="bg-cdx-bg-elevated rounded-xl p-4">
+              <dt class="flex flex-wrap items-baseline gap-x-3 gap-y-1.5">
+                <code class="cdx-code text-sm">{opt.cli ?? opt.key}</code>
+                <span class="text-cdx-text-muted font-mono text-xs">{opt.type}</span>
+                {opt.default !== undefined && (
+                  <span class="text-cdx-text-secondary text-xs">
+                    default: <code class="cdx-code">{opt.default}</code>
+                  </span>
+                )}
+                {!opt.cli && (
+                  <span class="text-cdx-text-muted text-[10px] font-semibold tracking-wider uppercase">
+                    config-only
+                  </span>
+                )}
               </dt>
-              <dd class="text-cdx-text-secondary">{desc}</dd>
-            </>
+              <dd class="text-cdx-text-secondary mt-2.5 text-sm leading-relaxed">{opt.desc}</dd>
+            </div>
           ))}
         </dl>
       </section>
     ))
   }
 
-  <p class="text-cdx-text-secondary pt-8">
-    Run <code class="cdx-code">compodocx --help</code> for the full surface, including project-level options
-    that don&rsquo;t fit a flag (e.g. <code class="cdx-code">themingTabSections</code> for tab composition).
+  <p class="text-cdx-text-secondary pt-8 text-sm">
+    Run <code class="cdx-code">compodocx --help</code> for the same surface from the terminal. Options
+    are resolved CLI &gt; config file &gt; defaults.
   </p>
 </FeaturesLayout>
