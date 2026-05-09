@@ -107,7 +107,7 @@ export const guides: Guide[] = [
 <aside class="border-cdx-border hidden self-stretch border-r pr-6 lg:block">
   <nav class="sticky top-20" aria-label="Guide navigation">
     <SectionEyebrow text="Guides" />
-    <ul class="mt-4 space-y-0.5 text-sm">
+    <ol class="mt-4 space-y-0.5 text-sm">
       {
         guides.map((g) => {
           const active = g.slug === currentSlug;
@@ -126,7 +126,7 @@ export const guides: Guide[] = [
                 <span
                   class:list={[
                     'font-mono text-xs',
-                    active ? 'text-cdx-text-secondary' : 'text-cdx-text-muted',
+                    active ? 'text-cdx-text-secondary' : 'text-cdx-text-secondary',
                   ]}
                 >
                   {String(g.number).padStart(2, '0')}
@@ -137,6 +137,6 @@ export const guides: Guide[] = [
           );
         })
       }
-    </ul>
+    </ol>
   </nav>
 </aside>
