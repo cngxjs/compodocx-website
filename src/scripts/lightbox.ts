@@ -1,7 +1,22 @@
 const BOUND = new WeakSet<HTMLButtonElement>();
 const DIALOGS = new WeakSet<HTMLDialogElement>();
+const IMG_BOUND = new WeakSet<HTMLImageElement>();
+
+function markLoaded(img: HTMLImageElement): void {
+  img.dataset.loaded = 'true';
+}
 
 export function initLightbox(): void {
+  document.querySelectorAll<HTMLImageElement>('.screenshot-zoom > img').forEach((img) => {
+    if (IMG_BOUND.has(img)) return;
+    IMG_BOUND.add(img);
+    if (img.complete && img.naturalWidth > 0) {
+      markLoaded(img);
+    } else {
+      img.addEventListener('load', () => markLoaded(img), { once: true });
+    }
+  });
+
   const dialog = document.getElementById('screenshot-lightbox');
   const img = document.getElementById('lightbox-img');
   if (!(dialog instanceof HTMLDialogElement) || !(img instanceof HTMLImageElement)) return;

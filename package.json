@@ -16,7 +16,8 @@
     "format:check": "prettier --check .",
     "sync:tokens": "node scripts/sync-tokens.mjs",
     "sync:screenshots": "node scripts/sync-screenshots.mjs",
-    "og:gen": "node scripts/gen-og.mjs"
+    "og:gen": "node scripts/gen-og.mjs",
+    "lqip:gen": "node scripts/gen-lqip.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.2",

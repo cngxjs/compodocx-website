@@ -266,14 +266,16 @@ const themeBundle = minifyCss(
 
     <style is:global>
       .lightbox-dialog {
+        position: fixed;
+        inset: 0;
+        margin: auto;
         padding: 0;
         border: none;
         background: transparent;
         max-width: min(92vw, 2048px);
         max-height: 92vh;
-      }
-      .lightbox-dialog[open] {
-        display: block;
+        width: max-content;
+        height: max-content;
       }
       .lightbox-dialog::backdrop {
         animation: lightbox-backdrop 200ms ease-out;
@@ -285,6 +287,23 @@ const themeBundle = minifyCss(
         to {
           opacity: 1;
         }
+      }
+
+      .screenshot-zoom {
+        background-image: var(--lqip-light);
+        background-size: cover;
+        background-position: center;
+      }
+      :root.dark .screenshot-zoom {
+        background-image: var(--lqip-dark);
+      }
+      .screenshot-zoom > img {
+        opacity: 0;
+        transition: opacity 0.4s ease-out;
+      }
+      .screenshot-zoom > img.is-loaded,
+      .screenshot-zoom > img[data-loaded] {
+        opacity: 1;
       }
     </style>
 

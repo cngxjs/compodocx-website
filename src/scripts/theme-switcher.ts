@@ -25,9 +25,9 @@ function readSaved(): string {
 function applyTheme(id: string): void {
   if (!KNOWN_THEMES.has(id)) return;
   if (id === DEFAULT_THEME) {
-    document.documentElement.removeAttribute('data-theme');
+    delete document.documentElement.dataset.theme;
   } else {
-    document.documentElement.setAttribute('data-theme', id);
+    document.documentElement.dataset.theme = id;
   }
   try {
     localStorage.setItem(STORAGE_KEY, id);

@@ -1,6 +1,7 @@
 ---
 import { Image, getImage } from 'astro:assets';
 import SectionEyebrow from './SectionEyebrow.astro';
+import lqipMap from '../assets/screenshots/lqip.json';
 
 import componentInfoLight from '../assets/screenshots/component-info-light.png';
 import componentInfoDark from '../assets/screenshots/component-info-dark.png';
@@ -64,6 +65,8 @@ const enrichedShots = await Promise.all(
     ...s,
     fullLight: (await getImage({ src: s.light, width: 2048, format: 'avif', quality: 80 })).src,
     fullDark: (await getImage({ src: s.dark, width: 2048, format: 'avif', quality: 80 })).src,
+    lqipLight: (lqipMap as Record<string, string>)[`${s.id}-light`],
+    lqipDark: (lqipMap as Record<string, string>)[`${s.id}-dark`],
   })),
 );
 ---
@@ -117,6 +120,7 @@ const enrichedShots = await Promise.all(
               data-zoom-light={shot.fullLight}
               data-zoom-dark={shot.fullDark}
               data-zoom-alt={shot.alt}
+              style={`--lqip-light:url('${shot.lqipLight}'); --lqip-dark:url('${shot.lqipDark}');`}
               aria-label={`View ${shot.label} screenshot at full resolution`}
             >
               <Image

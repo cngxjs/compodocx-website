@@ -1,6 +1,7 @@
 ---
 import { Image, getImage } from 'astro:assets';
 import SectionEyebrow from './SectionEyebrow.astro';
+import lqipMap from '../assets/screenshots/lqip.json';
 
 import coverageLight from '../assets/screenshots/coverage-report-light.png';
 import coverageDark from '../assets/screenshots/coverage-report-dark.png';
@@ -13,6 +14,7 @@ const fullLight = (await getImage({ src: coverageLight, width: 2048, format: 'av
   .src;
 const fullDark = (await getImage({ src: coverageDark, width: 2048, format: 'avif', quality: 80 }))
   .src;
+const lqip = lqipMap as Record<string, string>;
 ---
 
 <section class="mx-auto max-w-6xl px-4 py-24" aria-labelledby="coverage-heading">
@@ -56,6 +58,7 @@ const fullDark = (await getImage({ src: coverageDark, width: 2048, format: 'avif
         data-zoom-light={fullLight}
         data-zoom-dark={fullDark}
         data-zoom-alt={altText}
+        style={`--lqip-light:url('${lqip['coverage-report-light']}'); --lqip-dark:url('${lqip['coverage-report-dark']}');`}
         aria-label="View documentation coverage screenshot at full resolution"
       >
         <Image

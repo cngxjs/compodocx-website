@@ -1,6 +1,7 @@
 ---
 import { Image, getImage } from 'astro:assets';
 import SectionEyebrow from './SectionEyebrow.astro';
+import lqipMap from '../assets/screenshots/lqip.json';
 
 import multiVersionLight from '../assets/screenshots/multi-version-light.png';
 import multiVersionDark from '../assets/screenshots/multi-version-dark.png';
@@ -15,6 +16,7 @@ const fullLight = (
 const fullDark = (
   await getImage({ src: multiVersionDark, width: 2048, format: 'avif', quality: 80 })
 ).src;
+const lqip = lqipMap as Record<string, string>;
 ---
 
 <section class="mx-auto max-w-6xl px-4 py-24" aria-labelledby="multi-version-heading">
@@ -26,6 +28,7 @@ const fullDark = (
         data-zoom-light={fullLight}
         data-zoom-dark={fullDark}
         data-zoom-alt={altText}
+        style={`--lqip-light:url('${lqip['multi-version-light']}'); --lqip-dark:url('${lqip['multi-version-dark']}');`}
         aria-label="View multi-version switcher screenshot at full resolution"
       >
         <Image
