@@ -8,8 +8,8 @@ import { EnumChangefreq } from 'sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://cngxjs.github.io/compodocx-website',
-  base: '/compodocx-website',
+  site: 'https://compodocx.dev',
+  base: '/',
   trailingSlash: 'always',
   devToolbar: { enabled: false },
 
@@ -23,13 +23,14 @@ export default defineConfig({
       priority: 0.7,
       lastmod: new Date(),
       serialize(item) {
-        if (item.url.endsWith('/compodocx-website/')) {
+        const path = new URL(item.url).pathname;
+        if (path === '/') {
           item.priority = 1.0;
           item.changefreq = EnumChangefreq.WEEKLY;
-        } else if (item.url.endsWith('/guides/')) {
+        } else if (path === '/guides/') {
           item.priority = 0.9;
           item.changefreq = EnumChangefreq.WEEKLY;
-        } else if (item.url.includes('/guides/')) {
+        } else if (path.startsWith('/guides/')) {
           item.priority = 0.7;
           item.changefreq = EnumChangefreq.MONTHLY;
         }
