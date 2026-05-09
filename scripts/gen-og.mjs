@@ -7,6 +7,9 @@ const root = fileURLToPath(new URL('..', import.meta.url));
 const outOg = resolve(root, 'public/og-image.png');
 const outAppleTouch = resolve(root, 'public/apple-touch-icon.png');
 const outFavicon = resolve(root, 'public/favicon.png');
+const outIcon192 = resolve(root, 'public/icon-192.png');
+const outIcon512 = resolve(root, 'public/icon-512.png');
+const outIconMaskable = resolve(root, 'public/icon-maskable-512.png');
 
 // Crop screenshot to content area only: skip sidebar (left ~560px) and topbar (top ~80px).
 // Source 2560×1600 → extract 1600×1400 → ratio 1.143:1, same as target panel 720×630.
@@ -104,6 +107,31 @@ const appleSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" 
   </text>
 </svg>`;
 
+// Scale appleSvg to any size — viewBox stays 0 0 180 180 so librsvg scales proportionally.
+function iconSvgAt(size) {
+  return appleSvg.replace('width="180" height="180"', `width="${size}" height="${size}"`);
+}
+
+// Maskable variant: full-bleed (no rx) so the OS can apply its own shape mask.
+// Content is pulled inward to fit the W3C maskable safe zone (inscribed circle, r = 40% of 180 = 72 units).
+const maskableSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" width="512" height="512">
+  <defs>
+    <pattern id="dots" x="0" y="0" width="14" height="14" patternUnits="userSpaceOnUse">
+      <circle cx="1" cy="1" r="1" fill="#f0f0f0" fill-opacity="0.14"/>
+    </pattern>
+  </defs>
+  <rect width="180" height="180" fill="#1c1c1c"/>
+  <rect width="180" height="180" fill="url(#dots)"/>
+  <text x="90" y="78" text-anchor="middle"
+        font-family="'Helvetica Neue', Helvetica, sans-serif"
+        font-size="46" font-weight="700" fill="#f0f0f0" letter-spacing="-1">compo</text>
+  <text x="90" y="128" text-anchor="middle"
+        font-family="'Helvetica Neue', Helvetica, sans-serif"
+        font-size="46" font-weight="700" letter-spacing="-1">
+    <tspan fill="#f0f0f0">doc</tspan><tspan fill="hsl(32,100%,62%)">x</tspan>
+  </text>
+</svg>`;
+
 const faviconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
   <defs>
     <linearGradient id="cx-fill" x1="0" x2="1" y1="0" y2="0">
@@ -138,3 +166,15 @@ console.log(`Wrote ${outAppleTouch} (${applePng.length} bytes)`);
 const faviconPng = await svgToPng(faviconSvg, 32, 32);
 await writeFile(outFavicon, faviconPng);
 console.log(`Wrote ${outFavicon} (${faviconPng.length} bytes)`);
+
+const icon192Png = await svgToPng(iconSvgAt(192), 192, 192);
+await writeFile(outIcon192, icon192Png);
+console.log(`Wrote ${outIcon192} (${icon192Png.length} bytes)`);
+
+const icon512Png = await svgToPng(iconSvgAt(512), 512, 512);
+await writeFile(outIcon512, icon512Png);
+console.log(`Wrote ${outIcon512} (${icon512Png.length} bytes)`);
+
+const iconMaskablePng = await svgToPng(maskableSvg, 512, 512);
+await writeFile(outIconMaskable, iconMaskablePng);
+console.log(`Wrote ${outIconMaskable} (${iconMaskablePng.length} bytes)`);
