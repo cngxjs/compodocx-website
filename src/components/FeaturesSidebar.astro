@@ -12,35 +12,93 @@ interface Guide {
   slug: string;
   number: number;
   title: string;
+  blurb: string;
   related?: string[];
 }
 
 export const guides: Guide[] = [
-  { slug: 'getting-started', number: 1, title: 'Getting Started', related: ['usage', 'options'] },
-  { slug: 'features', number: 2, title: 'Features', related: ['themes', 'usage'] },
+  {
+    slug: 'getting-started',
+    number: 1,
+    title: 'Getting Started',
+    blurb: 'Install, configure, and ship your first build in under a minute.',
+    related: ['usage', 'options'],
+  },
+  {
+    slug: 'features',
+    number: 2,
+    title: 'Features',
+    blurb: 'Standalone components, signals, multi-version, theming — the full output surface.',
+    related: ['themes', 'usage'],
+  },
   {
     slug: 'options',
     number: 6,
     title: 'Options',
+    blurb: 'Every CLI flag and JSON config key, with defaults and gotchas.',
     related: ['usage', 'getting-started', 'routing'],
   },
-  { slug: 'usage', number: 7, title: 'Usage', related: ['options', 'tips', 'coverage'] },
-  { slug: 'themes', number: 8, title: 'Themes', related: ['options', 'features'] },
-  { slug: 'comments', number: 9, title: 'Comments', related: ['jsdoc-tags', 'live-example'] },
-  { slug: 'jsdoc-tags', number: 10, title: 'JSDoc Tags', related: ['comments', 'features'] },
-  { slug: 'routing', number: 11, title: 'Routing', related: ['options', 'tab-configuration'] },
-  { slug: 'coverage', number: 12, title: 'Documentation Coverage', related: ['usage', 'options'] },
-  { slug: 'tips', number: 13, title: 'Tips and Tricks', related: ['usage', 'themes', 'options'] },
+  {
+    slug: 'usage',
+    number: 7,
+    title: 'Usage',
+    blurb: 'tsconfig pointing, watch mode, custom paths, monorepo flows.',
+    related: ['options', 'tips', 'coverage'],
+  },
+  {
+    slug: 'themes',
+    number: 8,
+    title: 'Themes',
+    blurb: 'Eight bundled themes plus rolling your own via --color-cdx-* tokens.',
+    related: ['options', 'features'],
+  },
+  {
+    slug: 'comments',
+    number: 9,
+    title: 'Comments',
+    blurb: 'Markdown-flavored JSDoc that compodocx actually reads.',
+    related: ['jsdoc-tags', 'live-example'],
+  },
+  {
+    slug: 'jsdoc-tags',
+    number: 10,
+    title: 'JSDoc Tags',
+    blurb: '@param, @returns, @example — supported tags and how each renders.',
+    related: ['comments', 'features'],
+  },
+  {
+    slug: 'routing',
+    number: 11,
+    title: 'Routing',
+    blurb: 'Static SPA paths, basePath, hash vs. history strategy.',
+    related: ['options', 'tab-configuration'],
+  },
+  {
+    slug: 'coverage',
+    number: 12,
+    title: 'Documentation Coverage',
+    blurb: 'Per-symbol coverage, --coverageMinimum CI gating, --publicApiOnly scoping.',
+    related: ['usage', 'options'],
+  },
+  {
+    slug: 'tips',
+    number: 13,
+    title: 'Tips and Tricks',
+    blurb: 'Real-world patterns for monorepos, design systems, libraries.',
+    related: ['usage', 'themes', 'options'],
+  },
   {
     slug: 'live-example',
     number: 16,
     title: 'Live Example Tab',
+    blurb: 'Sandboxed component demos rendered alongside API docs.',
     related: ['comments', 'features'],
   },
   {
     slug: 'tab-configuration',
     number: 17,
     title: 'Tab Configuration',
+    blurb: 'Reorder, hide, or extend per-entity tabs (API, examples, source).',
     related: ['features', 'options'],
   },
 ];

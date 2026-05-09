@@ -107,21 +107,35 @@ const breadcrumbJsonLd = {
           >
             <h2
               id={`related-${guide.slug}`}
-              class="text-cdx-text-muted text-xs font-semibold uppercase tracking-[0.2em]"
+              class="text-cdx-text-secondary text-xs font-semibold tracking-[0.2em] uppercase"
             >
               Related guides
             </h2>
-            <ul class="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+            <ul class="mt-5 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {relatedGuides.map((r) => (
                 <li>
                   <a
                     href={`${base}guides/${r.slug}/`}
-                    class="bg-cdx-bg-elevated hover:bg-cdx-bg-alt group block rounded-lg p-4 transition-colors"
+                    class="bg-cdx-bg-elevated hover:bg-cdx-bg-alt focus-visible:ring-cdx-primary group flex h-full flex-col gap-3 rounded-xl p-5 transition-colors focus-visible:ring-2 focus-visible:outline-none"
                   >
-                    <span class="text-cdx-text-muted font-mono text-xs">
-                      {String(r.number).padStart(2, '0')}
-                    </span>
-                    <span class="text-cdx-text mt-1 block text-sm font-semibold">{r.title}</span>
+                    <div class="flex items-center gap-3">
+                      <span
+                        aria-hidden="true"
+                        class="bg-cdx-primary text-cdx-text-inverse inline-flex size-8 items-center justify-center rounded-md font-mono text-xs font-bold"
+                      >
+                        {String(r.number).padStart(2, '0')}
+                      </span>
+                      <span class="text-cdx-text text-sm font-semibold tracking-tight">
+                        {r.title}
+                      </span>
+                      <span
+                        aria-hidden="true"
+                        class="text-cdx-text-secondary group-hover:text-cdx-primary ml-auto transition-all group-hover:translate-x-0.5"
+                      >
+                        →
+                      </span>
+                    </div>
+                    <p class="text-cdx-text-secondary text-xs leading-relaxed">{r.blurb}</p>
                   </a>
                 </li>
               ))}
@@ -142,7 +156,9 @@ const breadcrumbJsonLd = {
             >
               <span aria-hidden="true">←</span>
               <span class="flex flex-col">
-                <span class="text-cdx-text-muted text-xs uppercase tracking-wider">Previous</span>
+                <span class="text-cdx-text-secondary text-xs tracking-wider uppercase">
+                  Previous
+                </span>
                 <span class="group-hover:text-cdx-text">{prev.title}</span>
               </span>
             </a>
@@ -157,7 +173,7 @@ const breadcrumbJsonLd = {
               class="text-cdx-text-secondary hover:text-cdx-text group inline-flex items-center gap-2 text-right"
             >
               <span class="flex flex-col">
-                <span class="text-cdx-text-muted text-xs uppercase tracking-wider">Next</span>
+                <span class="text-cdx-text-secondary text-xs tracking-wider uppercase">Next</span>
                 <span class="group-hover:text-cdx-text">{next.title}</span>
               </span>
               <span aria-hidden="true">→</span>
