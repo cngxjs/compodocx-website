@@ -13,15 +13,16 @@ const steps: Step[] = [
   {
     id: 'install',
     label: 'Install',
-    caption: 'Add it to your dev dependencies. Works in any Angular library or app on Node 22+.',
-    code: 'npm install --save-dev @cngxjs/compodocx',
+    caption:
+      'Add it to your dev dependencies. <br />Works in any Angular library or app from Angular 17 upwards.',
+    code: 'npm install -D @cngxjs/compodocx',
     lang: 'bash',
   },
   {
     id: 'run',
     label: 'Run',
     caption:
-      'Point at your tsconfig. Static docs land in ./documentation/<versionLabel>/. The label comes from package.json automatically.',
+      'Point at your tsconfig. Static docs land in <code class="cdx-code">./documentation/&lt;versionLabel&gt;/</code>. <br />Label auto-detected from <code class="cdx-code">package.json</code>.',
     code: 'npx compodocx -p tsconfig.doc.json',
     lang: 'bash',
   },
@@ -32,8 +33,7 @@ const steps: Step[] = [
     code: `{
   "tsconfig": "tsconfig.doc.json",
   "output": "documentation",
-  "theme": "ocean",
-  "exportFormat": "html"
+  "theme": "ocean"
 }`,
     lang: 'json',
   },
@@ -52,66 +52,75 @@ const steps: Step[] = [
     onboard.
   </p>
 
-  <div class="mt-12 grid gap-4 md:grid-cols-3">
+  <ol class="mt-12 grid gap-5 md:grid-cols-3">
     {
       steps.map((step, idx) => (
-        <div class="bg-cdx-bg-elevated grid grid-rows-[auto_auto_1fr_auto] gap-3 rounded-xl p-5">
-          <h3 class="text-cdx-text-secondary font-mono text-xs tracking-wider uppercase">
-            {String(idx + 1).padStart(2, '0')} · {step.label}
-          </h3>
-          <p class="text-cdx-text-secondary text-sm leading-relaxed">{step.caption}</p>
-          <div class="relative">
+        <li class="bg-cdx-bg-elevated flex min-w-0 flex-col overflow-hidden rounded-xl">
+          <header class="flex items-center gap-3 px-6 pt-6">
             <span
               aria-hidden="true"
-              class="bg-cdx-bg-elevated text-cdx-text-secondary absolute right-2 top-2 z-10 rounded px-1.5 py-0.5 font-mono text-[10px] tracking-wider uppercase"
+              class="bg-cdx-primary text-cdx-text-inverse inline-flex size-9 items-center justify-center rounded-lg font-mono text-sm font-bold"
             >
-              {step.lang}
+              {String(idx + 1).padStart(2, '0')}
             </span>
+            <h3 class="text-cdx-text text-base font-semibold tracking-tight">{step.label}</h3>
+          </header>
+
+          <p
+            class="text-cdx-text-secondary mt-3 px-6 text-sm leading-relaxed"
+            set:html={step.caption}
+          />
+
+          <div class="bg-cdx-bg-alt/60 ring-cdx-border/40 mx-6 mt-5 mb-6 min-w-0 overflow-hidden rounded-lg ring-1 lg:mt-auto">
+            <div class="border-cdx-border/30 flex items-center justify-between border-b px-3 py-1.5">
+              <span class="text-cdx-text-secondary font-mono text-[10px] tracking-[0.15em] uppercase">
+                {step.lang}
+              </span>
+              <button
+                type="button"
+                data-copy-target={`gs-${step.id}-code`}
+                aria-label={`Copy ${step.label} command`}
+                class="copy-btn group text-cdx-text-secondary hover:text-cdx-text data-[copied=true]:text-cdx-primary inline-flex size-6 items-center justify-center rounded transition-colors"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="13"
+                  height="13"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                  class="copy-icon-default"
+                >
+                  <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+                  <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
+                </svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="13"
+                  height="13"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2.5"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                  class="copy-icon-done"
+                >
+                  <polyline points="20 6 9 17 4 12" />
+                </svg>
+                <span class="sr-only" data-copy-live aria-live="polite" />
+              </button>
+            </div>
             {/* prettier-ignore */}
-            <pre class="bg-cdx-bg-alt/60 text-cdx-text overflow-x-auto rounded-lg p-3 pr-14 font-mono text-xs leading-relaxed"><code id={`gs-${step.id}-code`}>{step.code}</code></pre>
+            <pre class="text-cdx-text overflow-x-auto p-3 font-mono text-xs leading-relaxed"><code id={`gs-${step.id}-code`}>{step.code}</code></pre>
           </div>
-          <button
-            type="button"
-            data-copy-target={`gs-${step.id}-code`}
-            aria-label={`Copy ${step.label} command`}
-            class="copy-btn group text-cdx-text-secondary hover:text-cdx-text hover:bg-cdx-bg-alt data-[copied=true]:text-cdx-primary mt-1 inline-flex w-fit items-center gap-1.5 rounded px-2 py-1 text-xs transition-colors"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              aria-hidden="true"
-              class="copy-icon-default"
-            >
-              <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
-              <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2" />
-            </svg>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              width="14"
-              height="14"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2.5"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              aria-hidden="true"
-              class="copy-icon-done"
-            >
-              <polyline points="20 6 9 17 4 12" />
-            </svg>
-            <span data-copy-label>Copy</span>
-            <span class="sr-only" data-copy-live aria-live="polite" />
-          </button>
-        </div>
+        </li>
       ))
     }
-  </div>
+  </ol>
 </section>

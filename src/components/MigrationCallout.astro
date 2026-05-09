@@ -6,54 +6,153 @@ const migrationGuideUrl = 'https://github.com/cngxjs/compodocx/blob/develop/MIGR
 
 <section class="mx-auto max-w-6xl px-4 py-24" aria-labelledby="migration-heading">
   <SectionEyebrow text="From compodoc" />
-  <div class="bg-cdx-bg-elevated border-cdx-primary mt-3 rounded-r-xl border-l-4 p-8 sm:p-10">
-    <h2
-      id="migration-heading"
-      class="text-cdx-text text-2xl font-semibold tracking-tight sm:text-3xl"
-    >
-      Already on compodoc? Stay calm.
-    </h2>
-    <p class="text-cdx-text-secondary mt-3 max-w-2xl leading-relaxed">
-      If you have a working compodoc setup, you can keep most of it. The CLI surface is the same,
-      the internals are new. Most teams ship the migration in a single PR.
-    </p>
+  <div class="bg-cdx-bg-elevated mt-3 rounded-xl p-8 sm:p-10 lg:p-12">
+    <div class="grid gap-6 lg:grid-cols-[1fr_auto] lg:items-end">
+      <div>
+        <span
+          aria-hidden="true"
+          class="text-cdx-text-secondary mb-3 inline-flex items-center gap-2 font-mono text-xs"
+        >
+          <span class="bg-cdx-bg-alt rounded px-2 py-0.5">compodoc</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="14"
+            height="14"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="text-cdx-primary"
+          >
+            <path d="M5 12h14"></path>
+            <path d="m12 5 7 7-7 7"></path>
+          </svg>
+          <span class="bg-cdx-primary/10 text-cdx-primary rounded px-2 py-0.5 font-semibold">
+            compodoc<span class="text-ember">x</span>
+          </span>
+        </span>
+        <h2
+          id="migration-heading"
+          class="text-cdx-text text-2xl font-semibold tracking-tight sm:text-3xl"
+        >
+          Already on compodoc? Stay calm.
+        </h2>
+        <p class="text-cdx-text-secondary mt-3 max-w-2xl leading-relaxed">
+          Keep most of your existing setup. The CLI surface is the same, the internals are new. Most
+          teams ship the migration in a single PR.
+        </p>
+      </div>
+      <a
+        href={migrationGuideUrl}
+        rel="noopener"
+        target="_blank"
+        class="bg-cdx-primary text-cdx-text-inverse hover:bg-cdx-primary-hover group inline-flex h-11 items-center justify-center gap-2 self-start rounded-lg px-5 text-sm font-medium whitespace-nowrap transition-colors lg:self-end"
+      >
+        Read MIGRATION.md
+        <span aria-hidden="true" class="transition-transform group-hover:translate-x-0.5">→</span>
+        <span class="sr-only">(opens in new tab)</span>
+      </a>
+    </div>
 
-    <ul class="mt-8 grid gap-6 md:grid-cols-3">
-      <li class="text-sm">
-        <h3 class="text-cdx-text text-base font-semibold">CLI alias works</h3>
-        <p class="text-cdx-text-secondary mt-1.5 leading-relaxed">
-          Your existing <code class="cdx-code">compodoc</code> scripts run unchanged. The binary registers
-          both names.
-        </p>
+    <ul class="border-cdx-border/50 mt-10 grid gap-6 border-t pt-8 md:grid-cols-3 md:gap-8">
+      <li class="flex gap-3.5">
+        <span
+          aria-hidden="true"
+          class="bg-cdx-primary/10 text-cdx-primary mt-0.5 inline-flex size-8 shrink-0 items-center justify-center rounded-md"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"></path>
+            <path d="M21 3v5h-5"></path>
+          </svg>
+        </span>
+        <div>
+          <h3 class="text-cdx-text text-sm font-semibold">CLI alias works</h3>
+          <p class="text-cdx-text-secondary mt-1.5 text-sm leading-relaxed">
+            Your existing <code class="cdx-code">compodoc</code> scripts run unchanged. The binary registers
+            both names.
+          </p>
+        </div>
       </li>
-      <li class="text-sm">
-        <h3 class="text-cdx-text text-base font-semibold">JS template overrides</h3>
-        <p class="text-cdx-text-secondary mt-1.5 leading-relaxed">
-          Custom templates are now JS partials returning HTML. No Handlebars, no helpers registry.
-          Just
-          <code class="cdx-code">module.exports = (data, h) =&gt; '...'</code>.
-        </p>
+      <li class="flex gap-3.5">
+        <span
+          aria-hidden="true"
+          class="bg-cdx-primary/10 text-cdx-primary mt-0.5 inline-flex size-8 shrink-0 items-center justify-center rounded-md"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <path d="M14 2v6h6"></path>
+            <path d="m9 18 3-3-3-3"></path>
+            <path d="m13 18 3-3-3-3"></path>
+          </svg>
+        </span>
+        <div>
+          <h3 class="text-cdx-text text-sm font-semibold">JS template overrides</h3>
+          <p class="text-cdx-text-secondary mt-1.5 text-sm leading-relaxed">
+            Custom templates are JS partials returning HTML. No Handlebars, no helpers registry.
+            Just
+            <code class="cdx-code">module.exports = (data, h) =&gt; '...'</code>.
+          </p>
+        </div>
       </li>
-      <li class="text-sm">
-        <h3 class="text-cdx-text text-base font-semibold">
-          <code class="cdx-code">migrate</code> sub-CLI
-        </h3>
-        <p class="text-cdx-text-secondary mt-1.5 leading-relaxed">
-          Ports Handlebars templates and CSS automatically. Inspect first, then convert files or
-          whole folders. You'll still want to review the diff.
-        </p>
+      <li class="flex gap-3.5">
+        <span
+          aria-hidden="true"
+          class="bg-cdx-primary/10 text-cdx-primary mt-0.5 inline-flex size-8 shrink-0 items-center justify-center rounded-md"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2.2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M15 4V2"></path>
+            <path d="M15 16v-2"></path>
+            <path d="M8 9h2"></path>
+            <path d="M20 9h2"></path>
+            <path d="M17.8 11.8 19 13"></path>
+            <path d="M15 9h.01"></path>
+            <path d="M17.8 6.2 19 5"></path>
+            <path d="m3 21 9-9"></path>
+            <path d="M12.2 6.2 11 5"></path>
+          </svg>
+        </span>
+        <div>
+          <h3 class="text-cdx-text text-sm font-semibold">
+            <code class="cdx-code">migrate</code> sub-CLI
+          </h3>
+          <p class="text-cdx-text-secondary mt-1.5 text-sm leading-relaxed">
+            Ports Handlebars templates and CSS automatically. Inspect first, convert files or whole
+            folders. You'll still want to review the diff.
+          </p>
+        </div>
       </li>
     </ul>
-
-    <a
-      href={migrationGuideUrl}
-      rel="noopener"
-      target="_blank"
-      class="text-cdx-primary hover:text-cdx-primary-hover mt-8 inline-flex items-center gap-1 text-sm font-medium"
-    >
-      Open MIGRATION.md
-      <span aria-hidden="true">→</span>
-      <span class="sr-only">(opens in new tab)</span>
-    </a>
   </div>
 </section>
