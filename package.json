@@ -24,7 +24,8 @@
     "sync:tokens": "node scripts/sync-tokens.mjs",
     "sync:screenshots": "node scripts/sync-screenshots.mjs",
     "og:gen": "node scripts/gen-og.mjs",
-    "lqip:gen": "node scripts/gen-lqip.mjs"
+    "lqip:gen": "node scripts/gen-lqip.mjs",
+    "test:overflow": "node scripts/test-mobile-overflow.mjs"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.2",
