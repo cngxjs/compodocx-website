@@ -194,6 +194,22 @@ const installCmd = 'npm install -D @cngxjs/compodocx';
       animation: none !important;
     }
   }
+
+  /* On narrow viewports the 45-50rem orbs overflow the viewport and are
+     GPU-expensive on slower phones, and the shimmer-sweep lands awkwardly
+     mid-paint at small font-sizes. Drop both. The static dot grid stays —
+     it is cheap and gives the section visual texture. Kept separate from
+     the prefers-reduced-motion block on purpose: different axis, different
+     opt-in. */
+  @media (max-width: 640px) {
+    .hero-section .orb {
+      display: none;
+    }
+    .hero-section .hero-headline {
+      animation: none;
+      background-position: 0 0;
+    }
+  }
 </style>
 
 <script>
