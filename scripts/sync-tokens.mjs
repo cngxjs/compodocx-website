@@ -3,7 +3,27 @@ import { dirname, join, relative } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const REPO = 'cngxjs/compodocx';
-const REF = 'develop';
+
+// Resolve which ref to sync from. Precedence:
+//   --ref=<value>  / --ref <value>   (CLI arg)
+//   COMPODOCX_REF                    (env var)
+//   'develop'                         (default)
+//
+// Used by the website's release-triggered deploy workflow to lock the
+// token vendor to a specific tag (e.g. `v0.4.0`) instead of HEAD-of-develop
+// — keeps the deployed site's token CSS in sync with the published library
+// version rather than the bleeding edge.
+function resolveRef() {
+  const args = process.argv.slice(2);
+  for (let i = 0; i < args.length; i++) {
+    if (args[i] === '--ref' && args[i + 1]) return args[i + 1];
+    if (args[i].startsWith('--ref=')) return args[i].slice('--ref='.length);
+  }
+  if (process.env.COMPODOCX_REF) return process.env.COMPODOCX_REF;
+  return 'develop';
+}
+
+const REF = resolveRef();
 
 const FILES = [
   { src: 'src/styles/compodocx.css', dst: 'src/styles/vendor/compodocx/compodocx.css' },

@@ -6,6 +6,15 @@ on:
   pull_request:
     branches: [develop]
   workflow_dispatch:
+    inputs:
+      compodocx-ref:
+        description: 'compodocx ref to sync tokens from (e.g. v0.4.0). Empty = skip sync.'
+        required: false
+        default: ''
+  # Cross-repo trigger from cngxjs/compodocx release.yml after a successful
+  # npm publish. client_payload: { version: 'v0.4.0', sha: '<commit>' }.
+  repository_dispatch:
+    types: [compodocx-released]
 
 permissions:
   contents: write
@@ -20,6 +29,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v6
+        with:
+          # Need full history to push the auto-token-sync commit when the
+          # release-dispatch path fires.
+          fetch-depth: 0
 
       - name: Setup Node
         uses: actions/setup-node@v6
@@ -30,14 +43,63 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      # Resolve which ref (if any) the run should sync compodocx tokens from.
+      # Sources, in order:
+      #   - repository_dispatch payload (release.yml fires `compodocx-released`)
+      #   - workflow_dispatch input (manual sync via the GitHub UI)
+      #   - empty (no sync — push / PR runs build with whatever is committed)
+      - name: Resolve sync ref
+        id: ref
+        run: |
+          REF=""
+          if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
+            REF="${{ github.event.client_payload.version }}"
+          elif [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            REF="${{ inputs.compodocx-ref }}"
+          fi
+          echo "ref=$REF" >> "$GITHUB_OUTPUT"
+          if [ -n "$REF" ]; then
+            echo "Will sync compodocx tokens from $REF"
+          else
+            echo "No sync ref — using committed token vendor as-is"
+          fi
+
+      - name: Sync compodocx tokens
+        if: steps.ref.outputs.ref != ''
+        run: npm run sync:tokens -- --ref=${{ steps.ref.outputs.ref }}
+
+      - name: Commit token changes (if any)
+        id: token-commit
+        if: steps.ref.outputs.ref != '' && github.ref == 'refs/heads/develop'
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          if git diff --quiet src/styles/vendor compodocx-tokens.lock.json 2>/dev/null; then
+            echo "No token changes to commit."
+            echo "committed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+          git add src/styles/vendor compodocx-tokens.lock.json
+          # `[skip ci]` suppresses the secondary deploy-on-push that would
+          # otherwise re-run this workflow with no token diff to apply.
+          git commit -m "chore: sync tokens for compodocx ${{ steps.ref.outputs.ref }} [skip ci]"
+          git push origin HEAD:develop
+          echo "committed=true" >> "$GITHUB_OUTPUT"
+
       - name: Lint
         run: npm run lint
 
       - name: Build
         run: npm run build
 
+      # Deploy on direct push, on cross-repo dispatch from release.yml, and on
+      # manual workflow_dispatch (so a maintainer can force a redeploy from
+      # the Actions tab). PR runs still skip deploy.
       - name: Deploy to gh-pages
-        if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
+        if: |
+          (github.event_name == 'push' && github.ref == 'refs/heads/develop')
+          || github.event_name == 'repository_dispatch'
+          || github.event_name == 'workflow_dispatch'
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
@@ -45,4 +107,4 @@ jobs:
           publish_branch: gh-pages
           user_name: github-actions[bot]
           user_email: 41898282+github-actions[bot]@users.noreply.github.com
-          commit_message: 'deploy: ${{ github.event.head_commit.message }}'
+          commit_message: ${{ github.event_name == 'repository_dispatch' && format('deploy: compodocx {0}', github.event.client_payload.version) || format('deploy: {0}', github.event.head_commit.message) }}
