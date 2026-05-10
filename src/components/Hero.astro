@@ -36,10 +36,14 @@ const installCmd = 'npm install -D @cngxjs/compodocx';
     <p class="text-cdx-text mt-3 max-w-2xl text-lg font-semibold sm:text-xl">All from one CLI.</p>
     <div class="mt-10 flex flex-col items-stretch gap-3 sm:flex-row">
       <div
-        class="bg-cdx-bg-elevated inline-flex h-12 items-center gap-3 rounded-lg px-4 font-mono text-sm"
+        class="bg-cdx-bg-elevated flex h-12 min-w-0 items-center gap-3 rounded-lg px-4 font-mono text-sm sm:self-start"
       >
         <span class="text-cdx-primary font-semibold select-none" aria-hidden="true">$</span>
-        <code id="hero-install-cmd" class="text-cdx-text whitespace-nowrap">{installCmd}</code>
+        <code
+          id="hero-install-cmd"
+          class="text-cdx-text min-w-0 flex-1 overflow-x-auto whitespace-nowrap [contain:inline-size] sm:flex-none sm:[contain:none]"
+          >{installCmd}</code
+        >
         <button
           type="button"
           data-copy-target="hero-install-cmd"

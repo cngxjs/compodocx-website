@@ -109,7 +109,11 @@ const breadcrumbJsonLd = {
 
     <FeaturesSidebar currentSlug={currentSlug} />
 
-    <article id={`article-${currentSlug}`} tabindex="-1" class="mx-auto max-w-3xl scroll-mt-24">
+    <article
+      id={`article-${currentSlug}`}
+      tabindex="-1"
+      class="mx-auto min-w-0 max-w-3xl scroll-mt-24"
+    >
       <header>
         <hgroup>
           <SectionEyebrow text={`Guide ${String(guide.number).padStart(2, '0')}`} />

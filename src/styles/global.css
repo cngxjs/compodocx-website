@@ -107,7 +107,7 @@ main > section:nth-of-type(11) {
 }
 
 .cdx-code {
-  display: inline-block;
+  display: inline;
   padding: 0.1em 0.4em;
   border-radius: 0.3em;
   background-color: var(--color-cdx-bg-alt);
@@ -119,8 +119,10 @@ main > section:nth-of-type(11) {
   font-size: 0.875em;
   font-weight: 500;
   line-height: 1.4;
-  white-space: nowrap;
   vertical-align: baseline;
+  overflow-wrap: anywhere;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
 
 /* Marketing accent — vibrant ember-glow orange. Static across all themes
