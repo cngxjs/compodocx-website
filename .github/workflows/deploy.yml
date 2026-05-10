@@ -64,27 +64,15 @@ jobs:
             echo "No sync ref — using committed token vendor as-is"
           fi
 
+      # Sync runs in the workflow's working tree only; we don't commit the
+      # vendored CSS back to develop. Reasons:
+      #   - branch-protection on develop blocks the bot push
+      #   - committed tokens stay a deliberate manual artefact (reviewable
+      #     diff each time we rev compodocx). The deployed dist/ already
+      #     reflects the released library version regardless.
       - name: Sync compodocx tokens
         if: steps.ref.outputs.ref != ''
         run: npm run sync:tokens -- --ref=${{ steps.ref.outputs.ref }}
-
-      - name: Commit token changes (if any)
-        id: token-commit
-        if: steps.ref.outputs.ref != '' && github.ref == 'refs/heads/develop'
-        run: |
-          git config user.name 'github-actions[bot]'
-          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          if git diff --quiet src/styles/vendor compodocx-tokens.lock.json 2>/dev/null; then
-            echo "No token changes to commit."
-            echo "committed=false" >> "$GITHUB_OUTPUT"
-            exit 0
-          fi
-          git add src/styles/vendor compodocx-tokens.lock.json
-          # `[skip ci]` suppresses the secondary deploy-on-push that would
-          # otherwise re-run this workflow with no token diff to apply.
-          git commit -m "chore: sync tokens for compodocx ${{ steps.ref.outputs.ref }} [skip ci]"
-          git push origin HEAD:develop
-          echo "committed=true" >> "$GITHUB_OUTPUT"
 
       - name: Lint
         run: npm run lint
