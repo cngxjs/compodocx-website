@@ -21,6 +21,12 @@ export function initCopyButtons(): void {
       const labelEl = button.querySelector<HTMLElement>('[data-copy-label]');
       const liveEl = button.querySelector<HTMLElement>('[data-copy-live]');
       const originalLabel = labelEl?.textContent ?? '';
+      button.dispatchEvent(
+        new CustomEvent('compodocx:copy-success', {
+          bubbles: true,
+          detail: { targetId, text },
+        }),
+      );
       if (labelEl) labelEl.textContent = 'Copied';
       if (liveEl) liveEl.textContent = 'Command copied to clipboard';
       button.dataset.copied = 'true';
