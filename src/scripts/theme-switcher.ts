@@ -32,7 +32,7 @@ function applyTheme(id: string): void {
   try {
     localStorage.setItem(STORAGE_KEY, id);
   } catch {
-    // storage blocked — runtime-only switch
+    // storage blocked - runtime-only switch
   }
 }
 

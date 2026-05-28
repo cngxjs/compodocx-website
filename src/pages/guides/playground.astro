@@ -33,7 +33,7 @@ const howToJsonLd = {
       '@type': 'HowToStep',
       position: 3,
       name: 'Rebuild and click Open in StackBlitz',
-      text: 'compodocx assembles a WebContainer-templated StackBlitz project per block at build time, with Angular peers locked to the version your package.json declares. The SDK is lazy-loaded on first click. Clicking opens a fresh tab — no iframe overlay.',
+      text: 'compodocx assembles a WebContainer-templated StackBlitz project per block at build time, with Angular peers locked to the version your package.json declares. The SDK is lazy-loaded on first click. Clicking opens a fresh tab - no iframe overlay.',
     },
   ],
 };
@@ -41,7 +41,7 @@ const howToJsonLd = {
 
 <FeaturesLayout
   currentSlug="playground"
-  title="Playground Blocks — Runnable StackBlitz demos in compodocx"
+  title="Playground Blocks - Runnable StackBlitz demos in compodocx"
   description="Author-curated runnable demos via @playground JSDoc blocks. Click-to-launch StackBlitz projects assembled at build time. Sources travel inline, no library publication required."
   extraJsonLd={howToJsonLd}
 >
@@ -96,8 +96,8 @@ const howToJsonLd = {
 
   <h2>Three authoring modes</h2>
   <p>
-    Pick the mode that matches the demo. All three share the same scaffold &mdash; only the
-    AppComponent body differs.
+    Pick the mode that matches the demo. All three share the same scaffold - only the AppComponent
+    body differs.
   </p>
   <ul>
     <li>
@@ -107,18 +107,18 @@ const howToJsonLd = {
     </li>
     <li>
       <strong>HTML file reference.</strong>
-      <code class="cdx-code">@playground &lt;title&gt; ./path/to/file.html</code> &mdash; the file body
-      becomes the AppComponent template literal. Best for longer markup demos.
+      <code class="cdx-code">@playground &lt;title&gt; ./path/to/file.html</code> - the file body becomes
+      the AppComponent template literal. Best for longer markup demos.
     </li>
     <li>
       <strong>TS component file reference.</strong>
-      <code class="cdx-code">@playground &lt;title&gt; ./path/to/file.component.ts</code> &mdash; a real
+      <code class="cdx-code">@playground &lt;title&gt; ./path/to/file.component.ts</code> - a real
       <code class="cdx-code">@Component</code> class replaces the AppComponent. Best for stateful demos
       with signals, event handlers, or composed widgets.
     </li>
   </ul>
 
-  <h2>Mode 1 — Inline snippet</h2>
+  <h2>Mode 1 - Inline snippet</h2>
   <p>
     The original authoring mode. The full demo body lives inside a fenced code block in the JSDoc
     comment.
@@ -149,7 +149,7 @@ export class MyButton { /* ... */ }`}
     when no block is parsed. Zero-config when you don&rsquo;t need it.
   </p>
 
-  <h2>Mode 2 — HTML file reference</h2>
+  <h2>Mode 2 - HTML file reference</h2>
   <p>
     Append a relative path ending in <code class="cdx-code">.html</code> to the title line. The file&rsquo;s
     contents become the AppComponent template body. Path is resolved against the file holding the JSDoc
@@ -182,11 +182,11 @@ export class MyButton { /* ... */ }`}
     highlighting works as expected, diffs stay clean.
   </p>
 
-  <h2>Mode 3 — TS component file reference</h2>
+  <h2>Mode 3 - TS component file reference</h2>
   <p>
     Append a relative path ending in <code class="cdx-code">.ts</code>. The file must export a real
-    standalone <code class="cdx-code">@Component</code> class &mdash; it REPLACES the AppComponent in
-    the StackBlitz project entirely. Optional <code class="cdx-code">templateUrl</code>,
+    standalone <code class="cdx-code">@Component</code> class - it REPLACES the AppComponent in the StackBlitz
+    project entirely. Optional <code class="cdx-code">templateUrl</code>,
     <code class="cdx-code">styleUrl</code>, <code class="cdx-code">styleUrls</code> siblings and relative
     imports are walked and packed automatically.
   </p>
@@ -224,8 +224,8 @@ export class CounterExample {
   />
 
   <p>
-    Use <code class="cdx-code">selector: &lsquo;app-root&rsquo;</code> on the entry &mdash; that is the
-    host the scaffold bootstraps. The class name itself can be anything; compodocx appends
+    Use <code class="cdx-code">selector: &lsquo;app-root&rsquo;</code> on the entry - that is the host
+    the scaffold bootstraps. The class name itself can be anything; compodocx appends
     <code class="cdx-code">export &#123; YourClass as AppComponent &#125;</code> automatically so the
     import in <code class="cdx-code">src/main.ts</code> resolves.
   </p>
@@ -245,7 +245,7 @@ export class CounterExample {
     │   └── default-example.component.css       (styleUrl sibling)
     ├── disabled/
     │   └── disabled-example.component.ts       (template inline)
-    └── inline-html.html                        (mode 2 — bare HTML)`}
+    └── inline-html.html                        (mode 2 - bare HTML)`}
   />
 
   <h2>Authoring rules</h2>
@@ -265,12 +265,12 @@ export class CounterExample {
     </li>
     <li>
       <code class="cdx-code">templateUrl</code>, <code class="cdx-code">styleUrl</code>,
-      <code class="cdx-code">styleUrls</code> in the entry must use string literals &mdash; template literals
+      <code class="cdx-code">styleUrls</code> in the entry must use string literals - template literals
       are not parsed.
     </li>
     <li>
-      Titles can contain slashes (<em>e.g.</em> &ldquo;A / B comparison&rdquo;) &mdash; only a trailing
-      path with <code class="cdx-code">.html</code>/<code class="cdx-code">.ts</code>
+      Titles can contain slashes (<em>e.g.</em> &ldquo;A / B comparison&rdquo;) - only a trailing path
+      with <code class="cdx-code">.html</code>/<code class="cdx-code">.ts</code>
       extension triggers file-ref mode.
     </li>
     <li>The Playground tab is component-only. Other entity types ignore the tag.</li>
@@ -330,8 +330,8 @@ export class CounterExample {
     auto-forwarded with the version your <code class="cdx-code">package.json</code> declares. Missing
     roots are skipped silently. The
     <code class="cdx-code">playgroundDependencies</code> config-only key (no CLI flag) lets you inject
-    extra packages or pin a specific version per build &mdash; useful for libraries the consumer ships
-    but doesn&rsquo;t install directly.
+    extra packages or pin a specific version per build - useful for libraries the consumer ships but doesn&rsquo;t
+    install directly.
   </p>
   <p>
     Dependency walking is bounded: depth 3, 25 files maximum, 8000 characters per file. When the
@@ -342,9 +342,10 @@ export class CounterExample {
 
   <h2>Library-author workflow</h2>
   <p>
-    Component-library authors who want first-class runnable demos &mdash; the way Angular Material
-    ships them &mdash; pair compodocx with a sibling dev-app inside the workspace. The library lives
-    at <code class="cdx-code">projects/&lt;library&gt;/</code>; a dev-app at
+    Component-library authors who want first-class runnable demos - the way Angular Material ships
+    them - pair compodocx with a sibling dev-app inside the workspace. The library lives at <code
+      class="cdx-code">projects/&lt;library&gt;/</code
+    >; a dev-app at
     <code class="cdx-code">projects/dev-app/</code> imports the SAME example components compodocx embeds
     in the docs. Single source of truth, no copy-paste drift.
   </p>

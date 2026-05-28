@@ -19,14 +19,14 @@ interface Guide {
 // Sidebar order follows the user journey:
 // Overview → Setup → Daily use → Reference → Authoring →
 // Advanced authoring → Customization → Hosting → CI → Tips.
-// Numbers are contiguous 1..13 — renumber here and the byline,
+// Numbers are contiguous 1..13 - renumber here and the byline,
 // guides hub, and JSON-LD all pick it up automatically.
 export const guides: Guide[] = [
   {
     slug: 'features',
     number: 1,
     title: 'Features',
-    blurb: 'Standalone components, signals, multi-version, theming — the full output surface.',
+    blurb: 'Standalone components, signals, multi-version, theming - the full output surface.',
     related: ['playground', 'themes', 'getting-started'],
   },
   {
@@ -61,7 +61,7 @@ export const guides: Guide[] = [
     slug: 'jsdoc-tags',
     number: 6,
     title: 'JSDoc Tags',
-    blurb: '@param, @returns, @playground, @internal — supported tags and how each renders.',
+    blurb: '@param, @returns, @playground, @internal - supported tags and how each renders.',
     related: ['comments', 'playground', 'features'],
   },
   {
@@ -69,7 +69,7 @@ export const guides: Guide[] = [
     number: 7,
     title: 'Playground Blocks',
     blurb:
-      'Author-curated runnable demos via @playground — click-to-launch StackBlitz projects per component.',
+      'Author-curated runnable demos via @playground - click-to-launch StackBlitz projects per component.',
     related: ['live-example', 'jsdoc-tags', 'comments'],
   },
   {

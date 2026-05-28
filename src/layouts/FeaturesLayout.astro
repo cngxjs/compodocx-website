@@ -29,9 +29,9 @@ const relatedGuides = (guide.related ?? [])
   .filter((g): g is (typeof guides)[number] => Boolean(g));
 
 const buildDate = new Date().toISOString().slice(0, 10);
-// Full ISO 8601 with timezone — Google Rich Results validator rejects date-only.
+// Full ISO 8601 with timezone - Google Rich Results validator rejects date-only.
 const buildDateISO = new Date().toISOString();
-// Initial publication date for the guide cluster — kept stable across rebuilds.
+// Initial publication date for the guide cluster - kept stable across rebuilds.
 const guidesPublishedDate = '2026-05-01T00:00:00+00:00';
 const ogImageUrl = new URL(`${base}og-image.png`, siteUrl).href;
 

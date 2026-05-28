@@ -125,7 +125,7 @@ main > section:nth-of-type(11) {
   box-decoration-break: clone;
 }
 
-/* Marketing accent — vibrant ember-glow orange. Static across all themes
+/* Marketing accent - vibrant ember-glow orange. Static across all themes
    (does NOT follow the active --color-cdx-primary). Same hue family as the
    hero-headline shimmer so the brand identity is coherent. Used for the
    brand "x" in the compodocx logo and for hero subhead highlights. */
@@ -136,7 +136,7 @@ main > section:nth-of-type(11) {
   color: hsl(32 100% 62%);
 }
 
-/* Text-selection highlight — matches the ember marketing accent so the
+/* Text-selection highlight - matches the ember marketing accent so the
    default browser blue does not clash with the brand. Same hue both modes,
    25-30% opacity gives a visible tint without bleaching the text. */
 ::selection {
@@ -160,7 +160,7 @@ main > section:nth-of-type(11) {
   border-radius: 0.25rem;
 }
 
-/* Guide article prose styling — applied via .cdx-prose on the FeaturesLayout
+/* Guide article prose styling - applied via .cdx-prose on the FeaturesLayout
    slot wrapper. Single source of truth for h2/h3/p/inline-link defaults
    inside guide content; replaces 12× duplicated Tailwind-soup. */
 .cdx-prose {
