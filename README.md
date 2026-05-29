@@ -1,6 +1,6 @@
 # compodocx-website
 
-The marketing and reference site for [`@cngxjs/compodocx`](https://github.com/cngxjs/compodocx) — a modern documentation generator for Angular applications. Standalone-first, signal-aware, themeable.
+The marketing and reference site for [`@cngxjs/compodocx`](https://github.com/cngxjs/compodocx) - a modern documentation generator for Angular applications. Standalone-first, signal-aware, themeable.
 
 [![Deploy](https://github.com/cngxjs/compodocx-website/actions/workflows/deploy.yml/badge.svg?branch=develop)](https://github.com/cngxjs/compodocx-website/actions/workflows/deploy.yml)
 [![Live site](https://img.shields.io/badge/live-compodocx.dev-1f6feb?logo=githubpages&logoColor=white)](https://compodocx.dev)
@@ -8,16 +8,16 @@ The marketing and reference site for [`@cngxjs/compodocx`](https://github.com/cn
 [![License: MIT + CC BY 4.0](https://img.shields.io/badge/license-MIT%20%2B%20CC%20BY%204.0-green.svg)](#license)
 [![Lighthouse: 100/100/100/100](https://img.shields.io/badge/lighthouse-100%2F100%2F100%2F100-success?logo=lighthouse)](https://compodocx.dev)
 
-[![compodocx — modern Angular documentation](public/og-image.png)](https://compodocx.dev)
+[![compodocx - modern Angular documentation](public/og-image.png)](https://compodocx.dev)
 
 ## What this site is
 
 A 17-route static site:
 
-- **Landing** — feature grid, screenshots, themes, getting-started, FAQ.
+- **Landing** - feature grid, screenshots, themes, getting-started, FAQ.
 - **Guides hub** + **13 reference guides** covering install, options, usage, themes, JSDoc tags, routing, coverage, playground, tab configuration, comments, live examples, tips, and the full feature surface.
-- **Impressum** — Austrian legal disclosure (§5 ECG / §25 MedienG).
-- **Custom 404** — branded fallback with quick links to popular guides.
+- **Impressum** - Austrian legal disclosure (§5 ECG / §25 MedienG).
+- **Custom 404** - branded fallback with quick links to popular guides.
 
 Built with [Astro 6](https://astro.build), [Tailwind v4](https://tailwindcss.com), and zero client-side framework. The only JavaScript on the site is ~530 bytes of vanilla TypeScript for the dark-mode toggle, theme picker, copy-to-clipboard, lightbox, and tab widget.
 
@@ -25,7 +25,7 @@ Built with [Astro 6](https://astro.build), [Tailwind v4](https://tailwindcss.com
 
 ```bash
 npm install        # Node >= 22.12 required
-npm run dev        # http://localhost:4321 — live reload, debug overlay
+npm run dev        # http://localhost:4321 - live reload, debug overlay
 ```
 
 ## Build
@@ -64,9 +64,9 @@ PRs run the same lint + build pipeline as a status check, but skip the publish s
 src/
   pages/              17 routes (landing, guides hub, 13 guides, impressum, 404)
   layouts/            Layout.astro (chrome) + FeaturesLayout.astro (guide pages)
-  components/         all .astro — NavBar, Hero, FeatureGrid, ThemesGrid, Footer, BackToTop, …
+  components/         all .astro - NavBar, Hero, FeatureGrid, ThemesGrid, Footer, BackToTop, …
   styles/             global.css + vendored compodocx tokens (8 themes total)
-  scripts/            ~530 B of vanilla TS — dark-mode, theme-switcher, copy, tabs, lightbox
+  scripts/            ~530 B of vanilla TS - dark-mode, theme-switcher, copy, tabs, lightbox
   assets/             screenshots (AVIF + WebP via <Image>), logos, theme thumbnails
 public/               favicon, manifest, og-image, robots.txt, CNAME
 scripts/              token sync, screenshot capture, og + lqip generators
@@ -74,7 +74,7 @@ scripts/              token sync, screenshot capture, og + lqip generators
 
 ## Contributing
 
-Pull requests are welcome — typo fixes, content additions, visual improvements, accessibility fixes. See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the workflow and what fits this repo.
+Pull requests are welcome - typo fixes, content additions, visual improvements, accessibility fixes. See [`CONTRIBUTING.md`](CONTRIBUTING.md) for the workflow and what fits this repo.
 
 Tool-specific feedback (CLI flags, JSDoc tag parsing, output structure) belongs in the [`@cngxjs/compodocx`](https://github.com/cngxjs/compodocx/issues) repo, not here.
 
@@ -84,9 +84,9 @@ See [`SECURITY.md`](SECURITY.md) for the disclosure process.
 
 ## License
 
-Dual-licensed — different terms apply to source code and content:
+Dual-licensed - different terms apply to source code and content:
 
-- **Source code** (Astro components, scripts, build configuration, CSS) — [MIT](LICENSE).
-- **Content** (guide pages, landing copy, screenshots, SVG mockups) — [CC BY 4.0](LICENSE-DOCS.md).
+- **Source code** (Astro components, scripts, build configuration, CSS) - [MIT](LICENSE).
+- **Content** (guide pages, landing copy, screenshots, SVG mockups) - [CC BY 4.0](LICENSE-DOCS.md).
 
 When attributing the content, link back to https://github.com/cngxjs/compodocx-website. The CC BY 4.0 attribution requirements are documented in `LICENSE-DOCS.md`.
