@@ -5,8 +5,8 @@ import CodeBlock from '../../components/CodeBlock.astro';
 
 <FeaturesLayout
   currentSlug="comments"
-  title="Comments — JSDoc markdown comments in compodocx Angular docs"
-  description="JSDoc-style comments with full markdown rendering — lists, tables, code blocks, links, headings — plus project-wide @link cross-references resolved at build."
+  title="Comments - JSDoc markdown comments in compodocx Angular docs"
+  description="JSDoc-style comments with full markdown rendering - lists, tables, code blocks, links, headings - plus project-wide @link cross-references resolved at build."
 >
   <p class="text-cdx-text-secondary text-lg">
     Use plain
@@ -75,4 +75,27 @@ export class CardComponent { ... }`}
     <code class="cdx-code">{'{@link}'}</code> works inside additional-page markdown identically to source
     comments.
   </p>
+
+  <h2>Provenance marker</h2>
+  <p>
+    Flag a markdown file as AI-assisted with an HTML-comment marker on the first non-empty line.
+    Detected on additional pages, READMEs, and the overview source. Renders a localized pill in the
+    page hero. The optional trailing label (model name, date, anything) is preserved verbatim. For
+    the source-symbol equivalent see the <code class="cdx-code">@aiGenerated</code> JSDoc tag in the
+    <a
+      href={`${import.meta.env.BASE_URL}guides/jsdoc-tags/#provenance`}
+      class="text-cdx-primary underline-offset-2 hover:underline">JSDoc Tags guide</a
+    >.
+  </p>
+
+  <CodeBlock
+    lang="md"
+    code={`<!-- @aiGenerated -->
+<!-- @aiGenerated claude-opus-4.7 -->
+<!-- @aiGenerated 2026-05 -->
+
+# Component guide
+
+The marker must sit at the top of the file; whitespace before it is fine.`}
+  />
 </FeaturesLayout>

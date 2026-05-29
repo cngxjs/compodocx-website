@@ -9,6 +9,7 @@ interface Feature {
   title: string;
   blurb: string;
   slug: string;
+  hash?: string;
   cta: string;
   iconBody: string;
   iconColor: string;
@@ -16,15 +17,16 @@ interface Feature {
 
 const features: Feature[] = [
   {
-    id: 'standalone',
-    category: 'Angular Support',
-    title: 'Standalone-first',
+    id: 'library-mode',
+    category: 'Library mode',
+    title: 'Curated chapter + reference portal',
     blurb:
-      'Components, directives, and pipes get first-class pages with imports, providers, and member tables. NgModule still works — we just treat it as the legacy path.',
+      'Set <code class="cdx-code">menuLayout: \'feature\'</code> to ship a curated <strong>Features</strong> chapter highlighting the components, directives, and entry points readers land on first, plus an exhaustive <strong>References</strong> portal covering every public symbol. Default <code class="cdx-code">\'type\'</code> keeps the classic per-kind layout.',
     slug: 'features',
-    cta: 'Standalone reference',
+    hash: 'bifurcation',
+    cta: 'Library mode walkthrough',
     iconColor: 'text-rose-500 dark:text-rose-400',
-    iconBody: `<path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/><path d="M12 22V12"/><path d="m3.3 7 8.7 5 8.7-5"/><path d="m7.5 4.27 9 5.15"/>`,
+    iconBody: `<path d="M3 5h18"/><path d="M3 12h6"/><path d="M3 19h6"/><path d="M15 12h6"/><path d="M15 19h6"/>`,
   },
   {
     id: 'signals',
@@ -75,7 +77,7 @@ const features: Feature[] = [
     category: 'Tooling',
     title: 'LLM-ready export',
     blurb:
-      'Export your API as flat markdown or typed JSON. Drop it into Claude, Copilot, your code-review bot — or any downstream pipeline.',
+      'Export your API as flat markdown or typed JSON. Drop it into Claude, Copilot, your code-review bot - or any downstream pipeline.',
     slug: 'options',
     cta: 'Export options',
     iconColor: 'text-fuchsia-500 dark:text-fuchsia-400',
@@ -121,8 +123,8 @@ const features: Feature[] = [
           />
 
           <a
-            href={`${base}guides/${feature.slug}/`}
-            aria-label={`${feature.cta} — ${feature.title}`}
+            href={`${base}guides/${feature.slug}/${feature.hash ? `#${feature.hash}` : ''}`}
+            aria-label={`${feature.cta} - ${feature.title}`}
             class="text-cdx-primary group-hover:text-cdx-primary-hover mt-6 inline-flex items-center gap-1 text-sm font-medium"
           >
             {feature.cta}

@@ -3,7 +3,7 @@ import SectionEyebrow from './SectionEyebrow.astro';
 
 export interface FaqItem {
   question: string;
-  /** Plain-text answer — used for FAQPage JSON-LD (schema.org requires plain text). */
+  /** Plain-text answer - used for FAQPage JSON-LD (schema.org requires plain text). */
   answer: string;
   /** Optional rich-HTML version used for the visible UI. Falls back to `answer`. */
   answerHtml?: string;
@@ -22,12 +22,12 @@ export const faq: FaqItem[] = [
     answer:
       'Yes. signal, computed, and linked-signal members render as first-class fields with derived-state dependencies. Standalone components, directives, and pipes are documented without NgModule scaffolding.',
     answerHtml:
-      '<strong class="text-cdx-text">Yes.</strong> <code class="cdx-code">signal()</code>, <code class="cdx-code">computed()</code>, and <code class="cdx-code">linkedSignal()</code> members render as first-class fields with derived-state dependencies.<br /><br />Standalone components, directives, and pipes are documented &mdash; no <code class="cdx-code">NgModule</code> scaffolding needed.',
+      '<strong class="text-cdx-text">Yes.</strong> <code class="cdx-code">signal()</code>, <code class="cdx-code">computed()</code>, and <code class="cdx-code">linkedSignal()</code> members render as first-class fields with derived-state dependencies.<br /><br />Standalone components, directives, and pipes are documented - no <code class="cdx-code">NgModule</code> scaffolding needed.',
   },
   {
     question: 'Can I generate docs for multiple library versions?',
     answer:
-      'Yes. Multi-version output is the default. compodocx detects the version from package.json, writes a versions.json manifest, and ships a runtime version-switcher widget — no server-side config needed.',
+      'Yes. Multi-version output is the default. compodocx detects the version from package.json, writes a versions.json manifest, and ships a runtime version-switcher widget - no server-side config needed.',
     answerHtml:
       '<strong class="text-cdx-text">Yes.</strong> Multi-version output is the default. compodocx detects the version from <code class="cdx-code">package.json</code>, writes a <code class="cdx-code">versions.json</code> manifest, and ships a runtime version-switcher widget.<br /><br />No server-side config needed.',
   },
@@ -51,6 +51,13 @@ export const faq: FaqItem[] = [
       'Yes. Add a @playground JSDoc block to a component and compodocx renders a Playground tab on its page with one launch button per block. Clicking opens a fresh StackBlitz project assembled at build time from your component sources. The SDK is lazy-loaded as a ~7 KB chunk on first click.',
     answerHtml:
       '<strong class="text-cdx-text">Yes.</strong> Add a <code class="cdx-code">@playground</code> JSDoc block to a component and compodocx renders a <em>Playground</em> tab with one launch button per block.<br /><br />Clicking opens a fresh StackBlitz project assembled at build time from your component sources. No library publication required. The SDK is lazy-loaded as a ~7 KB chunk on first click, so static doc pages stay light.',
+  },
+  {
+    question: 'Does compodocx surface accessibility metadata?',
+    answer:
+      'Yes. Annotate any entity with @wcag A, AA, or AAA and a coloured chip lands in the page hero. Add @a11y for a free-form note attached to the entity for the llm-md export. The WCAG level also feeds the search-palette facet rail so a reader can filter the index to "AA and up".',
+    answerHtml:
+      '<strong class="text-cdx-text">Yes.</strong> Annotate any entity with <code class="cdx-code">@wcag A</code>, <code class="cdx-code">AA</code>, or <code class="cdx-code">AAA</code> and a coloured chip lands in the page hero. Add <code class="cdx-code">@a11y</code> for a free-form note attached to the entity for the <code class="cdx-code">llm-md</code> export.<br /><br />The WCAG level also feeds the search-palette facet rail so a reader can filter the index to "AA and up".',
   },
   {
     question: 'Is compodocx free?',

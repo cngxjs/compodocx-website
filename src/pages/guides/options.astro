@@ -31,7 +31,7 @@ const groups: OptGroup[] = [
         key: 'tsconfig',
         cli: '-p, --tsconfig',
         type: 'string',
-        desc: "Path to the project's tsconfig.json. Required — compodocx uses TypeScript's compiler to analyze the source.",
+        desc: "Path to the project's tsconfig.json. Required - compodocx uses TypeScript's compiler to analyze the source.",
       },
       {
         key: 'name',
@@ -52,6 +52,16 @@ const groups: OptGroup[] = [
         cli: '-c, --config',
         type: 'string',
         desc: 'Explicit config-file path. Otherwise compodocx auto-discovers .compodocxrc, .compodocxrc.json, .compodocxrc.yaml, or a compodocx/compodoc key in package.json.',
+      },
+      {
+        key: 'include',
+        type: 'string[]',
+        desc: "Glob patterns of files to include. Merged with the tsconfig's include array. Use when you want a narrower or wider source surface than your build's tsconfig provides.",
+      },
+      {
+        key: 'exclude',
+        type: 'string[]',
+        desc: "Glob patterns of files to exclude. Merged with the tsconfig's exclude array. Skips matched files before TypeScript analysis runs.",
       },
     ],
   },
@@ -85,7 +95,7 @@ const groups: OptGroup[] = [
         cli: '--multiVersion / --no-multiVersion',
         type: 'boolean',
         default: 'true',
-        desc: 'Multi-version layout on by default — writes <output>/<versionLabel>/ and maintains versions.json. Disable for a flat single-version layout. Non-HTML exports ignore this flag.',
+        desc: 'Multi-version layout on by default - writes <output>/<versionLabel>/ and maintains versions.json. Disable for a flat single-version layout. Non-HTML exports ignore this flag.',
       },
       {
         key: 'versionLabel',
@@ -106,7 +116,7 @@ const groups: OptGroup[] = [
         cli: '--maxVersionsShown',
         type: 'number',
         default: '10',
-        desc: 'Cap on switcher dropdown entries. 0 = unlimited. Manifest is always written in full — this is presentation-only. Range 0–1000.',
+        desc: 'Cap on switcher dropdown entries. 0 = unlimited. Manifest is always written in full - this is presentation-only. Range 0–1000.',
       },
       {
         key: 'jsonIndent',
@@ -336,13 +346,6 @@ const groups: OptGroup[] = [
         desc: 'Remove all dependency graphs (overview + per-component tabs).',
       },
       {
-        key: 'disableMainGraph',
-        cli: '--disableMainGraph',
-        type: 'boolean',
-        default: 'false',
-        desc: 'Remove only the main overview dependency graph. Per-component tabs remain.',
-      },
-      {
         key: 'disableDependenciesTab',
         cli: '--disableDependenciesTab',
         type: 'boolean',
@@ -381,9 +384,34 @@ const groups: OptGroup[] = [
   },
   {
     id: 'navigation',
-    heading: 'Navigation',
-    blurb: 'Sidebar collapse + entity page tab order.',
+    heading: 'Navigation & layout',
+    blurb:
+      'Sidebar architecture, chapter headings, default collapse state, and entity-page tab order.',
     items: [
+      {
+        key: 'menuLayout',
+        type: 'string',
+        default: "'type'",
+        desc: "Sidebar architecture. 'type' = single tree grouped by Angular artefact kind (Components, Directives, …). 'feature' = bifurcated tree with a curated Features chapter (components, directives, pipes, injectables, classes, guards, interceptors, entities, plus any reference symbol promoted with @docsKind primary) and an exhaustive References chapter (every public symbol), each bucketed by @category or folder path. Required to opt into bucket-landing pages, the References portal, and the Pagefind facet rail.",
+      },
+      {
+        key: 'collapsedAll',
+        type: 'boolean',
+        default: 'false',
+        desc: 'Start the sidebar with every chapter collapsed on first load. Independent of toggleMenuItems - wins when both are set. Useful for large API surfaces where the default expanded tree is overwhelming.',
+      },
+      {
+        key: 'featuresName',
+        type: 'string',
+        default: "'Features'",
+        desc: "Override the heading of the Features chapter under menuLayout: 'feature'. Pass a plain string - no markdown, no HTML. Falls back to the active language's translated key when unset.",
+      },
+      {
+        key: 'referencesName',
+        type: 'string',
+        default: "'References'",
+        desc: "Override the heading of the References chapter under menuLayout: 'feature'. Pass a plain string. Falls back to the active language's translated key when unset.",
+      },
       {
         key: 'toggleMenuItems',
         cli: '--toggleMenuItems',
@@ -404,7 +432,7 @@ const groups: OptGroup[] = [
     id: 'tab-sections',
     heading: 'Tab sections (config-only)',
     blurb:
-      'Compose the section list inside Info / API / Theming tabs. No CLI flag — set in the config file.',
+      'Compose the section list inside Info / API / Theming tabs. No CLI flag - set in the config file.',
     items: [
       {
         key: 'infoTabSections',
@@ -491,7 +519,7 @@ const groups: OptGroup[] = [
   {
     id: 'additional-content',
     heading: 'Additional content',
-    blurb: 'External markdown, static assets, template playground.',
+    blurb: 'External markdown, static assets, and template overrides.',
     items: [
       {
         key: 'includes',
@@ -516,14 +544,7 @@ const groups: OptGroup[] = [
         key: 'templates',
         cli: '--templates',
         type: 'string',
-        desc: 'Directory of JS template overrides. Each file exports (data, helpers) => string. Replaces the corresponding built-in template.',
-      },
-      {
-        key: 'templatePlayground',
-        cli: '--templatePlayground',
-        type: 'boolean',
-        default: 'false',
-        desc: 'Generate an interactive Template Playground page with code editor and live preview.',
+        desc: 'Directory of JS template overrides. Each file exports (data, helpers) => string and replaces the corresponding built-in. Override names match the emitted page kind (component, directive, pipe, injectable, token, class, guard, interceptor, interface, entity, module, bucket-landing, api-reference, miscellaneous-{function,variable,typealias,enumeration}, additional-page, …) or block (referenced-by, block-theming, block-playground, version-switcher, …).',
       },
     ],
   },
@@ -544,7 +565,7 @@ const groups: OptGroup[] = [
         key: 'playgroundDependencies',
         type: 'object',
         default: '{}',
-        desc: "Extra packages to inject into every StackBlitz manifest's dependencies, with the version YOU specify. Wins over the consumer-package.json auto-forward AND any auto-detected version (e.g. Material). Use for libraries the consumer ships but doesn't npm install directly (peer-only CSS themes), or to pin a per-build version. No CLI flag — config-file only.",
+        desc: "Extra packages to inject into every StackBlitz manifest's dependencies, with the version YOU specify. Wins over the consumer-package.json auto-forward AND any auto-detected version (e.g. Material). Use for libraries the consumer ships but doesn't npm install directly (peer-only CSS themes), or to pin a per-build version. No CLI flag - config-file only.",
       },
     ],
   },
@@ -603,7 +624,7 @@ const totalCount = groups.reduce((acc, g) => acc + g.items.length, 0);
 
 <FeaturesLayout
   currentSlug="options"
-  title="Options — compodocx CLI flags and config reference"
+  title="Options - compodocx CLI flags and config reference"
   description="Complete compodocx options reference. CLI flags + JSON config keys for entry, output, theming, visibility, feature toggles, navigation, coverage, and integrations."
 >
   <p class="text-cdx-text-secondary text-lg">

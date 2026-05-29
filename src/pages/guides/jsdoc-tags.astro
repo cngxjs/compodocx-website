@@ -36,6 +36,10 @@ const groups: TagGroup[] = [
       ['@since / @deprecated', 'Same semantics as on members.'],
       ['@internal', 'Hides the symbol when --disableInternal is set.'],
       ['@category', 'Groups the entity under this category when --groupBy category.'],
+      [
+        '@docsKind primary',
+        "Promotes a reference-kind symbol (function, interface, type alias, variable, enum) into the curated Features chapter under menuLayout: 'feature'. Use for bootstrap helpers, factory functions, public config interfaces, or any reference symbol that deserves the curated treatment instead of landing only in the exhaustive References chapter. Values other than primary fall back silently. No effect under menuLayout: 'type'.",
+      ],
     ],
   },
   {
@@ -62,6 +66,38 @@ const groups: TagGroup[] = [
       ['@beta', 'Adds a "Beta" badge.'],
       ['@breaking <version>', 'Adds a "Breaking" badge that pins the version.'],
       ['@since <version>', 'Adds a version badge to the entity hero.'],
+    ],
+  },
+  {
+    id: 'accessibility',
+    heading: 'Accessibility',
+    blurb:
+      'Surface conformance metadata. The hero chip is the single user-visible signal; the free-form note travels with the entity for the LLM-md export and future reverse-lookups.',
+    items: [
+      [
+        '@wcag A | AA | AAA',
+        'Renders a coloured chip in the entity hero (neutral A, green AA, blue AAA). Case-insensitive. Invalid values log a build warning and skip the chip. Also emits a Pagefind facet so the command palette can narrow to "WCAG AA and up".',
+      ],
+      [
+        '@a11y <text>',
+        'Free-form markdown accessibility note. Parsed and attached to the entity (IDep.a11yNote), exported through the llm-md bundle. Not rendered as a page section by design - the WCAG chip stays the only on-page conformance signal.',
+      ],
+    ],
+  },
+  {
+    id: 'provenance',
+    heading: 'Provenance',
+    blurb:
+      'Mark entities or markdown files as AI-assisted so readers can reason about source quality.',
+    items: [
+      [
+        '@aiGenerated [label]',
+        'Per-entity JSDoc tag. Stamps an "AI generated" pill in the entity hero with a localized tooltip. The optional trailing text (e.g. model name, date) is preserved verbatim.',
+      ],
+      [
+        '<!-- @aiGenerated [label] -->',
+        'HTML-comment marker for markdown files. Place at the top of a README, additional page, or overview source to flag the whole page. Detected via regex on the raw markdown - no JSDoc parser required.',
+      ],
     ],
   },
   {
@@ -107,8 +143,8 @@ const totalCount = groups.reduce((acc, g) => acc + g.items.length, 0);
 
 <FeaturesLayout
   currentSlug="jsdoc-tags"
-  title="JSDoc Tags — Recognized tags & rendering in compodocx"
-  description="Every JSDoc tag compodocx recognizes — @param, @returns, @example, @deprecated, @internal, @category, @see, @since, @link, @beta, @breaking, @slot, @playground, hero-link tags."
+  title="JSDoc Tags - Recognized tags & rendering in compodocx"
+  description="Every JSDoc tag compodocx recognizes - @param, @returns, @example, @deprecated, @internal, @category, @docsKind, @wcag, @a11y, @aiGenerated, @see, @since, @link, @beta, @breaking, @slot, @playground, hero-link tags."
 >
   <p class="text-cdx-text-secondary text-lg">
     {totalCount} recognized tags grouped by where they apply. Unknown tags are not an error: theming token

@@ -1,11 +1,23 @@
 ---
 import FeaturesLayout from '../../layouts/FeaturesLayout.astro';
+import CodeBlock from '../../components/CodeBlock.astro';
 
 interface FeatureSection {
   id: string;
   title: string;
   iconBody: string;
   iconColor: string;
+  items: string[];
+}
+
+interface BifurcationCard {
+  id: string;
+  title: string;
+  iconBody: string;
+  iconColor: string;
+  /** Short lead line under the title. Renders as muted caption. */
+  intro: string;
+  /** Bullet items rendered with the section accent checkmark. */
   items: string[];
 }
 
@@ -83,15 +95,73 @@ const sections: FeatureSection[] = [
       '<code class="cdx-code">:focus-visible</code> rings on every interactive element. ARIA patterns on tabs, sidebar, and version switcher.',
       'Respects <code class="cdx-code">prefers-reduced-motion</code> and <code class="cdx-code">prefers-color-scheme</code>.',
       'WCAG AA contrast on default tokens. Per-theme palettes audited individually.',
+      'Per-entity <code class="cdx-code">@wcag</code> and <code class="cdx-code">@a11y</code> JSDoc tags surface conformance metadata in the entity hero and feed the search-palette WCAG facet.',
     ],
   },
 ];
+
+const bifurcationCards: BifurcationCard[] = [
+  {
+    id: 'token-kind',
+    title: 'Tokens as their own page kind',
+    iconColor: 'text-violet-500 dark:text-violet-400',
+    iconBody: `<path d="m21 2-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0 3 3L22 7l-3-3m-3.5 3.5L19 4"/>`,
+    intro:
+      '<code class="cdx-code">InjectionToken</code> + <code class="cdx-code">HttpContextToken</code> at <code class="cdx-code">tokens/&lt;name&gt;.html</code>.',
+    items: [
+      'Lean page: hero, referenced-by chips, type signature, providedIn.',
+      'No methods, no API tab.',
+      'The <code class="cdx-code">Injectable</code> bucket counts real services only.',
+    ],
+  },
+  {
+    id: 'bucket-landings',
+    title: 'Bucket landing pages',
+    iconColor: 'text-emerald-500 dark:text-emerald-400',
+    iconBody: `<path d="M3 7v11a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1h-6.5l-2-2H4a1 1 0 0 0-1 1z"/>`,
+    intro: 'Auto-built landing per <code class="cdx-code">@category</code> bucket.',
+    items: [
+      'Path: <code class="cdx-code">categories/&lt;id&gt;.html</code>, nested for sub-buckets.',
+      'Members grouped by kind with first-sentence excerpts.',
+      'Sidebar bucket row: label navigates, chevron toggles.',
+    ],
+  },
+  {
+    id: 'backlinks',
+    title: 'Referenced-by backlinks',
+    iconColor: 'text-rose-500 dark:text-rose-400',
+    iconBody: `<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>`,
+    intro: 'Reverse-index chip list above the Info tab.',
+    items: [
+      'Applies to interfaces, type aliases, enums, variables, functions.',
+      'Tracks <code class="cdx-code">extends</code>, <code class="cdx-code">implements</code>, member types, return types, host directives.',
+      'Override name: <code class="cdx-code">referenced-by</code>.',
+    ],
+  },
+  {
+    id: 'pagefind-facets',
+    title: 'Pagefind facet rail',
+    iconColor: 'text-fuchsia-500 dark:text-fuchsia-400',
+    iconBody: `<polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>`,
+    intro: 'Multi-dimensional filtering in the command palette.',
+    items: [
+      'Chip rows: <strong class="text-cdx-text">Kind</strong>, <strong class="text-cdx-text">Library</strong>, <strong class="text-cdx-text">Tier</strong>, <strong class="text-cdx-text">WCAG</strong>.',
+      'Multi-select per dimension, AND across dimensions.',
+      'Filter state persists in the URL.',
+    ],
+  },
+];
+
+const enableSnippet = `// .compodocxrc.json
+{
+  "menuLayout": "feature"
+}`;
 ---
 
 <FeaturesLayout
   currentSlug="features"
-  title="Features — Standalone, Signals & multi-version · compodocx"
-  description="Standalone components, signals, computed, host bindings, multi-version output, theming tokens, migration tools — what compodocx renders out of the box."
+  title="Features - Standalone, Signals & curated docs · compodocx"
+  description="Standalone components, signals, multi-version output, theming tokens, the curated Features chapter plus exhaustive References portal, InjectionToken pages, bucket landings, backlinks, and Pagefind facets."
 >
   <p class="text-cdx-text-secondary text-lg">
     What lands on the page after a build, grouped by area.
@@ -148,4 +218,352 @@ const sections: FeatureSection[] = [
       ))
     }
   </div>
+
+  <div class="border-cdx-border/60 mt-20 border-t pt-16 sm:mt-24 sm:pt-20" aria-hidden="true"></div>
+
+  <section
+    id="bifurcation"
+    tabindex="-1"
+    class="scroll-mt-24 focus:outline-none"
+    aria-labelledby="bifurcation-heading"
+  >
+    <hgroup>
+      <p class="text-cdx-text-secondary text-xs font-semibold tracking-[0.2em] uppercase">
+        Library mode
+      </p>
+      <h2
+        id="bifurcation-heading"
+        class="text-cdx-text mt-3 text-2xl font-semibold tracking-tight sm:text-[1.75rem]"
+      >
+        Two audiences, one source pass
+      </h2>
+      <p class="text-cdx-text-secondary mt-4 max-w-2xl leading-relaxed">
+        Picking a sidebar layout is the only opt-in. Library authors and SDK teams flip one config
+        key and the sidebar reshapes into a curated chapter plus an exhaustive reference portal -
+        both bucketed by <code class="cdx-code">@category</code> or folder path.
+      </p>
+    </hgroup>
+
+    <div class="mt-8 grid gap-5 md:grid-cols-2">
+      <article
+        class="bg-cdx-bg-elevated flex flex-col rounded-xl p-6"
+        aria-labelledby="mode-type-title"
+      >
+        <header class="flex items-center gap-3">
+          <span
+            class="text-emerald-500 dark:text-emerald-400 bg-cdx-bg-alt inline-flex size-10 shrink-0 items-center justify-center rounded-lg"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <line x1="3" y1="6" x2="21" y2="6" />
+              <line x1="3" y1="12" x2="21" y2="12" />
+              <line x1="3" y1="18" x2="21" y2="18" />
+            </svg>
+          </span>
+          <div class="min-w-0">
+            <h3 id="mode-type-title" class="text-cdx-text text-lg font-semibold tracking-tight">
+              Per-kind tree
+            </h3>
+            <code class="cdx-code text-xs">menuLayout: 'type'  ·  default</code>
+          </div>
+        </header>
+
+        <ul class="mt-5 space-y-3 text-sm">
+          <li class="flex gap-3">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              class="text-emerald-500 dark:text-emerald-400 mt-1 shrink-0"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            <span class="text-cdx-text-secondary leading-relaxed"
+              >One chapter per Angular artefact kind.</span
+            >
+          </li>
+          <li class="flex gap-3">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              class="text-emerald-500 dark:text-emerald-400 mt-1 shrink-0"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            <span class="text-cdx-text-secondary leading-relaxed"
+              >Components, Directives, Pipes, Injectables, Classes, …</span
+            >
+          </li>
+          <li class="flex gap-3">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              class="text-emerald-500 dark:text-emerald-400 mt-1 shrink-0"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            <span class="text-cdx-text-secondary leading-relaxed"
+              >No bucket landings and no References portal.</span
+            >
+          </li>
+          <li class="flex gap-3">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              class="text-emerald-500 dark:text-emerald-400 mt-1 shrink-0"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            <span class="text-cdx-text-secondary leading-relaxed"
+              >Best for application docs and internal projects.</span
+            >
+          </li>
+        </ul>
+      </article>
+
+      <article
+        class="bg-cdx-bg-elevated flex flex-col rounded-xl p-6"
+        aria-labelledby="mode-feature-title"
+      >
+        <header class="flex items-center gap-3">
+          <span
+            class="text-amber-500 dark:text-amber-400 bg-cdx-bg-alt inline-flex size-10 shrink-0 items-center justify-center rounded-lg"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+            >
+              <path d="m16 6 4 14" />
+              <path d="M12 6v14" />
+              <path d="M8 8v12" />
+              <path d="M4 4v16" />
+            </svg>
+          </span>
+          <div class="min-w-0">
+            <h3 id="mode-feature-title" class="text-cdx-text text-lg font-semibold tracking-tight">
+              Curated + reference portal
+            </h3>
+            <code class="cdx-code text-xs">menuLayout: 'feature'  ·  opt-in</code>
+          </div>
+        </header>
+
+        <ul class="mt-5 space-y-3 text-sm">
+          <li class="flex gap-3">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              class="text-amber-500 dark:text-amber-400 mt-1 shrink-0"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            <span class="text-cdx-text-secondary leading-relaxed"
+              ><strong class="text-cdx-text">Features</strong> chapter, the curated entry points
+              readers reach for first.</span
+            >
+          </li>
+          <li class="flex gap-3">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              class="text-amber-500 dark:text-amber-400 mt-1 shrink-0"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            <span class="text-cdx-text-secondary leading-relaxed"
+              ><strong class="text-cdx-text">References</strong> portal at <code class="cdx-code"
+                >references.html</code
+              >, exhaustive index of every public symbol.</span
+            >
+          </li>
+          <li class="flex gap-3">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              class="text-amber-500 dark:text-amber-400 mt-1 shrink-0"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            <span class="text-cdx-text-secondary leading-relaxed"
+              >Plus bucket landings, backlinks, and Pagefind facets.</span
+            >
+          </li>
+          <li class="flex gap-3">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="14"
+              height="14"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              aria-hidden="true"
+              class="text-amber-500 dark:text-amber-400 mt-1 shrink-0"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+            <span class="text-cdx-text-secondary leading-relaxed"
+              >Best for library authors and SDK teams.</span
+            >
+          </li>
+        </ul>
+      </article>
+    </div>
+
+    <div class="mt-8 grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
+      <div>
+        <p class="text-cdx-text text-sm font-semibold tracking-tight">
+          Flip the switch in one line
+        </p>
+        <p class="text-cdx-text-secondary mt-2 text-sm leading-relaxed">
+          Config-only - no CLI flag. Full reference under <a
+            href={`${import.meta.env.BASE_URL}guides/options/#navigation`}
+            class="text-cdx-primary underline-offset-2 hover:underline">Navigation &amp; layout</a
+          >.
+        </p>
+      </div>
+      <div class="lg:min-w-[20rem]">
+        <CodeBlock lang="json" code={enableSnippet} filename=".compodocxrc.json" />
+      </div>
+    </div>
+
+    <h3 class="text-cdx-text mt-16 text-xl font-semibold tracking-tight">
+      What library mode unlocks
+    </h3>
+    <p class="text-cdx-text-secondary mt-2 max-w-2xl text-sm leading-relaxed">
+      Four extra capabilities under <code class="cdx-code">menuLayout: 'feature'</code>, all
+      overridable via <code class="cdx-code">--templates</code>.
+    </p>
+
+    <div class="mt-6 grid gap-5 md:grid-cols-2">
+      {
+        bifurcationCards.map((card) => (
+          <article class="bg-cdx-bg-elevated flex flex-col rounded-xl p-6">
+            <header class="flex items-center gap-3">
+              <span
+                class={`${card.iconColor} bg-cdx-bg-alt inline-flex size-10 shrink-0 items-center justify-center rounded-lg`}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                  set:html={card.iconBody}
+                />
+              </span>
+              <h4 id={card.id} class="text-cdx-text text-base font-semibold tracking-tight">
+                {card.title}
+              </h4>
+            </header>
+            <p
+              class="text-cdx-text mt-4 text-sm leading-relaxed"
+              set:html={card.intro}
+            />
+            <ul class="mt-4 space-y-3 text-sm">
+              {card.items.map((item) => (
+                <li class="flex gap-3">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="14"
+                    height="14"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                    class={`${card.iconColor} mt-1 shrink-0`}
+                  >
+                    <polyline points="20 6 9 17 4 12" />
+                  </svg>
+                  <span class="text-cdx-text-secondary leading-relaxed" set:html={item} />
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+  </section>
 </FeaturesLayout>
