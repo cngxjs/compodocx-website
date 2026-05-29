@@ -35,7 +35,8 @@ const {
 } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const analyticsDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN || 'compodocx.dev';
-const analyticsSrc = import.meta.env.PUBLIC_PLAUSIBLE_SRC || 'https://analytics.qtq.at/js/script.js';
+const analyticsSrc =
+  import.meta.env.PUBLIC_PLAUSIBLE_SRC || 'https://analytics.qtq.at/js/script.js';
 const analyticsEnabled = import.meta.env.PROD || import.meta.env.PUBLIC_ENABLE_ANALYTICS === 'true';
 const siteUrl = Astro.site ?? new URL(base, 'https://compodocx.dev');
 const canonical = new URL(Astro.url.pathname, siteUrl).href;
@@ -180,14 +181,14 @@ const themeBundle = minifyCss(
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content={`${title} — compodocx`} />
+    <meta property="og:image:alt" content={`${title} - compodocx`} />
     <meta property="og:locale" content="en_US" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={metaDescription} />
     <meta name="twitter:image" content={ogImage} />
-    <meta name="twitter:image:alt" content={`${title} — compodocx`} />
+    <meta name="twitter:image:alt" content={`${title} - compodocx`} />
 
     <meta name="theme-color" content="#f5f5f5" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#1c1c1c" media="(prefers-color-scheme: dark)" />
@@ -199,7 +200,11 @@ const themeBundle = minifyCss(
     }
 
     <ClientRouter />
-    {analyticsEnabled && <script is:inline defer data-domain={analyticsDomain} src={analyticsSrc} />}
+    {
+      analyticsEnabled && (
+        <script is:inline defer data-domain={analyticsDomain} src={analyticsSrc} />
+      )
+    }
     <style is:global set:html={themeBundle}></style>
     <script is:inline>
       (function () {
@@ -212,7 +217,7 @@ const themeBundle = minifyCss(
                 : stored === 'true';
             doc.documentElement.classList.toggle('dark', dark);
           } catch (_) {
-            // storage / matchMedia unavailable — fall through to light default
+            // storage / matchMedia unavailable - fall through to light default
           }
           try {
             const theme = localStorage.getItem('compodocx-website-theme');
@@ -222,7 +227,7 @@ const themeBundle = minifyCss(
               doc.documentElement.removeAttribute('data-theme');
             }
           } catch (_) {
-            // ignore — fall through to default theme
+            // ignore - fall through to default theme
           }
         }
 

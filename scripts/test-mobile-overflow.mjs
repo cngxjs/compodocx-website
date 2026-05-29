@@ -176,9 +176,7 @@ for (const browserName of BROWSERS) {
           );
           for (const c of result.culprits) {
             const text = c.text ? `  "${c.text}"` : '';
-            console.log(
-              `         -> ${c.tag}.${c.cls} (${c.width}px ws=${c.whiteSpace})${text}`,
-            );
+            console.log(`         -> ${c.tag}.${c.cls} (${c.width}px ws=${c.whiteSpace})${text}`);
           }
         }
       } catch (err) {
@@ -195,7 +193,5 @@ for (const browserName of BROWSERS) {
 }
 
 const passed = totalChecks - totalFailures;
-console.log(
-  `\n${totalFailures === 0 ? 'PASS' : 'FAIL'}: ${passed}/${totalChecks} routes ok`,
-);
+console.log(`\n${totalFailures === 0 ? 'PASS' : 'FAIL'}: ${passed}/${totalChecks} routes ok`);
 process.exit(totalFailures === 0 ? 0 : 1);

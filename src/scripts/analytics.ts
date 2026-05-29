@@ -16,10 +16,14 @@ function track(eventName: string, props?: Record<string, string>): void {
 
 function eventForLink(link: HTMLAnchorElement): string | null {
   const url = new URL(link.href);
-  if (url.hostname === 'github.com' && url.pathname.split('/').slice(1, 3).join('/') === 'cngxjs/compodocx') {
+  if (
+    url.hostname === 'github.com' &&
+    url.pathname.split('/').slice(1, 3).join('/') === 'cngxjs/compodocx'
+  ) {
     return 'click_github';
   }
-  if (url.hostname === 'www.npmjs.com' && url.pathname === '/package/@cngxjs/compodocx') return 'click_npm';
+  if (url.hostname === 'www.npmjs.com' && url.pathname === '/package/@cngxjs/compodocx')
+    return 'click_npm';
   if (url.hostname === 'stackblitz.com') return 'click_stackblitz';
   if (link.hash === '#screenshots') return 'click_demo';
   if (link.pathname.includes('/guides/getting-started/')) return 'click_getting_started';

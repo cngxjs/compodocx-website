@@ -4,7 +4,7 @@ const installCmd = 'npm install -D @cngxjs/compodocx';
 
 <section class="hero-section relative isolate overflow-hidden">
   <div
-    class="from-cdx-bg-alt/60 to-cdx-bg pointer-events-none absolute inset-0 -z-30 bg-gradient-to-b"
+    class="from-cdx-bg-alt/60 to-cdx-bg pointer-events-none absolute inset-0 -z-30 bg-linear-to-b"
     aria-hidden="true"
   >
   </div>
@@ -31,7 +31,7 @@ const installCmd = 'npm install -D @cngxjs/compodocx';
       compodocx is a static Angular documentation generator. Point it at your TypeScript source for
       a site that's
       <span class="text-ember font-medium">standalone, signal-aware, themable</span>.<br />
-      Multi-version output, runnable StackBlitz playgrounds, CI diffs, LLM-context export — all included.
+      Multi-version output, runnable StackBlitz playgrounds, CI diffs, LLM-context export - all included.
     </p>
     <p class="text-cdx-text mt-3 max-w-2xl text-lg font-semibold sm:text-xl">All from one CLI.</p>
     <div class="mt-10 flex flex-col items-stretch gap-3 sm:flex-row">
@@ -41,7 +41,7 @@ const installCmd = 'npm install -D @cngxjs/compodocx';
         <span class="text-cdx-primary font-semibold select-none" aria-hidden="true">$</span>
         <code
           id="hero-install-cmd"
-          class="text-cdx-text min-w-0 flex-1 overflow-x-auto whitespace-nowrap [contain:inline-size] sm:flex-none sm:[contain:none]"
+          class="text-cdx-text min-w-0 flex-1 overflow-x-auto whitespace-nowrap contain-[inline-size] sm:flex-none sm:contain-none"
           >{installCmd}</code
         >
         <button
@@ -197,7 +197,7 @@ const installCmd = 'npm install -D @cngxjs/compodocx';
 
   /* On narrow viewports the 45-50rem orbs overflow the viewport and are
      GPU-expensive on slower phones, and the shimmer-sweep lands awkwardly
-     mid-paint at small font-sizes. Drop both. The static dot grid stays —
+     mid-paint at small font-sizes. Drop both. The static dot grid stays -
      it is cheap and gives the section visual texture. Kept separate from
      the prefers-reduced-motion block on purpose: different axis, different
      opt-in. */
