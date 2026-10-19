@@ -1,0 +1,1 @@
+import{t as e}from"./copy-button.ClRhFSxi.js";document.addEventListener(`astro:page-load`,()=>e());

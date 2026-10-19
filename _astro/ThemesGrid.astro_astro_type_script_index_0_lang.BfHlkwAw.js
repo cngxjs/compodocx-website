@@ -1,0 +1,1 @@
+import{t as e}from"./theme-switcher.DWjL3JmZ.js";document.addEventListener(`astro:page-load`,()=>e());
