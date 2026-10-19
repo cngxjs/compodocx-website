@@ -1,8 +1,8 @@
 {
   "source": "https://github.com/cngxjs/compodocx",
-  "ref": "develop",
-  "sha": "d98f6caddc9a097f06511ea5efdfef3593d165b2",
-  "syncedAt": "2026-05-08T15:22:46.124Z",
+  "ref": "v0.9.0",
+  "sha": "c11b2d4d1c623003b35c7d7e5b941cee521500ac",
+  "syncedAt": "2026-10-19T07:39:41.685Z",
   "files": [
     {
       "dst": "src/styles/vendor/compodocx/compodocx.css",
@@ -11,37 +11,37 @@
     },
     {
       "dst": "src/styles/vendor/compodocx/themes/ocean.css",
-      "src": "src/themes/ocean.css",
+      "src": "src/resources/styles/ocean.css",
       "mode": "verbatim"
     },
     {
       "dst": "src/styles/vendor/compodocx/themes/midnight.css",
-      "src": "src/themes/midnight.css",
+      "src": "src/resources/styles/midnight.css",
       "mode": "verbatim"
     },
     {
       "dst": "src/styles/vendor/compodocx/themes/nord.css",
-      "src": "src/themes/nord.css",
+      "src": "src/resources/styles/nord.css",
       "mode": "verbatim"
     },
     {
       "dst": "src/styles/vendor/compodocx/themes/rose-pine.css",
-      "src": "src/themes/rose-pine.css",
+      "src": "src/resources/styles/rose-pine.css",
       "mode": "verbatim"
     },
     {
       "dst": "src/styles/vendor/compodocx/themes/ember.css",
-      "src": "src/themes/ember.css",
+      "src": "src/resources/styles/ember.css",
       "mode": "verbatim"
     },
     {
       "dst": "src/styles/vendor/compodocx/themes/neon.css",
-      "src": "src/themes/neon.css",
+      "src": "src/resources/styles/neon.css",
       "mode": "verbatim"
     },
     {
       "dst": "src/styles/vendor/compodocx/themes/brutalist.css",
-      "src": "src/themes/brutalist.css",
+      "src": "src/resources/styles/brutalist.css",
       "mode": "verbatim"
     }
   ]

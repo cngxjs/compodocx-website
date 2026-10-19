@@ -27,13 +27,13 @@ const REF = resolveRef();
 
 const FILES = [
   { src: 'src/styles/compodocx.css', dst: 'src/styles/vendor/compodocx/compodocx.css' },
-  { src: 'src/themes/ocean.css', dst: 'src/styles/vendor/compodocx/themes/ocean.css' },
-  { src: 'src/themes/midnight.css', dst: 'src/styles/vendor/compodocx/themes/midnight.css' },
-  { src: 'src/themes/nord.css', dst: 'src/styles/vendor/compodocx/themes/nord.css' },
-  { src: 'src/themes/rose-pine.css', dst: 'src/styles/vendor/compodocx/themes/rose-pine.css' },
-  { src: 'src/themes/ember.css', dst: 'src/styles/vendor/compodocx/themes/ember.css' },
-  { src: 'src/themes/neon.css', dst: 'src/styles/vendor/compodocx/themes/neon.css' },
-  { src: 'src/themes/brutalist.css', dst: 'src/styles/vendor/compodocx/themes/brutalist.css' },
+  { src: 'src/resources/styles/ocean.css', dst: 'src/styles/vendor/compodocx/themes/ocean.css' },
+  { src: 'src/resources/styles/midnight.css', dst: 'src/styles/vendor/compodocx/themes/midnight.css' },
+  { src: 'src/resources/styles/nord.css', dst: 'src/styles/vendor/compodocx/themes/nord.css' },
+  { src: 'src/resources/styles/rose-pine.css', dst: 'src/styles/vendor/compodocx/themes/rose-pine.css' },
+  { src: 'src/resources/styles/ember.css', dst: 'src/styles/vendor/compodocx/themes/ember.css' },
+  { src: 'src/resources/styles/neon.css', dst: 'src/styles/vendor/compodocx/themes/neon.css' },
+  { src: 'src/resources/styles/brutalist.css', dst: 'src/styles/vendor/compodocx/themes/brutalist.css' },
 ];
 
 const root = fileURLToPath(new URL('..', import.meta.url));
