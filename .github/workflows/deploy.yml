@@ -19,9 +19,11 @@ on:
 permissions:
   contents: write
 
+# Deploying runs share one group so gh-pages pushes never overlap. PR runs get
+# a per-PR group; sharing pages-deploy let queued runs supersede each other.
 concurrency:
-  group: pages-deploy
-  cancel-in-progress: false
+  group: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.ref) || 'pages-deploy' }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   build:
