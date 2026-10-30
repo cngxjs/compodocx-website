@@ -1,8 +1,8 @@
 {
   "source": "https://github.com/cngxjs/compodocx",
-  "ref": "v0.11.0",
-  "sha": "9008cb38e399d7a53f160234eb6dc36b71d5590b",
-  "syncedAt": "2026-10-27T13:16:44.933Z",
+  "ref": "v0.14.0",
+  "sha": "dd1e607dae373e3d17890b49f8f0141accee9df1",
+  "syncedAt": "2026-10-30T13:51:06.058Z",
   "files": [
     {
       "dst": "src/styles/vendor/compodocx/compodocx.css",
