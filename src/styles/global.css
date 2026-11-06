@@ -168,7 +168,8 @@ main > section:nth-of-type(11) {
 .cdx-prose {
   color: var(--color-cdx-text-secondary);
 }
-.cdx-prose > h2 {
+.cdx-prose > h2,
+.cdx-prose > section > h2 {
   margin-top: 3rem;
   font-size: 1.25rem;
   font-weight: 600;
