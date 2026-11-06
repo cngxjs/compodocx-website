@@ -51,7 +51,7 @@ const groups: OptGroup[] = [
         key: 'config',
         cli: '-c, --config',
         type: 'string',
-        desc: 'Explicit config-file path. Otherwise compodocx searches the working folder for .compodocxrc, .compodocxrc.json, .compodocxrc.yaml, compodocx.config.*, or a compodocx key in package.json, then the same compodoc names.',
+        desc: 'Explicit config-file path. Otherwise compodocx searches the working folder for .compodocxrc, .compodocxrc.json, .compodocxrc.yaml, compodocx.config.{js,ts,cjs,mjs}, or a compodocx key in package.json, then the same compodoc names.',
       },
       {
         key: 'include',
@@ -294,14 +294,14 @@ const groups: OptGroup[] = [
         cli: '--disableProperties',
         type: 'boolean',
         default: 'false',
-        desc: 'Hide the entire properties section (inputs, outputs, regular properties).',
+        desc: 'Do not build the package properties page or its sidebar link. Class and component members are not affected.',
       },
       {
         key: 'disableDependencies',
         cli: '--disableDependencies',
         type: 'boolean',
         default: 'false',
-        desc: 'Hide the dependencies section on the Info tab, which shows the inject() calls of the class.',
+        desc: 'Do not build the package dependencies page or its sidebar link. To hide the section on the Info tab, leave dependencies out of infoTabSections.',
       },
       {
         key: 'disableFilePath',
@@ -433,7 +433,7 @@ const groups: OptGroup[] = [
         cli: '--navTabConfig',
         type: 'object[]',
         default: '[]',
-        desc: 'Customize entity-page tab order/labels. Array of { id, label }. Tab IDs: info, readme, api, source, templateData, styleData, theming, tree, example, playground. Tabs not listed are hidden. Empty (default) shows all in default order.',
+        desc: 'Customize entity-page tab order/labels. Array of { id, label }. Tab IDs: info, readme, api, source, templateData, styleData, theming, tree, example, playground. Tabs not listed are hidden, except the Dependencies tab, which has no ID and is controlled by disableDependenciesTab. Empty (default) shows all in default order.',
       },
       {
         key: 'exampleUrlBase',
