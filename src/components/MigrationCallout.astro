@@ -37,11 +37,12 @@ const migrationGuideUrl = 'https://github.com/cngxjs/compodocx/blob/develop/MIGR
           id="migration-heading"
           class="text-cdx-text text-2xl font-semibold tracking-tight sm:text-3xl"
         >
-          Already on compodoc? Stay calm.
+          Coming from compodoc? Modern Angular only.
         </h2>
         <p class="text-cdx-text-secondary mt-3 max-w-2xl leading-relaxed">
-          Keep most of your existing setup. The CLI surface is the same, the internals are new. Most
-          teams ship the migration in a single PR.
+          compodocx is the successor for Angular 21+ standalone code, not a drop-in replacement.
+          Switching means changing the package and the script, running it once, and acting on the
+          warnings it prints.
         </p>
       </div>
       <a
@@ -73,15 +74,16 @@ const migrationGuideUrl = 'https://github.com/cngxjs/compodocx/blob/develop/MIGR
             stroke-linecap="round"
             stroke-linejoin="round"
           >
-            <path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"></path>
-            <path d="M21 3v5h-5"></path>
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M12 8v4"></path>
+            <path d="M12 16h.01"></path>
           </svg>
         </span>
         <div>
-          <h3 class="text-cdx-text text-sm font-semibold">CLI alias works</h3>
+          <h3 class="text-cdx-text text-sm font-semibold">What is no longer documented</h3>
           <p class="text-cdx-text-secondary mt-1.5 text-sm leading-relaxed">
-            Your existing <code class="cdx-code">compodoc</code> scripts run unchanged. The binary registers
-            both names.
+            NgModules, <code class="cdx-code">@Input</code> and other decorator members, constructor injection,
+            and class-based guards, interceptors and resolvers. One legacy notice lists their locations.
           </p>
         </div>
       </li>
@@ -108,11 +110,10 @@ const migrationGuideUrl = 'https://github.com/cngxjs/compodocx/blob/develop/MIGR
           </svg>
         </span>
         <div>
-          <h3 class="text-cdx-text text-sm font-semibold">JS template overrides</h3>
+          <h3 class="text-cdx-text text-sm font-semibold">What changes for your tooling</h3>
           <p class="text-cdx-text-secondary mt-1.5 text-sm leading-relaxed">
-            Custom templates are JS partials returning HTML. No Handlebars, no helpers registry.
-            Just
-            <code class="cdx-code">module.exports = (data, h) =&gt; '...'</code>.
+            Handlebars templates become JS overrides, rewritten by hand. Page URLs and the JSON
+            export differ; <code class="cdx-code">redirects.json</code> maps old paths to new ones.
           </p>
         </div>
       </li>
@@ -145,11 +146,12 @@ const migrationGuideUrl = 'https://github.com/cngxjs/compodocx/blob/develop/MIGR
         </span>
         <div>
           <h3 class="text-cdx-text text-sm font-semibold">
-            <code class="cdx-code">migrate</code> sub-CLI
+            What <code class="cdx-code">ng add</code> does for you
           </h3>
           <p class="text-cdx-text-secondary mt-1.5 text-sm leading-relaxed">
-            Ports Handlebars templates and CSS automatically. Inspect first, convert files or whole
-            folders. You'll still want to review the diff.
+            Swaps the package, rewrites <code class="cdx-code">compodoc</code> scripts, and seeds
+            <code class="cdx-code">tsconfig.doc.json</code>.
+            <code class="cdx-code">compodocx migrate jsdoc</code> removes retired tags.
           </p>
         </div>
       </li>

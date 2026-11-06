@@ -15,6 +15,7 @@
  * Optional:
  *   COMPODOCX_FIXTURE=kitchen-sink-standalone (default)
  *   COMPODOCX_COMPONENT=SignalCardComponent (default)
+ *   COMPODOCX_FEATURE_DIR=shared (default)
  *   ONLY=<target id>  capture only one target id (e.g. ONLY=source-viewer)
  */
 import { spawn } from 'node:child_process';
@@ -29,6 +30,11 @@ const outDir = resolve(root, 'src/assets/screenshots');
 
 const FIXTURE = process.env.COMPODOCX_FIXTURE ?? 'kitchen-sink-standalone';
 const COMPONENT = process.env.COMPODOCX_COMPONENT ?? 'SignalCardComponent';
+// Symbol pages live in the folder of their feature since compodocx 0.9.
+const FEATURE_DIR = process.env.COMPODOCX_FEATURE_DIR ?? 'shared';
+const COMPONENT_PATH = `/${FEATURE_DIR}/${COMPONENT}.html`;
+// Shown in the sidebar header and on the overview hero of every shot.
+const DOC_NAME = 'acme-admin-console';
 const ONLY = process.env.ONLY;
 const repoPath = process.env.COMPODOCX_REPO;
 
@@ -44,19 +50,21 @@ const VIEWPORT = { width: 1280, height: 800 };
 const TARGETS = [
   {
     id: 'component-info',
-    path: `/components/${COMPONENT}.html`,
+    path: COMPONENT_PATH,
   },
   {
     id: 'component-api',
-    path: `/components/${COMPONENT}.html#api`,
+    path: `${COMPONENT_PATH}#api`,
   },
   {
     id: 'project-graph',
     path: '/overview.html',
+    // Skips the build-up animation, so the graph is captured in its final state.
+    reducedMotion: 'reduce',
   },
   {
     id: 'source-viewer',
-    path: `/components/${COMPONENT}.html#source`,
+    path: `${COMPONENT_PATH}#source`,
     prepare: async (page) => {
       // Scroll into a method body so the VSCode-style sticky-stack
       // accumulates surrounding class + method context.
@@ -76,7 +84,7 @@ const TARGETS = [
   },
   {
     id: 'multi-version',
-    path: `/components/${COMPONENT}.html`,
+    path: COMPONENT_PATH,
     prepare: async (page) => {
       const trigger = page.locator('.cdx-version-switcher-trigger:visible');
       await trigger.first().click();
@@ -97,8 +105,9 @@ async function importPlaywrightOrExit() {
 
 function runCli(args) {
   return new Promise((resolveExec, rejectExec) => {
-    const child = spawn('node', ['./bin/index-cli.js', ...args], {
-      cwd: repoPath,
+    // Run from the fixture so entity pages show src/app/... instead of test/fixtures/....
+    const child = spawn('node', [resolve(repoPath, 'bin/index-cli.js'), ...args], {
+      cwd: resolve(repoPath, 'test/fixtures', FIXTURE),
       stdio: ['ignore', 'pipe', 'inherit'],
     });
     child.stdout.on('data', () => {});
@@ -138,6 +147,7 @@ async function captureMode(browser, target, mode) {
     viewport: VIEWPORT,
     deviceScaleFactor: 2,
     colorScheme: mode,
+    reducedMotion: target.reducedMotion ?? 'no-preference',
   });
   const stateValue = mode === 'dark' ? 'true' : 'false';
   await context.addInitScript((v) => {
@@ -150,7 +160,10 @@ async function captureMode(browser, target, mode) {
   const page = await context.newPage();
   try {
     const url = `${baseUrl}${target.path}`;
-    await page.goto(url, { waitUntil: 'networkidle' });
+    const response = await page.goto(url, { waitUntil: 'networkidle' });
+    if (!response?.ok()) {
+      throw new Error(`${url} answered ${response?.status()}; check COMPODOCX_FEATURE_DIR`);
+    }
     await wait(400);
     if (typeof target.prepare === 'function') {
       await target.prepare(page);
@@ -168,9 +181,9 @@ async function main() {
 
   console.log(`Building ${FIXTURE} twice into ${buildOut}`);
   await rm(buildOut, { recursive: true, force: true });
-  const tsconfig = `./test/fixtures/${FIXTURE}/tsconfig.json`;
-  await runCli(['-p', tsconfig, '-d', buildOut, '--versionLabel', 'v1.0.0']);
-  await runCli(['-p', tsconfig, '-d', buildOut, '--versionLabel', 'v1.1.0']);
+  const buildArgs = ['-p', 'tsconfig.json', '-d', buildOut, '-n', DOC_NAME];
+  await runCli([...buildArgs, '--versionLabel', 'v1.0.0']);
+  await runCli([...buildArgs, '--versionLabel', 'v1.1.0']);
 
   const playwright = await importPlaywrightOrExit();
   console.log('Spawning static server on :4173');

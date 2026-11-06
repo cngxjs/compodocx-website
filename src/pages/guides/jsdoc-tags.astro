@@ -35,17 +35,20 @@ const groups: TagGroup[] = [
       ['@see', 'See-also section with link resolution.'],
       ['@since / @deprecated', 'Same semantics as on members.'],
       ['@internal', 'Hides the symbol when --disableInternal is set.'],
-      ['@category', 'Groups the entity under this category when --groupBy category.'],
       [
-        '@docsKind primary',
-        "Promotes a reference-kind symbol (function, interface, type alias, variable, enum) into the curated Features chapter under menuLayout: 'feature'. Use for bootstrap helpers, factory functions, public config interfaces, or any reference symbol that deserves the curated treatment instead of landing only in the exhaustive References chapter. Values other than primary fall back silently. No effect under menuLayout: 'type'.",
+        '@feature <key>',
+        'Puts the symbol into a feature of its entry point, above the detected one. The features config wins over the tag. It cannot move a symbol into another entry point.',
+      ],
+      [
+        '@axis <name> <value>',
+        'Sets the value on a classification axis declared in classificationAxes. Shows as a chip on the page and a search filter.',
       ],
     ],
   },
   {
     id: 'component-only',
     heading: 'Component-only',
-    blurb: 'Recognized only when the symbol is decorated as @Component.',
+    blurb: 'Component tags, plus the example marker that works on any class.',
     items: [
       ['@slot', 'Documents an exposed content slot. Renders as a metadata card on the Info tab.'],
       [
@@ -53,8 +56,12 @@ const groups: TagGroup[] = [
         'Author-curated runnable demo. Surfaces a Playground tab with one StackBlitz launcher per block.',
       ],
       [
+        '@playgroundConfig <path>',
+        'Points all @playground blocks of the component at a .ts file that exports appConfig, for providers and routing.',
+      ],
+      [
         '<example-url>',
-        'JSDoc marker pointing at a hosted demo URL. Surfaces an Example tab with an iframe per URL.',
+        'JSDoc marker pointing at a hosted demo URL. Surfaces an Examples tab with an iframe per URL. Counts only for the class whose comment holds it.',
       ],
     ],
   },
@@ -76,7 +83,7 @@ const groups: TagGroup[] = [
     items: [
       [
         '@wcag A | AA | AAA',
-        'Renders a coloured chip in the entity hero (neutral A, green AA, blue AAA). Case-insensitive. Invalid values log a build warning and skip the chip. Also emits a Pagefind facet so the command palette can narrow to "WCAG AA and up".',
+        'Renders a coloured chip in the entity hero (neutral A, green AA, blue AAA). Case-insensitive. Invalid values log a build warning and skip the chip. Also emits a search filter so the command palette can narrow to a level.',
       ],
       [
         '@a11y <text>',
@@ -92,11 +99,11 @@ const groups: TagGroup[] = [
     items: [
       [
         '@aiGenerated [label]',
-        'Per-entity JSDoc tag. Stamps an "AI generated" pill in the entity hero with a localized tooltip. The optional trailing text (e.g. model name, date) is preserved verbatim.',
+        'JSDoc tag for entities and members (@ai and @aigen are synonyms). Shows an "AI generated" chip and a sentence with the optional value: a model name, a date, or key=value pairs. Set the text with aiGeneratedNote, hide it with --hideAiGeneratedBadge.',
       ],
       [
         '<!-- @aiGenerated [label] -->',
-        'HTML-comment marker for markdown files. Place at the top of a README, additional page, or overview source to flag the whole page. Detected via regex on the raw markdown - no JSDoc parser required.',
+        'HTML-comment marker for markdown files. Place it on the first line of a README or additional page to flag the whole page with a banner.',
       ],
     ],
   },
@@ -108,14 +115,18 @@ const groups: TagGroup[] = [
       ['@github <url>', 'GitHub source / repo link.'],
       ['@figma <url>', 'Figma design file.'],
       ['@storybook <url>', 'Hosted Storybook entry.'],
-      ['@stackblitz <url>', 'StackBlitz playground.'],
+      [
+        '@stackblitz <url>',
+        'Link to a StackBlitz project you maintain. For assembled demos use @playground.',
+      ],
       ['@docs <url>', 'External documentation page.'],
     ],
   },
   {
     id: 'theming-tokens',
     heading: 'Theming tokens',
-    blurb: 'Parsed from JSDoc on CSS / SCSS files alongside @Component sources.',
+    blurb:
+      'Parsed from /// blocks in SCSS and /** */ blocks in CSS, in component styles and files listed in styleFiles. Unknown tags are dropped and reported once per run.',
     items: [
       ['@overview', 'Description block at the top of the Theming tab.'],
       ['@type', 'Token type (e.g. color, length, duration).'],
@@ -123,6 +134,13 @@ const groups: TagGroup[] = [
       ['@group', 'Groups tokens under an H4 in the Theming tab.'],
       ['@example / @since / @see', 'Same semantics as elsewhere.'],
       ['@deprecated', 'Optional reason. Empty marks deprecated without a message.'],
+      ['@cssprop', 'Documents a property the component reads but never sets. Alias: @cssproperty.'],
+      [
+        '@themes <Name>',
+        'File level. Links a style file to the components and directives it themes.',
+      ],
+      ['@relatedTo <Name>', 'Related-symbol links on a token, mixin, or style page.'],
+      ['@internal', 'Hides the token, hook, mixin, or function from the docs.'],
     ],
   },
   {
@@ -132,7 +150,7 @@ const groups: TagGroup[] = [
     items: [
       [
         '{@link Symbol}',
-        'Project-wide cross-reference. Resolves to a deep link, including across additional pages.',
+        'Project-wide cross-reference, with an optional label ({@link Symbol|label}). Also takes URLs and Markdown files. A target that resolves to nothing renders as code.',
       ],
     ],
   },
@@ -144,11 +162,15 @@ const totalCount = groups.reduce((acc, g) => acc + g.items.length, 0);
 <FeaturesLayout
   currentSlug="jsdoc-tags"
   title="JSDoc Tags - Recognized tags & rendering in compodocx"
-  description="Every JSDoc tag compodocx recognizes - @param, @returns, @example, @deprecated, @internal, @category, @docsKind, @wcag, @a11y, @aiGenerated, @see, @since, @link, @beta, @breaking, @slot, @playground, hero-link tags."
+  description="Every JSDoc tag compodocx recognizes - @param, @returns, @example, @deprecated, @internal, @feature, @axis, @wcag, @a11y, @aiGenerated, @see, @since, @link, @slot, @playground, hero links."
 >
   <p class="text-cdx-text-secondary text-lg">
-    {totalCount} recognized tags grouped by where they apply. Unknown tags are not an error: theming token
-    blocks fold them into the description, and member descriptions pass them through verbatim.
+    {totalCount} recognized tags grouped by where they apply. Unknown tags are not an error: style comments
+    drop them and report them in the build log. <code class="cdx-code">@category</code> and
+    <code class="cdx-code">@docsKind</code> are no longer read; <code class="cdx-code"
+      >compodocx migrate jsdoc</code
+    >
+    removes them.
   </p>
 
   <ul class="space-y-3" aria-label="JSDoc tag groups">

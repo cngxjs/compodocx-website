@@ -422,8 +422,10 @@ const totalTokens = tokenGroups.reduce(
   <h2>Custom logo &amp; favicon</h2>
   <p>
     Branding the docs goes beyond colors. Pass a logo and a favicon via CLI flags or the JSON
-    config. SVG works for the logo (it scales crisply in the topbar); a multi-size ICO or 32×32 PNG
-    works for the favicon.
+    config. SVG works for the logo (it scales crisply in the sidebar header); SVG, ICO, or PNG works
+    for the favicon. <code class="cdx-code">--customLogoDark</code> adds a dark-mode variant, and
+    <code class="cdx-code">--logoLayout</code> sets whether the logo stands alone or next to the project
+    name.
   </p>
   <CodeBlock
     lang="bash"
@@ -435,7 +437,7 @@ const totalTokens = tokenGroups.reduce(
   <p>Or pin all three in the JSON config so the team runs the same brand on every build:</p>
   <CodeBlock
     lang="json"
-    filename="compodocx.json"
+    filename=".compodocxrc.json"
     code={`{
   "tsconfig": "tsconfig.doc.json",
   "theme": "./my-brand.css",
@@ -444,10 +446,9 @@ const totalTokens = tokenGroups.reduce(
 }`}
   />
   <p>
-    Paths are resolved relative to the project root (the directory containing the
-    <code class="cdx-code">package.json</code>). Drop the asset under
-    <code class="cdx-code">./brand/</code> or wherever your assets live; compodocx copies it into the
-    static output.
+    In a config file, relative paths resolve against the folder of that file; CLI flags resolve
+    against the working directory. Drop the asset under <code class="cdx-code">./brand/</code> or wherever
+    your assets live; compodocx copies it into the static output.
   </p>
 
   <h2>Author a custom theme</h2>
@@ -543,16 +544,42 @@ const totalTokens = tokenGroups.reduce(
     }
   </ul>
 
-  <h2>Per-component theming tokens</h2>
+  <h2 id="component-tokens">Documenting your own tokens</h2>
   <p>
-    Components can document their own theming surface via JSDoc on the component&rsquo;s associated
-    SCSS / CSS file: <code class="cdx-code">@overview</code> for a description,
-    <code class="cdx-code">@type</code> / <code class="cdx-code">@default</code> /
-    <code class="cdx-code">@group</code> per token, plus <code class="cdx-code">@example</code>,
-    <code class="cdx-code">@since</code>, <code class="cdx-code">@deprecated</code>, and
-    <code class="cdx-code">@see</code>. Each component page surfaces a <em>Theming Tokens</em> tab with
-    a grouped catalog and an optional source preview.
+    Components can document their theming surface with comments in their stylesheets:
+    <code class="cdx-code">///</code> above SCSS variables, <code class="cdx-code">/** */</code> above
+    CSS custom properties and <code class="cdx-code">@property</code> rules. Use
+    <code class="cdx-code">@overview</code> for a description and <code class="cdx-code">@type</code
+    > /
+    <code class="cdx-code">@default</code> / <code class="cdx-code">@group</code> per token, plus
+    <code class="cdx-code">@example</code>, <code class="cdx-code">@since</code>,
+    <code class="cdx-code">@deprecated</code>, and <code class="cdx-code">@see</code>. The component
+    page surfaces a <em>Theming</em> tab with a grouped catalog and an optional source preview.
   </p>
+  <ul>
+    <li>
+      <strong>Hook tokens.</strong>
+      <code class="cdx-code">@cssprop</code> documents a property a component only reads and never sets.
+    </li>
+    <li>
+      <strong>Mixins and functions.</strong> A <code class="cdx-code">///</code> block above an SCSS
+      <code class="cdx-code">@mixin</code> or <code class="cdx-code">@function</code> adds it to a Mixins
+      section.
+    </li>
+    <li>
+      <strong>Free-standing sheets.</strong> The config-only <code class="cdx-code">styleFiles</code
+      > key adds files no component reads. <code class="cdx-code">@themes Name</code> links a file to
+      the components and directives it themes, and tokens no symbol claims collect on a
+      <code class="cdx-code">design-tokens.html</code> page.
+    </li>
+    <li>
+      <strong>Hidden tokens.</strong>
+      <code class="cdx-code">@internal</code> hides one token, and custom properties starting with <code
+        class="cdx-code">--_</code
+      > stay out of the docs (see
+      <code class="cdx-code">themingPrivatePrefix</code>).
+    </li>
+  </ul>
 </FeaturesLayout>
 
 <style is:global>

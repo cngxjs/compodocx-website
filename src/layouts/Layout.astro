@@ -43,7 +43,7 @@ const canonical = new URL(Astro.url.pathname, siteUrl).href;
 const homeUrl = new URL(base, siteUrl).href;
 const ogImage = new URL(image ?? `${base}og-image.png`, siteUrl).href;
 const fallbackDescription =
-  'Modern documentation tool for Angular applications. Fork of compodoc, modernized: standalone-first, Signals, theming tokens, multi-version, migration tools.';
+  'Static documentation generator for Angular 21+ standalone code: signals, inject(), typed routes, theming tokens, multi-version output. Successor to compodoc.';
 const metaDescription = description ?? fallbackDescription;
 const defaultKeywords = [
   'angular documentation',

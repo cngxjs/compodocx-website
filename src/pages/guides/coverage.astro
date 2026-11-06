@@ -7,7 +7,7 @@ const howToJsonLd = {
   '@type': 'HowTo',
   name: 'Gate a CI build on documentation coverage',
   description:
-    'Use compodocx --coverageMinimum to make CI fail when public-symbol documentation drops below your threshold.',
+    'Use compodocx --coverageTest to make CI fail when documentation coverage drops below your threshold.',
   totalTime: 'PT5M',
   tool: [{ '@type': 'HowToTool', name: '@cngxjs/compodocx' }],
   step: [
@@ -20,14 +20,14 @@ const howToJsonLd = {
     {
       '@type': 'HowToStep',
       position: 2,
-      name: 'Run compodocx with --coverageMinimum',
-      text: 'Add --coverageMinimum 80 to the docs build command in your CI pipeline. Anything below 80% public-symbol documentation will exit non-zero.',
+      name: 'Run compodocx with --coverageTest',
+      text: 'Add --coverageTest 80 to the docs build command in your CI pipeline. Anything below 80% documentation coverage will exit non-zero.',
     },
     {
       '@type': 'HowToStep',
       position: 3,
-      name: 'Optionally scope to public API only',
-      text: 'Pass --publicApiOnly to compute coverage against the exported allow-list, so internal helpers do not drag the percentage down.',
+      name: 'Optionally scope to the public API',
+      text: 'Pass --publicApiOnly with your dist folder to compute coverage against the published API only, so internal helpers do not drag the percentage down.',
     },
   ],
 };
@@ -36,40 +36,59 @@ const howToJsonLd = {
 <FeaturesLayout
   currentSlug="coverage"
   title="Documentation Coverage - CI gating in compodocx"
-  description="Per-symbol compodocx documentation coverage with CI threshold gating via --coverageMinimum. coverage.json with schemaVersion for dashboard ingestion."
+  description="Per-symbol compodocx documentation coverage with CI threshold gating via --coverageTest and --coverageMinimumPerFile, scoped to your documented surface."
   extraJsonLd={howToJsonLd}
 >
   <p class="text-cdx-text-secondary text-lg">
-    Every run produces a coverage report. The percentage of public symbols carrying at least a
-    one-line description. Below the threshold, the CLI exits non-zero so CI can gate.
+    Every HTML build produces a coverage report: how much of each symbol carries a description. Set
+    a threshold and the CLI exits non-zero below it, so CI can gate.
   </p>
 
   <h2>Gating in CI</h2>
-  <CodeBlock lang="bash" code="npx compodocx -p tsconfig.doc.json --coverageMinimum 80" />
+  <CodeBlock lang="bash" code="npx compodocx -p tsconfig.doc.json --coverageTest 80" />
   <p>
-    Anything below 80% in the example above fails the build. Set the threshold based on the
-    strictness you&rsquo;re aiming for. Most projects start at 50% and move it up as gaps close.
+    Anything below 80% in the example above fails the build. Without a value the threshold is 70.
+    Set it based on the strictness you&rsquo;re aiming for. Most projects start at 50% and move it
+    up as gaps close.
   </p>
+  <ul>
+    <li>
+      <code class="cdx-code">--coverageMinimumPerFile</code> makes each file meet a threshold of its own.
+    </li>
+    <li>
+      <code class="cdx-code">--coverageTestThresholdFail false</code> prints a warning instead of failing.
+    </li>
+    <li>
+      <code class="cdx-code">--coverageTestShowOnlyFailed</code> lists only the files below the threshold.
+    </li>
+    <li>
+      <code class="cdx-code">--files src/a.ts --files src/b.ts</code> with
+      <code class="cdx-code">--coverageMinimumPerFile</code> checks just those files and generates no
+      docs, which suits a pre-commit hook.
+    </li>
+  </ul>
 
   <h2>What counts as documented</h2>
   <p>
-    A public symbol counts as documented when its JSDoc block has a non-empty description on the
-    first line. Tags alone (<code class="cdx-code">@param</code>,
-    <code class="cdx-code">@returns</code>) do not satisfy the description requirement; they augment
-    it. Members marked <code class="cdx-code">@internal</code> are excluded entirely.
+    A symbol and each of its members count once, and each counts as documented when it has a
+    non-empty description. Tags alone (<code class="cdx-code">@param</code>,
+    <code class="cdx-code">@returns</code>) do not satisfy the description requirement. Private
+    members are not counted, and symbols no entry point exports are left out of the report and the
+    threshold.
   </p>
 
-  <h2>Coverage tab</h2>
+  <h2>Coverage page</h2>
   <p>
-    The HTML output renders a <em>Documentation Coverage</em> tab on the project root: the overall percentage,
-    breakdown by entity kind (components, directives, classes, interfaces, etc.), and a sortable list
-    of undocumented symbols with deep links to their source.
+    The HTML output renders a <em>Documentation Coverage</em> page at the project root: the overall percentage
+    and a list of symbols you can sort and filter by name or file, each linking to its page.
+    <code class="cdx-code">--disableCoverage</code> removes it. Pass an Istanbul summary with
+    <code class="cdx-code">--unitTestCoverage coverage-summary.json</code> to show test coverage alongside.
   </p>
 
   <h2>Public-API filtering</h2>
   <p>
-    When <code class="cdx-code">--publicApiOnly</code> is set, coverage is computed against the allow-list.
-    Internal symbols stop dragging the percentage down, and the report focuses on the surface consumers
-    actually see.
+    <code class="cdx-code">--publicApiOnly &lt;dist&gt;</code> restricts the docs, and with them the coverage
+    figure, to the names in an API Extractor report or your built package. Internal symbols stop dragging
+    the percentage down, and the report focuses on the surface consumers actually see.
   </p>
 </FeaturesLayout>

@@ -11,7 +11,7 @@ const howToJsonLd = {
   totalTime: 'PT3M',
   supply: [
     { '@type': 'HowToSupply', name: 'Node.js 22 or newer' },
-    { '@type': 'HowToSupply', name: 'An Angular project with a tsconfig' },
+    { '@type': 'HowToSupply', name: 'An Angular 21+ project with standalone code and a tsconfig' },
   ],
   tool: [{ '@type': 'HowToTool', name: '@cngxjs/compodocx' }],
   step: [
@@ -40,7 +40,7 @@ const howToJsonLd = {
 <FeaturesLayout
   currentSlug="getting-started"
   title="Getting Started - Install compodocx & generate Angular docs"
-  description="Install compodocx, point it at a tsconfig, run the CLI. Three steps to a static documentation site for your Angular project. Requires Node 22+."
+  description="Install compodocx, point it at a tsconfig, run the CLI. Three steps to a static docs site for Angular 21+ standalone projects. Requires Node 22+."
   extraJsonLd={howToJsonLd}
 >
   <p class="text-lg">
@@ -59,7 +59,7 @@ const howToJsonLd = {
       target="_blank"
       class="text-cdx-primary underline underline-offset-2"
       >Node<span class="sr-only"> (opens in new tab)</span></a
-    > 22 or newer.
+    > 22 or newer and a project on Angular 21 or 22 written with standalone APIs.
   </p>
 
   <CodeBlock
@@ -77,8 +77,16 @@ npx compodocx -p tsconfig.doc.json`}
   </p>
 
   <p>
-    Add <code class="cdx-code">--watch --serve</code> while authoring to get a local dev server with live
-    reload.
+    Inside an Angular workspace, <code class="cdx-code">ng add @cngxjs/compodocx</code> does the setup
+    in one pass: it seeds <code class="cdx-code">tsconfig.doc.json</code> and registers
+    <code class="cdx-code">compodocx:build</code>, <code class="cdx-code"
+      >compodocx:build-and-serve</code
+    >, and <code class="cdx-code">compodocx:serve</code> scripts.
+  </p>
+
+  <p>
+    Add <code class="cdx-code">--watch --serve</code> while authoring to get a local dev server that rebuilds
+    on every source change.
   </p>
 
   <h2>A minimal tsconfig</h2>
@@ -99,10 +107,40 @@ npx compodocx -p tsconfig.doc.json`}
 
   <h2>Coming from compodoc</h2>
   <p>
-    Most flags carry over. Two breaking changes worth knowing up front: the package is now
-    <code class="cdx-code">@cngxjs/compodocx</code>, and the output is multi-version by default. Pin
-    a label or pass <code class="cdx-code">--no-multiVersion</code> if your CI publishes to a flat folder.
-    Custom Handlebars templates need a one-time port via
-    <code class="cdx-code">compodocx migrate templates</code>.
+    compodocx is the successor to compodoc for modern Angular, not a drop-in replacement. These are
+    not documented, and a run reports them in one legacy notice with their locations:
+  </p>
+  <ul>
+    <li>NgModules and everything tied to them.</li>
+    <li>
+      Decorator members: <code class="cdx-code">@Input</code>, <code class="cdx-code">@Output</code
+      >,
+      <code class="cdx-code">@HostBinding</code>, and <code class="cdx-code">@HostListener</code>.
+    </li>
+    <li>Constructor injection in components, directives, pipes, and injectables.</li>
+    <li>Class-based guards, interceptors, and resolvers.</li>
+  </ul>
+  <p>
+    Switching means changing the package and the script, running it once, and acting on the warnings
+    it prints. <code class="cdx-code">ng add @cngxjs/compodocx</code> removes
+    <code class="cdx-code">@compodoc/compodoc</code> and rewrites your scripts. Removed flags and config
+    keys are ignored with a warning instead of failing the build.
+  </p>
+  <p>
+    A few things need work of your own. Page URLs changed (<code class="cdx-code"
+      >redirects.json</code
+    > maps the old paths), output is multi-version by default (<code class="cdx-code"
+      >--no-multiVersion</code
+    > keeps a flat folder), tools that read <code class="cdx-code">documentation.json</code> need the
+    new schema, and Handlebars templates must be rewritten as JS overrides by hand.
+    <code class="cdx-code">compodocx migrate jsdoc &lt;dir&gt;</code> removes retired
+    <code class="cdx-code">@category</code> and <code class="cdx-code">@docsKind</code> tags. The
+    <a
+      href="https://github.com/cngxjs/compodocx/blob/develop/MIGRATION.md"
+      rel="noopener"
+      target="_blank"
+      class="text-cdx-primary underline underline-offset-2"
+      >migration guide<span class="sr-only"> (opens in new tab)</span></a
+    > explains each warning.
   </p>
 </FeaturesLayout>

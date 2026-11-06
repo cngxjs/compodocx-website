@@ -1,6 +1,6 @@
 # compodocx-website
 
-The marketing and reference site for [`@cngxjs/compodocx`](https://github.com/cngxjs/compodocx) - a modern documentation generator for Angular applications. Standalone-first, signal-aware, themeable.
+The marketing and reference site for [`@cngxjs/compodocx`](https://github.com/cngxjs/compodocx) - a modern documentation generator for Angular applications. For standalone Angular 21+ code, signal-aware, themeable.
 
 [![Deploy](https://github.com/cngxjs/compodocx-website/actions/workflows/deploy.yml/badge.svg?branch=develop)](https://github.com/cngxjs/compodocx-website/actions/workflows/deploy.yml)
 [![Live site](https://img.shields.io/badge/live-compodocx.dev-1f6feb?logo=githubpages&logoColor=white)](https://compodocx.dev)
@@ -25,7 +25,7 @@ Built with [Astro 6](https://astro.build), [Tailwind v4](https://tailwindcss.com
 
 ```bash
 npm install        # Node >= 22.12 required
-npm run dev        # http://localhost:4321 - live reload, debug overlay
+npm run dev        # http://localhost:4321 - live reload
 ```
 
 ## Build
@@ -41,11 +41,11 @@ npm run format     # prettier --write .
 
 ## Deploy
 
-Every pr to `develop` triggers `.github/workflows/deploy.yml`:
+Every push to `develop` triggers `.github/workflows/deploy.yml`:
 
 1. `npm ci` → `npm run lint` → `npm run build`
 2. `peaceiris/actions-gh-pages@v4` publishes `./dist` to the `gh-pages` branch
-3. GitHub Pages serves `gh-pages` to https://compodocx.dev (custom domain, Let's Encrypt cert, HTTPS enforced)
+3. GitHub Pages serves `gh-pages` to <https://compodocx.dev> (custom domain, Let's Encrypt cert, HTTPS enforced)
 
 PRs run the same lint + build pipeline as a status check, but skip the publish step. Branch protection on `develop` requires the `build` check to pass.
 
@@ -60,7 +60,7 @@ PRs run the same lint + build pipeline as a status check, but skip the publish s
 
 ## Project layout
 
-```
+```text
 src/
   pages/              17 routes (landing, guides hub, 13 guides, impressum, 404)
   layouts/            Layout.astro (chrome) + FeaturesLayout.astro (guide pages)
@@ -89,4 +89,4 @@ Dual-licensed - different terms apply to source code and content:
 - **Source code** (Astro components, scripts, build configuration, CSS) - [MIT](LICENSE).
 - **Content** (guide pages, landing copy, screenshots, SVG mockups) - [CC BY 4.0](LICENSE-DOCS.md).
 
-When attributing the content, link back to https://github.com/cngxjs/compodocx-website. The CC BY 4.0 attribution requirements are documented in `LICENSE-DOCS.md`.
+When attributing the content, link back to <https://github.com/cngxjs/compodocx-website>. The CC BY 4.0 attribution requirements are documented in `LICENSE-DOCS.md`.
