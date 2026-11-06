@@ -31,7 +31,7 @@ const lqip = lqipMap as Record<string, string>;
         <a
           href={`${import.meta.env.BASE_URL}guides/coverage/`}
           class="text-cdx-primary underline underline-offset-2"
-          ><code class="cdx-code">--coverageMinimum</code></a
+          ><code class="cdx-code">--coverageTest</code></a
         > and your build fails below threshold.
       </p>
       <ul class="text-cdx-text-secondary mt-8 space-y-5 text-sm">
@@ -60,7 +60,7 @@ const lqip = lqipMap as Record<string, string>;
           </span>
           <span class="leading-relaxed">
             <span class="text-cdx-text font-semibold">Deep-linked symbol list.</span>
-            Click any undocumented item to jump straight into source.
+            Click any under-documented symbol to jump straight to its page.
           </span>
         </li>
         <li class="flex gap-3.5">
@@ -111,10 +111,9 @@ const lqip = lqipMap as Record<string, string>;
             </svg>
           </span>
           <span class="leading-relaxed">
-            <span class="text-cdx-text font-semibold">
-              <code class="cdx-code">--publicApiOnly</code> filter.
-            </span>
-            Scope to your exported allow-list so internal helpers don&rsquo;t tank the percentage.
+            <span class="text-cdx-text font-semibold"> Documented surface only. </span>
+            Symbols no entry point exports are not counted. Use
+            <code class="cdx-code">--publicApiOnly</code> to narrow further.
           </span>
         </li>
       </ul>

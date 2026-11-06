@@ -1,7 +1,7 @@
 {
-  "name": "compodocx — modern Angular documentation",
+  "name": "compodocx - modern Angular documentation",
   "short_name": "compodocx",
-  "description": "Modern documentation generator for Angular applications. Standalone-first, Signals support, multi-version output, theming tokens, migration tools.",
+  "description": "Static documentation generator for Angular 21+ standalone code: signals, inject(), typed routes, theming tokens, multi-version output. Successor to compodoc.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",

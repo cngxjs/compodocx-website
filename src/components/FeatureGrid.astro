@@ -17,14 +17,14 @@ interface Feature {
 
 const features: Feature[] = [
   {
-    id: 'library-mode',
-    category: 'Library mode',
-    title: 'Curated chapter + reference portal',
+    id: 'project-structure',
+    category: 'Project structure',
+    title: 'Organized by feature, from your code',
     blurb:
-      'Set <code class="cdx-code">menuLayout: \'feature\'</code> to ship a curated <strong>Features</strong> chapter highlighting the components, directives, and entry points readers land on first, plus an exhaustive <strong>References</strong> portal covering every public symbol. Default <code class="cdx-code">\'type\'</code> keeps the classic per-kind layout.',
+      'Entry points, imports, and folders decide where a symbol belongs. Every feature gets a page, and a <strong>References</strong> portal lists every documented symbol. Prefer one chapter per kind? Set <code class="cdx-code">menuLayout: \'type\'</code>.',
     slug: 'features',
-    hash: 'bifurcation',
-    cta: 'Library mode walkthrough',
+    hash: 'project-structure',
+    cta: 'How features are detected',
     iconColor: 'text-rose-500 dark:text-rose-400',
     iconBody: `<path d="M3 5h18"/><path d="M3 12h6"/><path d="M3 19h6"/><path d="M15 12h6"/><path d="M15 19h6"/>`,
   },
@@ -33,7 +33,7 @@ const features: Feature[] = [
     category: 'Angular Support',
     title: 'Signals, properly rendered',
     blurb:
-      '<code class="cdx-code">signal()</code>, <code class="cdx-code">computed()</code>, and <code class="cdx-code">linkedSignal()</code> render as first-class members with their derived dependencies. Effects opt in via JSDoc tag.',
+      '<code class="cdx-code">input()</code>, <code class="cdx-code">output()</code>, <code class="cdx-code">model()</code>, <code class="cdx-code">computed()</code>, and <code class="cdx-code">linkedSignal()</code> render as first-class members with their value types. Effects opt in via <code class="cdx-code">--showEffects</code>.',
     slug: 'features',
     cta: 'Signals deep dive',
     iconColor: 'text-sky-500 dark:text-sky-400',
@@ -64,9 +64,9 @@ const features: Feature[] = [
   {
     id: 'cli',
     category: 'Tooling',
-    title: 'Migrate & diff sub-CLIs',
+    title: 'Diff & validate sub-CLIs',
     blurb:
-      '<code class="cdx-code">compodocx migrate</code> rewrites your old Handlebars templates as JS partials. <code class="cdx-code">compodocx diff</code> fails CI when your public API changes.',
+      '<code class="cdx-code">compodocx diff</code> fails CI when your public API breaks. <code class="cdx-code">compodocx playground:validate</code> compiles every runnable demo before you ship it.',
     slug: 'usage',
     cta: 'CLI reference',
     iconColor: 'text-amber-500 dark:text-amber-400',
@@ -83,6 +83,41 @@ const features: Feature[] = [
     iconColor: 'text-fuchsia-500 dark:text-fuchsia-400',
     iconBody: `<path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/>`,
   },
+  {
+    id: 'di',
+    category: 'Angular Support',
+    title: 'Dependency injection as a chapter',
+    blurb:
+      'Providers, feature functions, and injection tokens get their own pages. See which providers supply a token, who injects it, and what needs an injection context.',
+    slug: 'features',
+    hash: 'di',
+    cta: 'Dependency injection pages',
+    iconColor: 'text-cyan-500 dark:text-cyan-400',
+    iconBody: `<path d="m21 2-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0 3 3L22 7l-3-3m-3.5 3.5L19 4"/>`,
+  },
+  {
+    id: 'routes',
+    category: 'Angular Support',
+    title: 'Typed routes as a tree',
+    blurb:
+      'Routes are read from <code class="cdx-code">provideRouter</code> through the type checker, lazy <code class="cdx-code">loadChildren</code> included. Components and guards link back to the routes that use them.',
+    slug: 'routing',
+    cta: 'Routes page',
+    iconColor: 'text-orange-500 dark:text-orange-400',
+    iconBody: `<circle cx="6" cy="19" r="3"/><path d="M9 19h8.5a3.5 3.5 0 0 0 0-7h-11a3.5 3.5 0 0 1 0-7H15"/><circle cx="18" cy="5" r="3"/>`,
+  },
+  {
+    id: 'style-files',
+    category: 'Theming',
+    title: 'Your design tokens, documented',
+    blurb:
+      'Comments above CSS custom properties and SCSS variables fill a <em>Theming</em> tab. <code class="cdx-code">styleFiles</code> adds free-standing sheets, mixins, and a design tokens page.',
+    slug: 'themes',
+    hash: 'component-tokens',
+    cta: 'Documenting tokens',
+    iconColor: 'text-indigo-500 dark:text-indigo-400',
+    iconBody: `<path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"/>`,
+  },
 ];
 ---
 
@@ -90,7 +125,7 @@ const features: Feature[] = [
   <hgroup>
     <SectionEyebrow text="Features" />
     <h2 id="features-heading" class="text-cdx-text mt-3 text-3xl font-semibold tracking-tight">
-      Built for modern Angular projects
+      Built for Angular 21+ standalone code
     </h2>
   </hgroup>
 

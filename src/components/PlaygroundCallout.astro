@@ -58,9 +58,8 @@ const base = import.meta.env.BASE_URL;
           publication required.
         </p>
         <p class="text-cdx-text-secondary mt-3 leading-relaxed">
-          The StackBlitz SDK is lazy-loaded on first click as a separate ~7 KB chunk, so static doc
-          pages stay light. <code class="cdx-code">@internal</code> exports never leak into the public
-          project.
+          Doc pages carry only an inert manifest, and nothing contacts StackBlitz until a reader
+          clicks. <code class="cdx-code">@internal</code> exports never leak into the public project.
         </p>
         <a
           href={`${base}guides/playground/`}
@@ -140,9 +139,9 @@ const base = import.meta.env.BASE_URL;
             >
           </span>
           <div class="text-sm leading-relaxed">
-            <p class="text-cdx-text font-semibold">Lazy SDK loading</p>
+            <p class="text-cdx-text font-semibold">Launches on click</p>
             <p class="text-cdx-text-secondary">
-              ~7 KB chunk fetched on first click. Doc pages stay fast.
+              Nothing contacts StackBlitz until a reader clicks.
             </p>
           </div>
         </li>

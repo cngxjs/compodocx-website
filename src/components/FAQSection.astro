@@ -11,18 +11,18 @@ export interface FaqItem {
 
 export const faq: FaqItem[] = [
   {
-    question: 'Is compodocx compatible with compodoc?',
+    question: 'Is compodocx a drop-in replacement for compodoc?',
     answer:
-      'Yes. compodocx is a drop-in fork. The compodoc CLI alias still works, and a compodocx migrate command ports Handlebars overrides to JS partials automatically.',
+      'No. compodocx is the successor to compodoc for modern Angular. It does not document NgModules, decorator members such as @Input and @Output, constructor injection in Angular classes, or class-based guards, interceptors and resolvers. Page URLs, the JSON export and custom templates differ too. A compodoc binary name and .compodocrc config names still work, and MIGRATION.md explains every warning the first run prints.',
     answerHtml:
-      '<strong class="text-cdx-text">Yes.</strong> compodocx is a drop-in fork. The <code class="cdx-code">compodoc</code> CLI alias still works, and <code class="cdx-code">compodocx migrate</code> ports Handlebars overrides to JS partials automatically.',
+      '<strong class="text-cdx-text">No.</strong> compodocx is the successor to compodoc for modern Angular. It does not document NgModules, decorator members such as <code class="cdx-code">@Input</code> and <code class="cdx-code">@Output</code>, constructor injection in Angular classes, or class-based guards, interceptors and resolvers. Page URLs, the JSON export and custom templates differ too.<br /><br />The <code class="cdx-code">compodoc</code> binary name and <code class="cdx-code">.compodocrc</code> config names still work, and <a href="https://github.com/cngxjs/compodocx/blob/develop/MIGRATION.md" rel="noopener" target="_blank" class="text-cdx-primary underline underline-offset-2">MIGRATION.md<span class="sr-only"> (opens in new tab)</span></a> explains every warning the first run prints.',
   },
   {
-    question: 'Does compodocx support Angular Signals and standalone components?',
+    question: 'Which Angular versions and APIs does compodocx document?',
     answer:
-      'Yes. signal, computed, and linked-signal members render as first-class fields with derived-state dependencies. Standalone components, directives, and pipes are documented without NgModule scaffolding.',
+      'Angular 21 and 22, standalone code only. That covers standalone components, directives and pipes, signal inputs, outputs and models, computed and linkedSignal, inject(), the host metadata object, and functional guards, interceptors and resolvers. Older constructs are skipped and reported in one legacy notice with their locations.',
     answerHtml:
-      '<strong class="text-cdx-text">Yes.</strong> <code class="cdx-code">signal()</code>, <code class="cdx-code">computed()</code>, and <code class="cdx-code">linkedSignal()</code> members render as first-class fields with derived-state dependencies.<br /><br />Standalone components, directives, and pipes are documented - no <code class="cdx-code">NgModule</code> scaffolding needed.',
+      '<strong class="text-cdx-text">Angular 21 and 22, standalone code only.</strong> That covers standalone components, directives and pipes, signal inputs, outputs and models, <code class="cdx-code">computed()</code> and <code class="cdx-code">linkedSignal()</code>, <code class="cdx-code">inject()</code>, the <code class="cdx-code">host</code> metadata object, and functional guards, interceptors and resolvers.<br /><br />Older constructs are skipped and reported in one legacy notice with their locations.',
   },
   {
     question: 'Can I generate docs for multiple library versions?',
@@ -41,23 +41,23 @@ export const faq: FaqItem[] = [
   {
     question: 'Does compodocx integrate with CI?',
     answer:
-      'Yes. compodocx diff compares two JSON snapshots and exits non-zero on breaking changes. --exportFormat json emits a typed schema with schemaVersion. --coverageMinimum gates merges on documentation completeness.',
+      'Yes. compodocx diff compares two JSON exports and exits non-zero on API changes. --exportFormat json emits a typed export with schemaVersion and a shipped JSON Schema. --coverageTest gates merges on documentation completeness.',
     answerHtml:
-      '<strong class="text-cdx-text">Yes.</strong> Three CI hooks ship in the box:<ul class="mt-3 list-disc space-y-2 pl-5"><li><code class="cdx-code">compodocx diff</code> compares two JSON snapshots and exits non-zero on breaking changes.</li><li><code class="cdx-code">--exportFormat json</code> emits a typed schema with a stable <code class="cdx-code">schemaVersion</code>.</li><li><code class="cdx-code">--coverageMinimum</code> gates merges on documentation completeness.</li></ul>',
+      '<strong class="text-cdx-text">Yes.</strong> Three CI hooks ship in the box:<ul class="mt-3 list-disc space-y-2 pl-5"><li><code class="cdx-code">compodocx diff</code> compares two JSON exports and exits non-zero on API changes.</li><li><code class="cdx-code">--exportFormat json</code> emits a typed export with a <code class="cdx-code">schemaVersion</code> and a shipped JSON Schema.</li><li><code class="cdx-code">--coverageTest</code> gates merges on documentation completeness.</li></ul>',
   },
   {
     question: 'Can I ship runnable demos with my docs?',
     answer:
-      'Yes. Add a @playground JSDoc block to a component and compodocx renders a Playground tab on its page with one launch button per block. Clicking opens a fresh StackBlitz project assembled at build time from your component sources. The SDK is lazy-loaded as a ~7 KB chunk on first click.',
+      'Yes. Add a @playground JSDoc block to a component and compodocx renders a Playground tab on its page with one launch button per block. Clicking opens a fresh StackBlitz project assembled at build time from your component sources. Nothing contacts StackBlitz until a reader clicks.',
     answerHtml:
-      '<strong class="text-cdx-text">Yes.</strong> Add a <code class="cdx-code">@playground</code> JSDoc block to a component and compodocx renders a <em>Playground</em> tab with one launch button per block.<br /><br />Clicking opens a fresh StackBlitz project assembled at build time from your component sources. No library publication required. The SDK is lazy-loaded as a ~7 KB chunk on first click, so static doc pages stay light.',
+      '<strong class="text-cdx-text">Yes.</strong> Add a <code class="cdx-code">@playground</code> JSDoc block to a component and compodocx renders a <em>Playground</em> tab with one launch button per block.<br /><br />Clicking opens a fresh StackBlitz project assembled at build time from your component sources. No library publication required. Nothing contacts StackBlitz until a reader clicks.',
   },
   {
     question: 'Does compodocx surface accessibility metadata?',
     answer:
-      'Yes. Annotate any entity with @wcag A, AA, or AAA and a coloured chip lands in the page hero. Add @a11y for a free-form note attached to the entity for the llm-md export. The WCAG level also feeds the search-palette facet rail so a reader can filter the index to "AA and up".',
+      'Yes. Annotate any entity with @wcag A, AA, or AAA and a coloured chip lands in the page hero. Add @a11y for a free-form note attached to the entity for the llm-md export. The WCAG level also feeds the search-palette filters so a reader can narrow the index to a level.',
     answerHtml:
-      '<strong class="text-cdx-text">Yes.</strong> Annotate any entity with <code class="cdx-code">@wcag A</code>, <code class="cdx-code">AA</code>, or <code class="cdx-code">AAA</code> and a coloured chip lands in the page hero. Add <code class="cdx-code">@a11y</code> for a free-form note attached to the entity for the <code class="cdx-code">llm-md</code> export.<br /><br />The WCAG level also feeds the search-palette facet rail so a reader can filter the index to "AA and up".',
+      '<strong class="text-cdx-text">Yes.</strong> Annotate any entity with <code class="cdx-code">@wcag A</code>, <code class="cdx-code">AA</code>, or <code class="cdx-code">AAA</code> and a coloured chip lands in the page hero. Add <code class="cdx-code">@a11y</code> for a free-form note attached to the entity for the <code class="cdx-code">llm-md</code> export.<br /><br />The WCAG level also feeds the search-palette filters so a reader can narrow the index to a level.',
   },
   {
     question: 'Is compodocx free?',
