@@ -10,7 +10,7 @@ interface FeatureSection {
   items: string[];
 }
 
-interface BifurcationCard {
+interface AnalysisCard {
   id: string;
   title: string;
   iconBody: string;
@@ -28,10 +28,11 @@ const sections: FeatureSection[] = [
     iconColor: 'text-rose-500 dark:text-rose-400',
     iconBody: `<path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"/><path d="M12 22V12"/><path d="m3.3 7 8.7 5 8.7-5"/>`,
     items: [
-      'Standalone components, directives, pipes. No NgModule scaffolding required.',
-      '<a href="https://angular.dev/guide/signals" rel="noopener" target="_blank" class="text-cdx-primary underline underline-offset-2">Signals<span class="sr-only"> (opens in new tab)</span></a>, <code class="cdx-code">computed</code>, and <code class="cdx-code">linked-signal</code> members render as first-class fields with their derived-state dependencies.',
-      '<code class="cdx-code">inject()</code> DI alongside constructor DI. Both surface in a unified dependencies block.',
-      'Host bindings, host listeners, host structured attributes, providers and view providers.',
+      'Angular 21 and 22, standalone components, directives, and pipes. NgModules, decorator members, constructor injection, and class-based guards, interceptors, and resolvers are reported in one legacy notice, not documented.',
+      '<a href="https://angular.dev/guide/signals" rel="noopener" target="_blank" class="text-cdx-primary underline underline-offset-2">Signals<span class="sr-only"> (opens in new tab)</span></a> as first-class members: <code class="cdx-code">input()</code>, <code class="cdx-code">output()</code>, <code class="cdx-code">model()</code>, signal queries, <code class="cdx-code">computed()</code>, and <code class="cdx-code">linkedSignal()</code>, typed by their value.',
+      '<code class="cdx-code">inject()</code> and <code class="cdx-code">injectAsync()</code> surface in a dependencies block. Angular 22 <code class="cdx-code">@Service</code> classes and <code class="cdx-code">httpResource</code> members get their own kinds.',
+      'The <code class="cdx-code">host</code> metadata object, <code class="cdx-code">hostDirectives</code>, providers and view providers, with provider calls linked.',
+      'Functional guards, interceptors, and resolvers, plus a typed route tree.',
       'Effects rendered opt-in via <code class="cdx-code">--showEffects</code>.',
       'Component theming tokens parsed from CSS custom properties, SCSS variables, and <code class="cdx-code">@property</code> rules.',
     ],
@@ -54,10 +55,11 @@ const sections: FeatureSection[] = [
     iconColor: 'text-amber-500 dark:text-amber-400',
     iconBody: `<path d="m7 11 2-2-2-2"/><path d="M11 13h4"/><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/>`,
     items: [
-      '<code class="cdx-code">compodocx migrate</code> ports compodoc Handlebars overrides to JS partials. Subcommands for inspecting, single-template, full-template-folder, and CSS migration.',
-      '<code class="cdx-code">compodocx diff</code> compares two <code class="cdx-code">--exportFormat json</code> snapshots. Exits 0 on clean, 1 on additive, 2 on breaking changes.',
+      '<code class="cdx-code">compodocx diff --old --new</code> compares two <code class="cdx-code">--exportFormat json</code> exports. Exits 0 on clean, 1 on additive, 2 on breaking changes.',
+      '<code class="cdx-code">compodocx playground:validate</code> compiles every <code class="cdx-code">@playground</code> with a real install and build.',
+      '<code class="cdx-code">compodocx migrate jsdoc</code> removes the retired <code class="cdx-code">@category</code> and <code class="cdx-code">@docsKind</code> tags from your sources.',
       '<code class="cdx-code">--exportFormat llm-md</code> emits an LLM-context markdown bundle for AI assistants and code-review bots.',
-      '<code class="cdx-code">--exportFormat json</code> emits a typed API snapshot with <code class="cdx-code">schemaVersion</code>, suitable for diffing or downstream tooling.',
+      '<code class="cdx-code">--exportFormat json</code> emits a typed API export with <code class="cdx-code">schemaVersion</code> and a shipped JSON Schema, suitable for diffing or downstream tooling.',
     ],
   },
   {
@@ -66,11 +68,12 @@ const sections: FeatureSection[] = [
     iconColor: 'text-sky-500 dark:text-sky-400',
     iconBody: `<path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/>`,
     items: [
-      'SPA hash-router with deep-link scroll restoration and tab activation by URL hash.',
-      'Keyboard navigation: <code class="cdx-code">j</code> / <code class="cdx-code">k</code> through member cards, <code class="cdx-code">[</code> / <code class="cdx-code">]</code> through the sidebar entity list, <code class="cdx-code">?</code> opens a shortcut overlay.',
+      'SPA page swaps on static HTML, with deep links to tabs, members, and source lines by URL hash.',
+      'An interactive map of the project: feature islands, filter chips, and hop-by-hop impact on click.',
+      'Keyboard navigation: <code class="cdx-code">j</code> / <code class="cdx-code">k</code> through member cards, <code class="cdx-code">n</code> / <code class="cdx-code">p</code> through the sidebar entries, <code class="cdx-code">?</code> opens a shortcut overlay.',
       'Shiki syntax highlighting with per-theme light/dark pairs.',
       'Flicker-free dark mode and theme switching, applied before paint. No FOUC.',
-      'Optional Pagefind search index for production builds (opt-in via <code class="cdx-code">--search</code>).',
+      'Pagefind search in a command palette (<code class="cdx-code">Ctrl+K</code>), with filters by kind, library, feature, and WCAG level. Turn it off with <code class="cdx-code">--disableSearch</code>.',
     ],
   },
   {
@@ -82,7 +85,8 @@ const sections: FeatureSection[] = [
       'Eight bundled themes: <em>Slate Noir</em> (default), Ocean, Midnight, Nord, Rose Pine, Ember, Neon, Brutalist.',
       'Custom themes are a single CSS file overriding any subset of the <code class="cdx-code">--color-cdx-*</code> tokens.',
       'Per-theme Shiki light/dark pairs picked to match each palette.',
-      'Component pages surface a <em>Theming Tokens</em> tab with grouped CSS custom properties, SCSS variables, and <code class="cdx-code">@property</code> rules.',
+      'Component and directive pages surface a <em>Theming</em> tab with grouped CSS custom properties, SCSS variables, <code class="cdx-code">@property</code> rules, hooks, and mixins.',
+      '<code class="cdx-code">styleFiles</code> documents free-standing sheets and collects unclaimed tokens on a design tokens page.',
     ],
   },
   {
@@ -100,68 +104,68 @@ const sections: FeatureSection[] = [
   },
 ];
 
-const bifurcationCards: BifurcationCard[] = [
+const analysisCards: AnalysisCard[] = [
   {
-    id: 'token-kind',
-    title: 'Tokens as their own page kind',
+    id: 'di',
+    title: 'Dependency injection chapter',
     iconColor: 'text-violet-500 dark:text-violet-400',
     iconBody: `<path d="m21 2-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0 3 3L22 7l-3-3m-3.5 3.5L19 4"/>`,
     intro:
-      '<code class="cdx-code">InjectionToken</code> + <code class="cdx-code">HttpContextToken</code> at <code class="cdx-code">tokens/&lt;name&gt;.html</code>.',
+      'Providers, feature functions, and tokens, with a <code class="cdx-code">dependency-injection.html</code> landing page.',
     items: [
-      'Lean page: hero, referenced-by chips, type signature, providedIn.',
-      'No methods, no API tab.',
-      'The <code class="cdx-code">Injectable</code> bucket counts real services only.',
+      'Providers that accept one feature type share a page with their feature functions.',
+      'Token pages show the shape of the type, the default factory, who provides it, and who injects it.',
+      'An <strong class="text-cdx-text">Injection context</strong> badge marks what must run inside one.',
     ],
   },
   {
-    id: 'bucket-landings',
-    title: 'Bucket landing pages',
+    id: 'feature-pages',
+    title: 'Feature pages',
     iconColor: 'text-emerald-500 dark:text-emerald-400',
     iconBody: `<path d="M3 7v11a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V9a1 1 0 0 0-1-1h-6.5l-2-2H4a1 1 0 0 0-1 1z"/>`,
-    intro: 'Auto-built landing per <code class="cdx-code">@category</code> bucket.',
+    intro: 'An <code class="cdx-code">index.html</code> in every feature folder.',
     items: [
-      'Path: <code class="cdx-code">categories/&lt;id&gt;.html</code>, nested for sub-buckets.',
-      'Members grouped by kind with first-sentence excerpts.',
-      'Sidebar bucket row: label navigates, chevron toggles.',
+      'Import path and the README of the feature folder.',
+      'Members by role, plus the feature&rsquo;s routes and theming.',
+      'The features it builds on and the ones that extend it.',
     ],
   },
   {
-    id: 'backlinks',
-    title: 'Referenced-by backlinks',
+    id: 'used-by',
+    title: 'Used by',
     iconColor: 'text-rose-500 dark:text-rose-400',
     iconBody: `<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>`,
-    intro: 'Reverse-index chip list above the Info tab.',
+    intro: 'Who uses a symbol, from the project analysis instead of a text search.',
     items: [
-      'Applies to interfaces, type aliases, enums, variables, functions.',
-      'Tracks <code class="cdx-code">extends</code>, <code class="cdx-code">implements</code>, member types, return types, host directives.',
+      'Symbol pages list the declarations that reference them.',
+      'Guards and resolvers list the routes that use them.',
       'Override name: <code class="cdx-code">referenced-by</code>.',
     ],
   },
   {
-    id: 'pagefind-facets',
-    title: 'Pagefind facet rail',
+    id: 'search-filters',
+    title: 'Search filters and axes',
     iconColor: 'text-fuchsia-500 dark:text-fuchsia-400',
     iconBody: `<polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/>`,
     intro: 'Multi-dimensional filtering in the command palette.',
     items: [
-      'Chip rows: <strong class="text-cdx-text">Kind</strong>, <strong class="text-cdx-text">Library</strong>, <strong class="text-cdx-text">Tier</strong>, <strong class="text-cdx-text">WCAG</strong>.',
-      'Multi-select per dimension, AND across dimensions.',
-      'Filter state persists in the URL.',
+      'Chip rows: <strong class="text-cdx-text">Kind</strong>, <strong class="text-cdx-text">Library</strong>, <strong class="text-cdx-text">Feature</strong>, <strong class="text-cdx-text">WCAG</strong>.',
+      '<code class="cdx-code">classificationAxes</code> adds one row per axis you declare, such as stability or platform.',
+      'OR within a row, AND across rows. Filter state persists in the URL.',
     ],
   },
 ];
 
 const enableSnippet = `// .compodocxrc.json
 {
-  "menuLayout": "feature"
+  "menuLayout": "type"
 }`;
 ---
 
 <FeaturesLayout
   currentSlug="features"
-  title="Features - Standalone, Signals & curated docs · compodocx"
-  description="Standalone components, signals, multi-version output, theming tokens, the curated Features chapter plus exhaustive References portal, InjectionToken pages, bucket landings, backlinks, and Pagefind facets."
+  title="Features - Standalone, Signals & project structure · compodocx"
+  description="Angular 21+ standalone code, signals, feature pages, dependency injection, typed routes, multi-version output, theming tokens, and Pagefind search in compodocx."
 >
   <p class="text-cdx-text-secondary text-lg">
     What lands on the page after a build, grouped by area.
@@ -222,25 +226,27 @@ const enableSnippet = `// .compodocxrc.json
   <div class="border-cdx-border/60 mt-20 border-t pt-16 sm:mt-24 sm:pt-20" aria-hidden="true"></div>
 
   <section
-    id="bifurcation"
+    id="project-structure"
     tabindex="-1"
     class="scroll-mt-24 focus:outline-none"
-    aria-labelledby="bifurcation-heading"
+    aria-labelledby="project-structure-heading"
   >
     <hgroup>
       <p class="text-cdx-text-secondary text-xs font-semibold tracking-[0.2em] uppercase">
-        Library mode
+        Project structure
       </p>
       <h2
-        id="bifurcation-heading"
+        id="project-structure-heading"
         class="text-cdx-text mt-3 text-2xl font-semibold tracking-tight sm:text-[1.75rem]"
       >
-        Two audiences, one source pass
+        Structure derived from your code
       </h2>
       <p class="text-cdx-text-secondary mt-4 max-w-2xl leading-relaxed">
-        Picking a sidebar layout is the only opt-in. Library authors and SDK teams flip one config
-        key and the sidebar reshapes into a curated chapter plus an exhaustive reference portal -
-        both bucketed by <code class="cdx-code">@category</code> or folder path.
+        Every documented symbol belongs to a feature: its entry point, then a key below it. compodocx
+        derives it from <code class="cdx-code">ng-package.json</code> entry files, the imports between
+        folders, and, in apps, the folders below <code class="cdx-code">src/app</code>. Correct it with an
+        <code class="cdx-code">@feature</code> tag or the <code class="cdx-code">features</code> config. The
+        page URLs follow the same structure.
       </p>
     </hgroup>
 
@@ -272,9 +278,9 @@ const enableSnippet = `// .compodocxrc.json
           </span>
           <div class="min-w-0">
             <h3 id="mode-type-title" class="text-cdx-text text-lg font-semibold tracking-tight">
-              Per-kind tree
+              Feature tree
             </h3>
-            <code class="cdx-code text-xs">menuLayout: 'type'  ·  default</code>
+            <code class="cdx-code text-xs">menuLayout: 'feature'  ·  default</code>
           </div>
         </header>
 
@@ -296,7 +302,8 @@ const enableSnippet = `// .compodocxrc.json
               <polyline points="20 6 9 17 4 12" />
             </svg>
             <span class="text-cdx-text-secondary leading-relaxed"
-              >One chapter per Angular artefact kind.</span
+              ><strong class="text-cdx-text">Features</strong> chapter: entry points as a tree of
+              their import path, each feature below its entry point.</span
             >
           </li>
           <li class="flex gap-3">
@@ -316,7 +323,8 @@ const enableSnippet = `// .compodocxrc.json
               <polyline points="20 6 9 17 4 12" />
             </svg>
             <span class="text-cdx-text-secondary leading-relaxed"
-              >Components, Directives, Pipes, Injectables, Classes, …</span
+              >Primary members on top; configuration, utilities, constants, and types in collapsed
+              nodes.</span
             >
           </li>
           <li class="flex gap-3">
@@ -336,7 +344,8 @@ const enableSnippet = `// .compodocxrc.json
               <polyline points="20 6 9 17 4 12" />
             </svg>
             <span class="text-cdx-text-secondary leading-relaxed"
-              >No bucket landings and no References portal.</span
+              ><strong class="text-cdx-text">References</strong> portal at
+              <code class="cdx-code">references.html</code>, listing every documented symbol.</span
             >
           </li>
           <li class="flex gap-3">
@@ -356,7 +365,7 @@ const enableSnippet = `// .compodocxrc.json
               <polyline points="20 6 9 17 4 12" />
             </svg>
             <span class="text-cdx-text-secondary leading-relaxed"
-              >Best for application docs and internal projects.</span
+              >Works for libraries and apps alike.</span
             >
           </li>
         </ul>
@@ -390,9 +399,9 @@ const enableSnippet = `// .compodocxrc.json
           </span>
           <div class="min-w-0">
             <h3 id="mode-feature-title" class="text-cdx-text text-lg font-semibold tracking-tight">
-              Curated + reference portal
+              Per-kind tree
             </h3>
-            <code class="cdx-code text-xs">menuLayout: 'feature'  ·  opt-in</code>
+            <code class="cdx-code text-xs">menuLayout: 'type'  ·  opt-in</code>
           </div>
         </header>
 
@@ -414,8 +423,7 @@ const enableSnippet = `// .compodocxrc.json
               <polyline points="20 6 9 17 4 12" />
             </svg>
             <span class="text-cdx-text-secondary leading-relaxed"
-              ><strong class="text-cdx-text">Features</strong> chapter, the curated entry points
-              readers reach for first.</span
+              >One chapter per kind: Components, Directives, Pipes, Injectables, Services, …</span
             >
           </li>
           <li class="flex gap-3">
@@ -435,9 +443,7 @@ const enableSnippet = `// .compodocxrc.json
               <polyline points="20 6 9 17 4 12" />
             </svg>
             <span class="text-cdx-text-secondary leading-relaxed"
-              ><strong class="text-cdx-text">References</strong> portal at <code class="cdx-code"
-                >references.html</code
-              >, exhaustive index of every public symbol.</span
+              >Each chapter is still grouped by feature.</span
             >
           </li>
           <li class="flex gap-3">
@@ -457,7 +463,7 @@ const enableSnippet = `// .compodocxrc.json
               <polyline points="20 6 9 17 4 12" />
             </svg>
             <span class="text-cdx-text-secondary leading-relaxed"
-              >Plus bucket landings, backlinks, and Pagefind facets.</span
+              >Utilities and Dependency Injection get sidebar chapters of their own.</span
             >
           </li>
           <li class="flex gap-3">
@@ -477,7 +483,7 @@ const enableSnippet = `// .compodocxrc.json
               <polyline points="20 6 9 17 4 12" />
             </svg>
             <span class="text-cdx-text-secondary leading-relaxed"
-              >Best for library authors and SDK teams.</span
+              >Only the sidebar changes. Pages and URLs stay the same.</span
             >
           </li>
         </ul>
@@ -487,12 +493,12 @@ const enableSnippet = `// .compodocxrc.json
     <div class="mt-8 grid gap-6 lg:grid-cols-[1fr_auto] lg:items-center">
       <div>
         <p class="text-cdx-text text-sm font-semibold tracking-tight">
-          Flip the switch in one line
+          Prefer one chapter per kind?
         </p>
         <p class="text-cdx-text-secondary mt-2 text-sm leading-relaxed">
           Config-only - no CLI flag. Full reference under <a
-            href={`${import.meta.env.BASE_URL}guides/options/#navigation`}
-            class="text-cdx-primary underline-offset-2 hover:underline">Navigation &amp; layout</a
+            href={`${import.meta.env.BASE_URL}guides/options/#sidebar-grouping`}
+            class="text-cdx-primary underline-offset-2 hover:underline">Sidebar grouping</a
           >.
         </p>
       </div>
@@ -502,16 +508,15 @@ const enableSnippet = `// .compodocxrc.json
     </div>
 
     <h3 class="text-cdx-text mt-16 text-xl font-semibold tracking-tight">
-      What library mode unlocks
+      Built on the project analysis
     </h3>
     <p class="text-cdx-text-secondary mt-2 max-w-2xl text-sm leading-relaxed">
-      Four extra capabilities under <code class="cdx-code">menuLayout: 'feature'</code>, all
-      overridable via <code class="cdx-code">--templates</code>.
+      compodocx analyzes the whole project through your tsconfig. These work in both sidebar layouts.
     </p>
 
     <div class="mt-6 grid gap-5 md:grid-cols-2">
       {
-        bifurcationCards.map((card) => (
+        analysisCards.map((card) => (
           <article class="bg-cdx-bg-elevated flex flex-col rounded-xl p-6">
             <header class="flex items-center gap-3">
               <span
