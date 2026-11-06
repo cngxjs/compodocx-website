@@ -5,7 +5,7 @@
  * Walks every published route at common mobile viewports and reports any
  * horizontal overflow (document.body.scrollWidth > window.innerWidth).
  * When overflow is detected, also dumps the narrowest descendant elements
- * forcing the layout — useful for tracing min-content propagation through
+ * forcing the layout - useful for tracing min-content propagation through
  * nowrap pills, code blocks, or non-shrinking flex items.
  *
  * Usage (with `npm run dev` running on :4321):
@@ -38,10 +38,10 @@ const HEADED = process.env.HEADED === '1' || process.env.HEADED === 'true';
 const SLOW_MO = Number(process.env.SLOW_MO ?? (HEADED ? 150 : 0));
 
 // Probe set: smallest-still-supported up to a current 6.x" iPhone. Stays in the
-// iOS family on purpose — Android viewports are similar enough that adding them
+// iOS family on purpose - Android viewports are similar enough that adding them
 // rarely surfaces new overflow modes.
 const PROFILES = [
-  // iPhone SE 1st gen — 320 px is the narrowest viewport we still consider.
+  // iPhone SE 1st gen - 320 px is the narrowest viewport we still consider.
   {
     name: 'iphone-se',
     context: {
@@ -53,9 +53,9 @@ const PROFILES = [
         'Mozilla/5.0 (iPhone; CPU iPhone OS 13_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0 Mobile/15E148 Safari/604.1',
     },
   },
-  // iPhone 8 / SE2 / 12 mini — 375 × 667 baseline.
+  // iPhone 8 / SE2 / 12 mini - 375 × 667 baseline.
   { name: 'iphone-8', context: devices['iPhone 8'] },
-  // iPhone 14 / 15 standard — 390 × 844.
+  // iPhone 14 / 15 standard - 390 × 844.
   { name: 'iphone-14', context: devices['iPhone 14'] },
 ];
 
@@ -145,7 +145,7 @@ for (const browserName of BROWSERS) {
   for (const profile of PROFILES) {
     // Firefox does not implement Playwright's mobile emulation flags
     // (isMobile / hasTouch / deviceScaleFactor). Strip them and keep just the
-    // viewport + UA — that still triggers the responsive CSS we care about.
+    // viewport + UA - that still triggers the responsive CSS we care about.
     const ctxOpts =
       browserName === 'firefox'
         ? {

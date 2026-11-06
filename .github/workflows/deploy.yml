@@ -49,7 +49,7 @@ jobs:
       # Sources, in order:
       #   - repository_dispatch payload (release.yml fires `compodocx-released`)
       #   - workflow_dispatch input (manual sync via the GitHub UI)
-      #   - empty (no sync — push / PR runs build with whatever is committed)
+      #   - empty (no sync - push / PR runs build with whatever is committed)
       - name: Resolve sync ref
         id: ref
         run: |
@@ -63,7 +63,7 @@ jobs:
           if [ -n "$REF" ]; then
             echo "Will sync compodocx tokens from $REF"
           else
-            echo "No sync ref — using committed token vendor as-is"
+            echo "No sync ref - using committed token vendor as-is"
           fi
 
       # Sync runs in the workflow's working tree only; we don't commit the

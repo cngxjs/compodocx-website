@@ -107,7 +107,7 @@ const appleSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" 
   </text>
 </svg>`;
 
-// Scale appleSvg to any size — viewBox stays 0 0 180 180 so librsvg scales proportionally.
+// Scale appleSvg to any size - viewBox stays 0 0 180 180 so librsvg scales proportionally.
 function iconSvgAt(size) {
   return appleSvg.replace('width="180" height="180"', `width="${size}" height="${size}"`);
 }
