@@ -80,9 +80,8 @@ npx compodocx diff --old snapshots/prev/documentation.json --new snapshots/next/
   <h2>LLM context for code review</h2>
   <CodeBlock lang="bash" code="npx compodocx -p tsconfig.doc.json --exportFormat llm-md" />
   <p>
-    Without <code class="cdx-code">-d</code>, writes to stdout. Pipe straight into
-    <code class="cdx-code">llm</code>, <code class="cdx-code">claude</code>, or any tool that reads
-    markdown. With <code class="cdx-code">-d</code>, writes
+    Without <code class="cdx-code">-d</code>, writes to stdout. Pipe it straight into your AI
+    assistant or any tool that reads markdown. With <code class="cdx-code">-d</code>, writes
     <code class="cdx-code">&lt;output&gt;/llm-context.md</code>.
   </p>
 </FeaturesLayout>
