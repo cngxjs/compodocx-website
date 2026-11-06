@@ -33,7 +33,7 @@ const howToJsonLd = {
       '@type': 'HowToStep',
       position: 3,
       name: 'Rebuild and click Open in StackBlitz',
-      text: 'compodocx assembles a WebContainer-templated StackBlitz project per block at build time, with Angular peers locked to the version your package.json declares. The SDK is lazy-loaded on first click. Clicking opens a fresh tab - no iframe overlay.',
+      text: 'compodocx assembles a WebContainer-templated StackBlitz project per block at build time, with Angular peers locked to the version your package.json declares. Clicking opens a fresh tab - no iframe overlay.',
     },
   ],
 };
@@ -83,7 +83,7 @@ const howToJsonLd = {
       />
     </a>
     <span class="text-cdx-text-muted hidden sm:inline">·</span>
-    <span class="text-cdx-text-muted text-xs">SDK lazy-loaded · ~7 KB chunk</span>
+    <span class="text-cdx-text-muted text-xs">Assembled at build time · launches on click</span>
   </div>
 
   <p class="text-cdx-text-secondary text-lg">
@@ -91,7 +91,7 @@ const howToJsonLd = {
     <code class="cdx-code">@playground</code> JSDoc block, and compodocx renders a dedicated <em
       >Playground</em
     > tab on the component page with one launch button per block. The StackBlitz project is assembled
-    at build time. The SDK is lazy-loaded on first click, so static doc pages stay light.
+    at build time, and nothing contacts StackBlitz until a reader clicks.
   </p>
 
   <h2>Three authoring modes</h2>
@@ -306,7 +306,9 @@ export class CounterExample {
   <p>
     At build time compodocx assembles a StackBlitz WebContainer-templated (<code class="cdx-code"
       >template: 'node'</code
-    >) Angular CLI 21 project per block: a minimal <code class="cdx-code">main.ts</code>,
+    >) Angular CLI project per block, on the Angular version your
+    <code class="cdx-code">package.json</code> declares (<code class="cdx-code">^21.0.0</code> when it
+    declares none): a minimal <code class="cdx-code">main.ts</code>,
     <code class="cdx-code">app.component.ts</code> that hosts your snippet (or IS your TS-mode entry),
     the documented component&rsquo;s source plus any transitive imports, and a
     <code class="cdx-code">package.json</code> with the dependency table.
@@ -334,10 +336,32 @@ export class CounterExample {
     install directly.
   </p>
   <p>
-    Dependency walking is bounded: depth 3, 25 files maximum, 8000 characters per file. When the
-    caps trip, the section renders a static fallback instead of a launcher and the build log
-    explains why. <code class="cdx-code">@internal</code>-tagged exports are filtered out before
-    serialisation, so private code never leaks into a public StackBlitz.
+    Dependency walking is bounded by default: depth 3, 25 files maximum, 8000 characters per file.
+    Raise the caps with <code class="cdx-code">playgroundDepDepth</code>,
+    <code class="cdx-code">playgroundFileCountCap</code>, and
+    <code class="cdx-code">playgroundFileCap</code>. Going over the file count fails that playground
+    with a message naming the walked files, and an oversized file is truncated with a footer.
+    <code class="cdx-code">@internal</code>-tagged exports are filtered out before serialisation, so
+    private code never leaks into a public StackBlitz.
+  </p>
+
+  <h2>Run against your working tree</h2>
+  <p>
+    A registry dependency resolves to the last published version, so a demo that uses unreleased
+    code fails in the sandbox. <code class="cdx-code">playgroundVendor</code> embeds your locally built
+    packages into the project instead, slimmed and pruned to the entry points the demo reaches. Build
+    the libraries before running compodocx. For providers or routing, point a component-level
+    <code class="cdx-code">@playgroundConfig ./app.config.ts</code> tag at a file that exports
+    <code class="cdx-code">appConfig</code>.
+  </p>
+
+  <h2>Catch broken demos before you ship</h2>
+  <p>
+    Each build warns when a demo imports a subpath or symbol the pinned package version
+    doesn&rsquo;t have;
+    <code class="cdx-code">--strictPlaygrounds</code> turns that warning into a failure.
+    <code class="cdx-code">compodocx playground:validate &lt;docsDir&gt;</code> goes further and compiles
+    every playground with a real install and build.
   </p>
 
   <h2>Library-author workflow</h2>
@@ -380,7 +404,7 @@ projects/dev-app/src/app/app.component.ts:
     code={`{
   "tsconfig": "projects/ui-kit/tsconfig.lib.json",
   "output": "docs/",
-  "publicApiOnly": true,
+  "publicApiOnly": "dist/ui-kit",
   "playgroundDependencies": {
     "@my-org/ui-kit": "^1.0.0"
   }
@@ -399,8 +423,8 @@ projects/dev-app/src/app/app.component.ts:
     Hide the tab globally with <code class="cdx-code">--disablePlaygroundTab</code> or
     <code class="cdx-code">disablePlaygroundTab: true</code> in your config file. Independent of
     <code class="cdx-code">--disableDependenciesTab</code>: one suppresses the per-component
-    standalone-import graph, the other suppresses the Playground tab. The flag has no effect on
-    components that declare no
+    dependency view, the other suppresses the Playground tab. The flag has no effect on components
+    that declare no
     <code class="cdx-code">@playground</code> blocks (the tab is already absent).
   </p>
 
@@ -409,9 +433,8 @@ projects/dev-app/src/app/app.component.ts:
     Each block emits an inert manifest into the static HTML as
     <code class="cdx-code"
       >&lt;script type=&quot;application/json&quot; data-cdx-stackblitz-manifest-data&gt;</code
-    >. On click, the launcher dynamic-imports <code class="cdx-code">@stackblitz/sdk</code>. The SDK
-    ships as a separate ~7&nbsp;KB gzipped chunk that is never loaded until needed. The SDK call is
-    <code class="cdx-code">openProject(manifest, &#123; newWindow: true &#125;)</code>: a fresh tab
+    >. On click, the launcher calls the StackBlitz SDK that ships inside the site script:
+    <code class="cdx-code">openProject(manifest, &#123; newWindow: true &#125;)</code>. A fresh tab
     opens, no iframe overlays the doc page.
   </p>
 </FeaturesLayout>

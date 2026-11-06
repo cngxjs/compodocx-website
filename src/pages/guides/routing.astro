@@ -1,55 +1,101 @@
 ---
 import FeaturesLayout from '../../layouts/FeaturesLayout.astro';
+import CodeBlock from '../../components/CodeBlock.astro';
 ---
 
 <FeaturesLayout
   currentSlug="routing"
-  title="Routing - Static SPA paths & basePath in compodocx"
-  description="compodocx static SPA routing: clean paths by default, --basePath for sub-path hosting (GitHub Pages, S3), --routingMode hash for hosts without rewrite rules."
+  title="Routing - Route tree & SPA navigation in compodocx"
+  description="How compodocx documents your Angular routes as a typed tree, and how the static output navigates: SPA page swaps, hash deep links, sub-path hosting."
 >
   <p class="text-cdx-text-secondary text-lg">
-    The output is a static SPA. A small hash router handles deep links, scroll restoration, tab
-    activation, and view transitions, without shipping a framework runtime.
+    Two kinds of routing meet here: the routes of your Angular app, which compodocx documents, and
+    the navigation of the generated static site.
   </p>
 
-  <h2>Why hash routing</h2>
+  <h2>The routes page</h2>
   <p>
-    Hash URLs work everywhere: GitHub Pages project sites, S3 prefixes, intranet hosts behind
-    reverse proxies, even <code class="cdx-code">file://</code> previews. No server-side rewrites needed,
-    deep links survive moves between hosts, and refreshing on any page just works.
+    compodocx reads your routes through the type checker and shows them on
+    <code class="cdx-code">routes.html</code>, one indented tree per router and per unmounted route
+    array. The page exists only when the project has routes. Turn it all off with
+    <code class="cdx-code">--disableRoutes</code>.
+  </p>
+  <CodeBlock
+    lang="ts"
+    filename="main.ts"
+    code={`bootstrapApplication(AppComponent, {
+  providers: [provideRouter(routes, withComponentInputBinding())],
+});`}
+  />
+  <ul>
+    <li>
+      <strong>Routers.</strong> Each <code class="cdx-code">provideRouter</code> call reached from
+      <code class="cdx-code">bootstrapApplication</code> is one router. Named configs,
+      <code class="cdx-code">mergeApplicationConfig</code>, and spreads are followed.
+    </li>
+    <li>
+      <strong>Route arrays.</strong> Recognized by their <code class="cdx-code"
+        >@angular/router</code
+      > type, never by name.
+    </li>
+    <li>
+      <strong>Lazy routes.</strong>
+      <code class="cdx-code">loadChildren</code> arrays expand below their route, and <code
+        class="cdx-code">loadComponent</code
+      > targets link to the component.
+    </li>
+    <li>
+      <strong>Unmounted routes.</strong> An exported route array no router mounts, such as a library shipping
+      feature routes, gets a section of its own.
+    </li>
+  </ul>
+  <p>
+    <code class="cdx-code">RouterModule.forRoot</code>, <code class="cdx-code">forChild</code>, and
+    string
+    <code class="cdx-code">loadChildren</code> are not read.
+  </p>
+
+  <h2>Links back from your symbols</h2>
+  <p>
+    Component pages list the routes they render at, route arrays the places they are mounted at, and
+    functional guards and resolvers the routes that use them, with the property (<code
+      class="cdx-code">/account - canActivate</code
+    >). Feature pages show the routes of their members as a tree, and the command palette finds
+    routes by their full path.
+  </p>
+
+  <h2>Navigating the generated site</h2>
+  <p>
+    The output is static HTML with real page URLs. A small client script intercepts internal links,
+    fetches the page, swaps the content area, and updates the URL with
+    <code class="cdx-code">history.pushState</code>, so no framework runtime ships with your docs.
   </p>
 
   <h2>Tab activation by hash</h2>
   <p>
-    Each entity tab (Info, API, Source, Theming Tokens, Example) has a stable hash id. Sharing a URL
-    like <code class="cdx-code">#api</code> opens the API tab; sharing
-    <code class="cdx-code">#L42</code> on a Source tab scrolls to that line. Hash-based line anchors take
-    priority over same-named DOM ids, so <code class="cdx-code">#L\d+</code> always wins.
-  </p>
-
-  <h2>Scroll restoration</h2>
-  <p>
-    Anchor scrolls account for the sticky NavBar height. Clicking
-    <code class="cdx-code">#api</code> doesn&rsquo;t hide the heading behind the topbar. Back/forward
-    navigation restores the prior scroll position. URL updates use
-    <code class="cdx-code">history.replaceState</code> so the browser&rsquo;s history isn&rsquo;t polluted
-    with intermediate hash changes.
+    Each entity tab has a stable hash id. Sharing a URL like <code class="cdx-code">#api</code> opens
+    the API tab, a member anchor opens the tab holding it, and <code class="cdx-code">#L42</code> scrolls
+    the Source tab to that line. Tab panels win over headings with the same id, and hash updates use
+    <code class="cdx-code">history.replaceState</code> so the browser&rsquo;s history isn&rsquo;t polluted.
   </p>
 
   <h2>No first-paint flash</h2>
   <p>
     Hash-targeted content is hidden during initial parse via a
     <code class="cdx-code">cdx-hash-pending</code> class on
-    <code class="cdx-code">&lt;html&gt;</code>; the router removes it after applying the initial
-    hash, so deep-linked pages never flash their default state before settling.
+    <code class="cdx-code">&lt;html&gt;</code>; it is removed after the initial hash is applied, so
+    deep-linked pages never flash their default state before settling.
   </p>
 
-  <h2>Sub-path hosting</h2>
+  <h2>Hosting anywhere</h2>
   <p>
-    Because routing is hash-based, the document root can sit anywhere: a project subdomain, a
-    sub-folder under a marketing site, a per-version folder under
-    <code class="cdx-code">/documentation/&lt;label&gt;/</code>. The version-switcher uses the
-    pathname segments (<code class="cdx-code">lastIndexOf(currentLabel)</code>) to compute target
-    URLs, so version hops work even when the docs live deep inside a host.
+    Links between pages are relative, so the docs can sit at a domain root, in a sub-folder, or in a
+    per-version folder under <code class="cdx-code">/documentation/&lt;label&gt;/</code> with no base-path
+    setting. A site opened from disk keeps its interactive parts too; only search needs a server, because
+    Pagefind fetches its index.
+  </p>
+  <p>
+    The version switcher follows <code class="cdx-code">redirects.json</code>, written with every
+    version, so a hop lands on the same symbol when its page moved between releases.
   </p>
 </FeaturesLayout>

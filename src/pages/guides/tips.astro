@@ -29,7 +29,7 @@ const tips: Tip[] = [
     title: 'Diff in CI on every PR',
     iconColor: 'text-emerald-500 dark:text-emerald-400',
     iconBody: `<circle cx="5" cy="6" r="3"/><path d="M12 6h5a2 2 0 0 1 2 2v7"/><circle cx="19" cy="18" r="3"/><path d="M12 18H7a2 2 0 0 1-2-2V9"/>`,
-    body: 'Generate a JSON snapshot per build (<code class="cdx-code">--exportFormat json</code>), commit it under <code class="cdx-code">snapshots/</code>, and run <code class="cdx-code">compodocx diff prev.json next.json</code> in CI. Exit code 2 fails the build on breaking changes. Pipe the JSON output to your bot for PR comments.',
+    body: 'Generate a JSON export per build (<code class="cdx-code">--exportFormat json</code>), keep the previous one as a baseline, and run <code class="cdx-code">compodocx diff --old prev.json --new next.json</code> in CI. Exit code 2 fails the build on breaking changes. <code class="cdx-code">--json</code> or <code class="cdx-code">--md</code> gives your bot a report for PR comments. Re-export the baseline after upgrading compodocx.',
   },
   {
     id: 'llm-context',
@@ -43,7 +43,7 @@ const tips: Tip[] = [
     title: 'Migrating from compodoc',
     iconColor: 'text-amber-500 dark:text-amber-400',
     iconBody: `<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>`,
-    body: '<code class="cdx-code">compodocx migrate templates</code> ports a folder of Handlebars overrides to JS partials in one shot. Run <code class="cdx-code">compodocx migrate inspect</code> first to see what will change.',
+    body: 'Run the new CLI once and read the log: it lists every legacy construct, ignored flag, and retired template with its location. <code class="cdx-code">compodocx migrate jsdoc &lt;dir&gt; --dry-run</code> shows which <code class="cdx-code">@category</code> and <code class="cdx-code">@docsKind</code> tags it would remove. Handlebars templates are rewritten by hand, using the cookbook in MIGRATION.md.',
   },
   {
     id: 'narrow-tsconfig',
@@ -57,14 +57,14 @@ const tips: Tip[] = [
     title: 'Public API filtering',
     iconColor: 'text-cyan-500 dark:text-cyan-400',
     iconBody: `<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/>`,
-    body: '<code class="cdx-code">--publicApiOnly</code> restricts output to the symbols matching your public API allow-list. Useful when you ship internal helpers in the same package and don&rsquo;t want them on the docs page.',
+    body: 'Symbols no entry point exports get no page by default. <code class="cdx-code">--publicApiOnly &lt;dist&gt;</code> goes further and reads the public names from an API Extractor report or your built package. Useful when you ship internal helpers in the same package and don&rsquo;t want them on the docs page.',
   },
   {
-    id: 'preserve-comments',
-    title: 'Preserve comments through the build',
+    id: 'feature-placement',
+    title: 'Correct a detected feature',
     iconColor: 'text-orange-500 dark:text-orange-400',
     iconBody: `<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 13h6"/><path d="M9 17h4"/>`,
-    body: 'Some bundlers strip JSDoc by default. Set <code class="cdx-code">"removeComments": false</code> in your doc tsconfig if you see empty descriptions in the rendered output.',
+    body: 'The build log prints how each feature was detected. To move a symbol, add an <code class="cdx-code">@feature &lt;key&gt;</code> tag or a <code class="cdx-code">features</code> glob in the config file. Neither can move a symbol into another entry point.',
   },
 ];
 ---
@@ -72,7 +72,7 @@ const tips: Tip[] = [
 <FeaturesLayout
   currentSlug="tips"
   title="Tips and Tricks - Real-world compodocx setups & patterns"
-  description="compodocx tips: monorepo layout, watch + serve dev loop, CI API diffs, narrow doc tsconfigs, multi-version setup, LLM-context exports, JSDoc preservation."
+  description="compodocx tips: monorepo layout, watch + serve dev loop, CI API diffs, narrow doc tsconfigs, public API filtering, LLM-context exports, feature placement."
 >
   <p class="text-cdx-text-secondary text-lg">
     Patterns that pay off in real projects. None are required. They&rsquo;re what we reach for once

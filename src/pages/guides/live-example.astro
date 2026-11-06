@@ -5,20 +5,21 @@ import CodeBlock from '../../components/CodeBlock.astro';
 
 <FeaturesLayout
   currentSlug="live-example"
-  title="Live Example Tab - Sandboxed component demos in compodocx"
-  description="Live demo iframes alongside component source via @example or <example-url>. Sandboxed, edit-and-rerun, no full app bundle. Enabled with --liveExamples."
+  title="Live Example Tab - Hosted component demos in compodocx"
+  description="Live demo iframes next to your API docs via <example-url> tags. Point at a demo you already host. exampleUrlBase resolves relative URLs against your demo app."
 >
   <p class="text-cdx-text-secondary text-lg">
-    Components can surface a dedicated <em>Example</em> tab with one or more live demos. Point at any
-    URL you control (a fixture page, a hosted demo, a StackBlitz project) and compodocx renders it inside
-    an iframe alongside the component&rsquo;s API and source.
+    Pages can surface a dedicated <em>Example</em> tab with one or more live demos. Point at any URL you
+    control (a fixture page, a hosted demo, a StackBlitz project) and compodocx renders it inside an iframe
+    alongside the symbol&rsquo;s API and source.
   </p>
 
   <h2>The marker</h2>
   <p>
-    Use an HTML-style <code class="cdx-code">&lt;example-url&gt;</code> marker inside the component&rsquo;s
-    class JSDoc. Multiple markers render as multiple iframes inside one Example tab. The tab is hidden
-    automatically when no marker is present.
+    Use an HTML-style <code class="cdx-code">&lt;example-url&gt;</code> marker inside the JSDoc of the
+    class it belongs to. Multiple markers render as multiple iframes inside one Example tab. The tab is
+    hidden automatically when no marker is present, and a marker counts only for the class whose comment
+    holds it.
   </p>
 
   <CodeBlock
@@ -37,6 +38,15 @@ export class CardComponent { ... }`}
     Each URL renders as <code class="cdx-code">&lt;iframe class="cdx-example-container"&gt;</code>.
     Browsers that don&rsquo;t allow iframes show the localized
     <code class="cdx-code">no-iframes</code> fallback message.
+  </p>
+
+  <h2>Relative URLs</h2>
+  <p>
+    Set <code class="cdx-code">exampleUrlBase</code> (or <code class="cdx-code"
+      >--exampleUrlBase</code
+    >) and a relative marker such as <code class="cdx-code">/#/forms/select</code> is appended to it,
+    so the tab loads from your demo app instead of the docs folder. Absolute URLs stay as written. Without
+    a base, the build lists relative markers in one warning.
   </p>
 
   <h2>

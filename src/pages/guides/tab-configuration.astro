@@ -5,24 +5,27 @@ import CodeBlock from '../../components/CodeBlock.astro';
 
 <FeaturesLayout
   currentSlug="tab-configuration"
-  title="Tab Configuration - Reorder & extend compodocx entity tabs"
-  description="compodocx entity tabs - Info, API, DOM Tree, Source, Theming Tokens. Reorder or hide via tabs config; register custom TSX tabs through --tabRegistry."
+  title="Tab Configuration - Reorder & hide compodocx entity tabs"
+  description="compodocx entity tabs - Info, API, Source, DOM Tree, Theming, Playground. Reorder, relabel, or hide them with navTabConfig and compose their sections."
 >
   <p class="text-cdx-text-secondary text-lg">
     Each entity page renders one or more tabs: <em>Info</em>, <em>API</em>, <em>Source</em>, plus
-    <em>Theming Tokens</em> and <em>Example</em> when a component opts into them. Tab visibility is data-driven.
+    <em>README</em>, <em>Template</em>, <em>Styles</em>, <em>Theming</em>, <em>DOM Tree</em>,
+    <em>Examples</em>, and <em>Playground</em> when there is data for them. Tab visibility is data-driven.
     Sections only render when there&rsquo;s something to show.
   </p>
 
   <h2>Auto-visibility</h2>
   <ul class="text-cdx-text-secondary mt-3 space-y-2 text-sm">
     <li>
-      <strong class="text-cdx-text">Theming Tokens</strong> appears on component pages when the component
-      declares any theming tokens or an
-      <code class="cdx-code">@overview</code> in its associated CSS / SCSS file.
+      <strong class="text-cdx-text">Theming</strong> appears on component pages when the component&rsquo;s
+      styles hold documented tokens or mixins, and on component and directive pages when a file listed
+      in
+      <code class="cdx-code">styleFiles</code> names them with <code class="cdx-code">@themes</code
+      >.
     </li>
     <li>
-      <strong class="text-cdx-text">Example</strong> appears on component pages when at least one
+      <strong class="text-cdx-text">Examples</strong> appears when at least one
       <code class="cdx-code">&lt;example-url&gt;</code> marker is present in the class JSDoc.
     </li>
     <li>
@@ -31,19 +34,37 @@ import CodeBlock from '../../components/CodeBlock.astro';
     </li>
   </ul>
 
+  <h2>Reorder, relabel, or hide tabs</h2>
+  <p>
+    <code class="cdx-code">navTabConfig</code> takes a list of <code class="cdx-code"
+      >{'{ id, label }'}</code
+    >
+    objects. Tabs you don&rsquo;t list are hidden. IDs: <code class="cdx-code">info</code>,
+    <code class="cdx-code">readme</code>, <code class="cdx-code">api</code>,
+    <code class="cdx-code">source</code>, <code class="cdx-code">templateData</code>,
+    <code class="cdx-code">styleData</code>, <code class="cdx-code">theming</code>,
+    <code class="cdx-code">tree</code>, <code class="cdx-code">example</code>, and
+    <code class="cdx-code">playground</code>.
+  </p>
+
   <h2>Section composition</h2>
   <p>
-    Within each tab, sections render in a fixed order driven by constants such as
-    <code class="cdx-code">DEFAULT_INFO_SECTIONS</code>,
-    <code class="cdx-code">DEFAULT_API_SECTIONS</code>, and
-    <code class="cdx-code">DEFAULT_THEMING_SECTIONS</code>. Sections without data are skipped: a
-    component without inputs simply omits the inputs row, no empty heading.
+    Within each tab, sections render in a default order. Sections without data are skipped: a
+    component without inputs simply omits the inputs row, no empty heading. The config-only keys
+    <code class="cdx-code">infoTabSections</code>, <code class="cdx-code">apiTabSections</code>, and
+    <code class="cdx-code">themingTabSections</code> replace that list in full, so name every section
+    you want. The IDs are in the <a
+      href={`${import.meta.env.BASE_URL}guides/options/#tab-sections`}
+      class="text-cdx-primary underline-offset-2 hover:underline">options guide</a
+    >.
   </p>
 
   <h2>Theming tab sections</h2>
   <p>
     The Theming tab&rsquo;s composition is configurable per project via the JSON config file (no CLI
-    flag). Pass a subset of <code class="cdx-code">['overview', 'index', 'tokens', 'source']</code>
+    flag). Pass a subset of <code class="cdx-code"
+      >['overview', 'index', 'tokens', 'mixins', 'source']</code
+    >
     in the order you want them to appear:
   </p>
 
@@ -55,8 +76,8 @@ import CodeBlock from '../../components/CodeBlock.astro';
   />
 
   <p>
-    The example above hides the per-tab token index and the source preview. Tab visibility itself is
-    not affected. The Theming tab still shows whenever theming data exists.
+    The example above hides the per-tab token index, the mixins, and the source preview. Tab
+    visibility itself is not affected. The Theming tab still shows whenever theming data exists.
   </p>
 
   <h2>Deeper customization</h2>
@@ -65,7 +86,8 @@ import CodeBlock from '../../components/CodeBlock.astro';
     project-specific layouts) use the JS-based template override system via
     <code class="cdx-code">--templates &lt;path&gt;</code>. Each overridable surface (page-level and
     block-level) is a JS partial exporting
-    <code class="cdx-code">function(data, helpers) {'...'}</code>. Migrating a folder of legacy
-    Handlebars overrides? Run <code class="cdx-code">compodocx migrate templates</code>.
+    <code class="cdx-code">function(data, helpers) {'...'}</code>. Coming from Handlebars overrides?
+    Rewrite them by hand with the cookbook in the migration guide. Handlebars files are skipped with
+    one warning.
   </p>
 </FeaturesLayout>

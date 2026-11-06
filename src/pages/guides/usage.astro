@@ -6,10 +6,10 @@ import CodeBlock from '../../components/CodeBlock.astro';
 <FeaturesLayout
   currentSlug="usage"
   title="Usage - compodocx command patterns for Angular docs"
-  description="compodocx command patterns: one-shot CI builds, watch + live-reload, multi-version output, npm scripts integration, semver-aware API diffs in CI."
+  description="compodocx command patterns: one-shot CI builds, watch and serve, multi-version output, npm scripts integration, API diffs and playground checks in CI."
 >
   <p class="text-cdx-text-secondary text-lg">
-    A few patterns we lean on. Every flag has a JSON-config equivalent.
+    A few patterns we lean on. Most flags have a config-file equivalent.
   </p>
 
   <h2>Build once for CI</h2>
@@ -58,12 +58,23 @@ import CodeBlock from '../../components/CodeBlock.astro';
   <CodeBlock
     lang="bash"
     code={`npx compodocx -p tsconfig.doc.json --exportFormat json -d snapshots/next/
-npx compodocx diff snapshots/prev/<label>/api.json snapshots/next/<label>/api.json`}
+npx compodocx diff --old snapshots/prev/documentation.json --new snapshots/next/documentation.json`}
   />
   <p>
     Exits <code class="cdx-code">0</code> on no public-API change,
     <code class="cdx-code">1</code> on additive changes, <code class="cdx-code">2</code> on breaking changes
-    (or fatal errors). Pipe the JSON output to your bot of choice for PR comments.
+    (or fatal errors). Add <code class="cdx-code">--json</code> or <code class="cdx-code">--md</code
+    > for a report your bot can post as a PR comment. Both exports must come from the same compodocx schema,
+    so re-export older baselines after an upgrade.
+  </p>
+
+  <h2>Validate playgrounds in CI</h2>
+  <CodeBlock lang="bash" code="npx compodocx playground:validate documentation" />
+  <p>
+    Builds every <code class="cdx-code">@playground</code> of a generated docs folder with a real
+    <code class="cdx-code">npm install</code> and <code class="cdx-code">ng build</code>. Exits
+    <code class="cdx-code">1</code> when one fails. It needs network access and is slow, so run it as
+    a CI step after the docs build.
   </p>
 
   <h2>LLM context for code review</h2>

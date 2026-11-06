@@ -69,19 +69,21 @@ export class CardComponent { ... }`}
   <h2>Additional pages</h2>
   <p>
     Markdown files outside the source tree can be wired in via a
-    <code class="cdx-code">summary.json</code> manifest. Slugs are derived from each page&rsquo;s
-    <code class="cdx-code">title</code>; missing files surface a per-page warning rather than
-    failing the build. Nesting deeper than five levels is a hard error.
-    <code class="cdx-code">{'{@link}'}</code> works inside additional-page markdown identically to source
-    comments.
+    <code class="cdx-code">summary.json</code> manifest. A node&rsquo;s optional
+    <code class="cdx-code">slug</code> keeps its URL stable when the wording changes, and
+    <code class="cdx-code">aliases</code> keep old URLs working. Missing files surface a per-page warning
+    rather than failing the build, and nodes deeper than five levels are skipped. Relative links between
+    Markdown files point at the generated pages, and <code class="cdx-code">{'{@link}'}</code> works inside
+    additional-page markdown identically to source comments.
   </p>
 
   <h2>Provenance marker</h2>
   <p>
-    Flag a markdown file as AI-assisted with an HTML-comment marker on the first non-empty line.
-    Detected on additional pages, READMEs, and the overview source. Renders a localized pill in the
-    page hero. The optional trailing label (model name, date, anything) is preserved verbatim. For
-    the source-symbol equivalent see the <code class="cdx-code">@aiGenerated</code> JSDoc tag in the
+    Flag a markdown file as AI-assisted with an HTML-comment marker on its first line. Detected on
+    additional pages and READMEs. Renders a localized chip and sentence above the content. An
+    optional value (model name, date, or <code class="cdx-code">key=value</code> pairs) shows in the sentence.
+    <code class="cdx-code">--hideAiGeneratedBadge</code> hides it. For the source-symbol equivalent see
+    the <code class="cdx-code">@aiGenerated</code> JSDoc tag in the
     <a
       href={`${import.meta.env.BASE_URL}guides/jsdoc-tags/#provenance`}
       class="text-cdx-primary underline-offset-2 hover:underline">JSDoc Tags guide</a
@@ -96,6 +98,6 @@ export class CardComponent { ... }`}
 
 # Component guide
 
-The marker must sit at the top of the file; whitespace before it is fine.`}
+The marker must be the first line of the file.`}
   />
 </FeaturesLayout>
