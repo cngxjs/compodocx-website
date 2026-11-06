@@ -150,14 +150,16 @@ main > section:nth-of-type(11) {
 
 /* Brand-consistent keyboard focus outline. Replaces UA-default blue with
    cdx-primary so every focusable element (button, a, summary, input, dialog
-   close, etc.) shows the same ring without per-element rules. Components
-   that explicitly set focus-visible:outline-none + ring-* (theme cards,
-   guides hub cards, related-guides) win via specificity and keep their
-   own focus styling. */
-:focus-visible {
-  outline: 2px solid var(--color-cdx-primary);
-  outline-offset: 2px;
-  border-radius: 0.25rem;
+   close, etc.) shows the same ring without per-element rules. Lives in the
+   base layer so utilities win: components that set focus-visible:outline-none
+   + ring-* (theme cards, guides hub cards, related-guides) keep their own
+   focus styling, and focus:outline-none works on programmatic focus targets. */
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--color-cdx-primary);
+    outline-offset: 2px;
+    border-radius: 0.25rem;
+  }
 }
 
 /* Guide article prose styling - applied via .cdx-prose on the FeaturesLayout
@@ -166,7 +168,8 @@ main > section:nth-of-type(11) {
 .cdx-prose {
   color: var(--color-cdx-text-secondary);
 }
-.cdx-prose > h2 {
+.cdx-prose > h2,
+.cdx-prose > section > h2 {
   margin-top: 3rem;
   font-size: 1.25rem;
   font-weight: 600;
