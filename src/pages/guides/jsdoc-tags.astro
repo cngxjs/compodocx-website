@@ -17,7 +17,10 @@ const groups: TagGroup[] = [
     items: [
       ['@param', 'Paired with TypeScript type info. Descriptions thread onto constructor args.'],
       ['@returns', 'Return-value description.'],
-      ['@example', 'Fenced code block, Shiki-highlighted.'],
+      [
+        '@example',
+        'Fenced code block, Shiki-highlighted. Text on the tag line before the fence, or a <caption> element, becomes a caption.',
+      ],
       ['@see', 'Appended as a See-also link block.'],
       ['@since', 'Small version label next to the member name.'],
       [
@@ -31,7 +34,10 @@ const groups: TagGroup[] = [
     heading: 'Symbols',
     blurb: 'Class, interface, enum, type alias, function, variable.',
     items: [
-      ['@example', 'Rendered as an Examples block on the Info tab. Multiple allowed.'],
+      [
+        '@example',
+        'Rendered as an Examples block on the Info tab. Multiple allowed. Text on the tag line before the fence, or a <caption> element, becomes a caption.',
+      ],
       ['@see', 'See-also section with link resolution.'],
       ['@since / @deprecated', 'Same semantics as on members.'],
       ['@internal', 'Hides the symbol when --disableInternal is set.'],

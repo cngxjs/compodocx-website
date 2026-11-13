@@ -114,6 +114,13 @@ const groups: OptGroup[] = [
         desc: 'Cap on switcher dropdown entries. 0 = unlimited. Manifest is always written in full - this is presentation-only. Range 0–1000.',
       },
       {
+        key: 'siteUrl',
+        cli: '--siteUrl',
+        type: 'string',
+        default: "''",
+        desc: 'Root URL of the published docs site, the folder above the version folders. Links in READMEs, additional pages and JSDoc that start with it point at the page in the version being built, with or without a version folder after the root, so the same link works on GitHub and stays in the version on the site. A link to a page the build does not have stays absolute and is listed in a Site links: warning. The JSON and llm-md exports keep links as written. Empty keeps every link as written.',
+      },
+      {
         key: 'jsonIndent',
         cli: '--jsonIndent',
         type: 'number',
