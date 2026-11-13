@@ -77,6 +77,45 @@ export class CardComponent { ... }`}
     additional-page markdown identically to source comments.
   </p>
 
+  <h2>Markdown layout hints</h2>
+  <p>
+    Two conventions change how compodocx lays out Markdown in additional pages, the README and the
+    other root files, and feature READMEs. JSDoc comments and READMEs next to source files keep the
+    plain layout. Both render as plain Markdown on GitHub and npm.
+  </p>
+  <p>
+    <strong>Lead-ins.</strong> A paragraph or list item that starts with a short bold label ending in
+    a period or a colon gets the label in its own column once the page is wide enough; on narrow
+    screens the label sits above the text. The label must come first, be plain text (no code or links
+    inside the bold) and be at most 40 characters long.
+  </p>
+
+  <CodeBlock
+    lang="md"
+    code={`**Parts.** The header stays fixed while the rest of the panel scrolls.
+
+**Modality.** Sheet and fullscreen are both modal.
+
+- **Focus.** Focus moves into the panel when it opens.
+- **Close vectors.** Escape, a tap outside the panel and the back gesture close it.`}
+  />
+
+  <p>
+    <strong>Inline lists.</strong> An HTML comment
+    <code class="cdx-code">{'<!-- compodocx: inline -->'}</code> directly before a bullet list renders
+    that list as a row of chips, for short items such as browser versions or tags. Only the list right
+    after the comment is affected; numbered lists are left alone. Everything else gets one base style;
+    compodocx does not guess a layout from the content of a list.
+  </p>
+
+  <CodeBlock
+    lang="md"
+    code={`<!-- compodocx: inline -->
+- Chrome 125+
+- Firefox 131+
+- Safari 18.4+`}
+  />
+
   <h2>Provenance marker</h2>
   <p>
     Flag a markdown file as AI-assisted with an HTML-comment marker on its first line. Detected on
