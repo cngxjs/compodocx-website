@@ -28,9 +28,9 @@
     "test:overflow": "node scripts/test-mobile-overflow.mjs"
   },
   "dependencies": {
-    "@astrojs/sitemap": "^3.7.4",
+    "@astrojs/sitemap": "^3.7.6",
     "@tailwindcss/vite": "^4.3.4",
-    "astro": "^7.4.4",
+    "astro": "^7.4.13",
     "tailwindcss": "^4.2.4"
   },
   "devDependencies": {
